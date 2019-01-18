@@ -31,5 +31,4 @@ with open(fileName, 'w') as CQA:
         data.append(content)
     print(len(data))
     CQA.write(json.dumps(data, ensure_ascii=False))
-    #print(data[tpo_1-conversation_1_1])
-        
+    
