@@ -1,7 +1,7 @@
 import json
 import os
 
-class loadData():
+class LoadData():
     
     def __init__(self, dataType, dataSet):
         self.dataType = dataType
