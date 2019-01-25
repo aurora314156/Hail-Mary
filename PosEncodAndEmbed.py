@@ -1,28 +1,27 @@
 #!/usr/bin/env python3
-import logging, time
-from gensim.models import KeyedVectors
 
 class PosEncodAndEmbed():
-    def __init__(self, words, max_dim_len):
+    def __init__(self, words, word2vec, max_dim_len):
         self.words = words
+        self.word2vec = word2vec
         self.max_dim_len = max_dim_len
+        
     def PosEncodAndEmbedMain(self):
         data_matrix = []
-        data_matrix = self.Embedding(self.words)
+        data_matrix = self.Embedding(self.words, self.word2vec)
         data_matrix = self.PosEncoding(self.words)
         data_matrix = self.Add()
         return data_matrix
         
-    def Embedding(self, words):
+    def Embedding(self, words, word2vec):
         print("Starting Embedding words.")
-        logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-        model = KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
-        # get vector with weight of words from w2v model
-        model_weight_vector = model.wv
         embeddedWords = []
+        # use pre-trained model to transforming each word 
         for word in words:
-            if word not in model_weight_vector:
-                embeddedWords = 
+            if word in word2vec:
+                word_with_weight = word2vec[word]
+                embeddedWords.append(word_with_weight)
+                print(len(embeddedWords))
 
         return embeddedWords
     
