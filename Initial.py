@@ -4,13 +4,13 @@ from LoadData import LoadData
 
 class Initial():
     def __init__(self):
-        
-        self.max_dim_len = 300
+        self.d_model = 300
 
     def InitialMain(self):
         dataset = self.GetDataset(self.ArgParse())
         word2vec = self.LoadWord2vec()
-        return dataset, word2vec, self.max_dim_len
+        return dataset, word2vec, self.d_model
+    
     def ArgParse(self):
         print("Start setting argparse.")
         # args setting

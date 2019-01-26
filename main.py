@@ -5,9 +5,9 @@ from Initial import Initial
 
 
 def main():
-    dataset, word2vec, max_dim_len = Initial().InitialMain()
+    dataset, word2vec, d_model = Initial().InitialMain()
     for single_data in dataset:
-        StoryMatirx = Transformer(single_data['story'], word2vec, max_dim_len).TransformerMain()
+        StoryMatirx = Transformer(single_data['story'], word2vec, d_model).TransformerMain()
         
 
 
