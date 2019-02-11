@@ -4,12 +4,12 @@ from LoadData import LoadData
 
 class Initial():
     def __init__(self):
-        self.d_model = 300
-
+        self.d_model = 512
+        
     def InitialMain(self):
         dataset = self.GetDataset(self.ArgParse())
-        word2vec = self.LoadWord2vec()
-        return dataset, word2vec, self.d_model
+        #word2vec = self.LoadWord2vec()
+        return dataset, self.d_model
     
     def ArgParse(self):
         print("Start setting argparse.")
