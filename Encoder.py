@@ -21,14 +21,14 @@ class Encoder():
             x = Add()([x, pos])
         x = self.emb_dropout(x)
         if return_att: atts = []
-        mask = Lambda(lambda x:self.GetPadMask(x, x))(src_seq)
+        mask = Lambda(lambda x:GetPadMask(x, x))(src_seq)
         for enc_layer in self.layers[:active_layers]:
             x, att = enc_layer(x, mask)
             if return_att: atts.append(att)
         return (x, atts) if return_att else x
 
-    def GetPadMask(q, k):
-        ones = K.expand_dims(K.ones_like(q, 'float32'), -1)
-        mask = K.cast(K.expand_dims(K.not_equal(k, 0), 1), 'float32')
-        mask = K.batch_dot(ones, mask, axes=[2,1])
-        return mask
+def GetPadMask(q, k):
+    ones = K.expand_dims(K.ones_like(q, 'float32'), -1)
+    mask = K.cast(K.expand_dims(K.not_equal(k, 0), 1), 'float32')
+    mask = K.batch_dot(ones, mask, axes=[2,1])
+    return mask

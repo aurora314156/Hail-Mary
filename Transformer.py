@@ -16,15 +16,20 @@ class Transformer():
         self.d_k = d_k
         self.d_v = d_v
         self.layers = layers
+        self.src_loc_info = True
         self.dropout = dropout
+        self.pos_emb, self.word_emb = PosEncodAndEmbed(self.words_len, self.len_limit, self.d_model).PosEncodAndEmbedMain()
+        self.encoder = Encoder(self.d_model, self.d_inner_hid, self.n_head, self.d_k, self.d_v, self.layers,\
+                          self.dropout, word_emb=self.word_emb, pos_emb=self.pos_emb)
+        self.target_layer = TimeDistributed(Dense(self.words_len, use_bias=False))
 
-    def TransformerMain(self):
+    #def TransformerMain(self):
         # get result by embedding with positional encoding
-        pos_emb, word_emb = PosEncodAndEmbed(self.words_len, self.len_limit, self.d_model).PosEncodAndEmbedMain()
-        encoder_result = Encoder(self.d_model, self.d_inner_hid, self.n_head, self.d_k, self.d_v, self.layers,\
-                          self.dropout, word_emb=word_emb, pos_emb=pos_emb)
-
-        return encoder_result
+        
+        #self.encoder = Encoder(self.d_model, self.d_inner_hid, self.n_head, self.d_k, self.d_v, self.layers,\
+        #                  self.dropout, word_emb=word_emb, pos_emb=pos_emb)
+        
+    #    return encoder_result
 
     def compile(self, optimizer='adam', active_layers=999):
         src_seq_input = Input(shape=(None,), dtype='int32')
@@ -39,8 +44,8 @@ class Transformer():
         if not self.src_loc_info: src_pos = None
 
         enc_output = self.encoder(src_seq, src_pos, active_layers=active_layers)
-        dec_output = self.decoder(tgt_seq, tgt_pos, src_seq, enc_output, active_layers=active_layers)
-        final_output = self.target_layer(dec_output)
+        #dec_output = self.decoder(tgt_seq, tgt_pos, src_seq, enc_output, active_layers=active_layers)
+        final_output = self.target_layer(enc_output)
 
         def get_loss(args):
             y_pred, y_true = args
