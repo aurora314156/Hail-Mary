@@ -3,7 +3,7 @@ from numpy import array
 from Initial import Initial
 
 
-def getEncodeContent(single_data):
+def getEncodeContent(bc, single_data):
     
     s_string, q_string, o_string = "", "", ""
     options = []
@@ -31,9 +31,11 @@ def getEncodeContent(single_data):
 def main():
     dataset, d_model = Initial().InitialMain()
     tTime = time.time()
+    # initial BERT model
+    bc = BertClient()
     for single_data in dataset:
         print(single_data['storyName'])
-        story, question, options, answer = getEncodeContent(single_data)
+        story, question, options, answer = getEncodeContent(bc, single_data)
         break
         
     print("Total cost time %.2fs." % (time.time()-tTime))
