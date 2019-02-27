@@ -15,6 +15,7 @@ class Mymodel():
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, merStoryOpt)
             if tmpScore < highestScore:
                 guessAnswer = ind
+                highestScore = tmpScore
             ind += 1
         
         return guessAnswer

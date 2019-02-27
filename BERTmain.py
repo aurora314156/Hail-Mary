@@ -41,7 +41,7 @@ def main():
         print("Guess answer is",guessAnswer)
         print("Actual answer is",answer)
         print("=========================\n")
-    print("correct ", correct)
+    print("correctness ", correct/717)
         
     print("Total cost time %.2fs." % (time.time()-tTime))
 
