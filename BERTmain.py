@@ -1,12 +1,6 @@
 import os, time, json
 from numpy import array
-from keras.optimizers import *
-from keras.callbacks import *
 from bert_serving.client import BertClient
-from keras.preprocessing.text import one_hot
-from keras.preprocessing.text import Tokenizer
-from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import OneHotEncoder
 from Initial import Initial
 
 
