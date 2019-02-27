@@ -1,7 +1,8 @@
 import os, time, json
 from numpy import array
 from Initial import Initial
-
+from Mymodel import Mymodel
+from bert_serving.client import BertClient
 
 def getEncodeContent(bc, single_data):
     
@@ -18,12 +19,10 @@ def getEncodeContent(bc, single_data):
             o_string += single_option_element + " "
         options.append(o_string)
     
+    print(options)
     story = bc.encode([s_string])
     question = bc.encode([q_string])
     options = bc.encode(options)
-    print("=================")
-    print(options.shape)
-    print("=================")
     answer = single_data['answer']
 
     return story, question, options, answer
@@ -33,10 +32,14 @@ def main():
     tTime = time.time()
     # initial BERT model
     bc = BertClient()
+    correct = 0
     for single_data in dataset:
-        print(single_data['storyName'])
         story, question, options, answer = getEncodeContent(bc, single_data)
+        guessAnswer = Mymodel(story, question, options).MymodelMain()
+        if guessAnswer == answer:
+            correct += 1
         break
+    print("correct ", correct)
         
     print("Total cost time %.2fs." % (time.time()-tTime))
 
