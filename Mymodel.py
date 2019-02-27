@@ -10,9 +10,9 @@ class Mymodel():
         
         merStoryQue = [x + y for x, y in zip(self.story, self.question)]
         ind, guessAnswer, highestScore = 0, 0, 0
-        for option in options:
-            merStoryOpt = [x + y for x, y in zip(self.story, self.option)]
-            tmpScore = 1 - spatial.distance.cosine(dataSetI, dataSetII)
+        for option in self.options:
+            merStoryOpt = [x + y for x, y in zip(self.story, option)]
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, merStoryOpt)
             print("tmpScore ",tmpScore)
             if tmpScore < highestScore:
                 guessAnswer = ind
