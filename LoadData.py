@@ -9,7 +9,7 @@ class LoadData():
         self.dataSetPath = os.path.join(os.getcwd(),"")
     
     def getDataSet(self):
-        self.checkArgs();
+        self.checkArgs()
         dataSetPath = self.joinDataSetPath(self.dataSetPath, self.dataType, self.dataSet)
         with open(dataSetPath, 'r') as data:
             data = json.load(data)

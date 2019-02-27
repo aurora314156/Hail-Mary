@@ -15,7 +15,7 @@ class Initial():
         print("Start setting argparse.")
         # args setting
         parser = argparse.ArgumentParser()
-        parser.add_argument("-d", "--optional-dataType", help="optional dataType", dest="dataType", default="with")
+        parser.add_argument("-d", "--optional-dataType", help="optional dataType", dest="dataType", default="without")
         parser.add_argument("-o", "--optional-dataSet", help="optional dataSet", dest="dataSet", default="train")
         args = parser.parse_args()
         return args
