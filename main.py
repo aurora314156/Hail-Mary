@@ -10,9 +10,6 @@ from sklearn.preprocessing import OneHotEncoder
 from Initial import Initial
 
 
-
-
-
 def main():
     dataset, d_model = Initial().InitialMain()
     tTime = time.time()
@@ -34,7 +31,7 @@ def main():
         x_test = x_train.reshape((len(x_train), np.prod(x_train.shape[1:])))
         
         #x_test = [one_hot(s, vocab_size) for s in single_data['story']]
-        transformer_model.model.fit(x_test,x_test,epochs=20,batch_size=64,validation_data=(x_test, x_test))
+        transformer_model.model.fit(x_test,x_test,epochs=20,batch_size=64,shuffle=True)
 
         print("Total cost time %.2fs." % (time.time()-tTime))
 
