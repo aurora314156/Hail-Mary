@@ -19,7 +19,6 @@ def getEncodeContent(bc, single_data):
             o_string += single_option_element + " "
         options.append(o_string)
     
-    print(options)
     story = bc.encode([s_string])
     question = bc.encode([q_string])
     options = bc.encode(options)
@@ -38,7 +37,6 @@ def main():
         guessAnswer = Mymodel(story, question, options).MymodelMain()
         if guessAnswer == answer:
             correct += 1
-        break
     print("correct ", correct)
         
     print("Total cost time %.2fs." % (time.time()-tTime))
