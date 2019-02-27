@@ -13,7 +13,7 @@ class Mymodel():
         for option in self.options:
             merStoryOpt = [x + y for x, y in zip(self.story, option)]
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, merStoryOpt)
-            if tmpScore < highestScore:
+            if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
             ind += 1
