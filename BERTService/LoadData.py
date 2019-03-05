@@ -14,13 +14,16 @@ class LoadData():
             self.checkArgs()
         except:
             return
-        print("Start processing datatype: %s\n" % (self.dataType))
+        print("***********************************\nStart processing datatype: %s\n" % (self.dataType))
         # iterator for get all selection dataset
         dataSet = []
         for dataName in self.dataSetList:
             dataSetPath = self.joinDataSetPath(self.dataSetPath, self.dataType, dataName)
             with open(dataSetPath, 'r') as d:
-                dataSet.append(json.load(d))
+                data = json.load(d)
+
+            dataSet.append(dataName)
+            dataSet.append(data)
 
         return dataSet
 

@@ -34,8 +34,10 @@ def main():
     bc = BertClient()
     correct = 0
     for single_dataset in dataset:
+        if isinstance(single_dataset, str):
+            print("Start processing dataset: %s\n" % (single_dataset))
+            continue
         for single_data in single_dataset:
-            print("Start processing dataset: %s\n" % (single_data))
             story, question, options, answer = getEncodeContent(bc, single_data)
             guessAnswer = Mymodel(story, question, options).MymodelMain()
             if guessAnswer == answer:
@@ -43,10 +45,9 @@ def main():
         #print("=========================")
         #print("Guess answer is",guessAnswer)
         #print("Actual answer is",answer)
-        #print("=========================\n")
-        
-        print("Dataset size ", correct/len(dataset))
-        print("Total cost time %.2fs." % (time.time()-tTime))
+        #print("=========================\n") 
+    print("Accuracy", correct/len(single_dataset))
+    print("Total cost time %.2fs.\n***********************************" % (time.time()-tTime))
 
 if __name__ == "__main__":
     main()
