@@ -35,7 +35,7 @@ def main():
     correct = 0
     for single_dataset in dataset:
         for single_data in single_dataset:
-            print("Start processing dataset: %s\n" % single_data)
+            print("Start processing dataset: %s\n" % (single_data))
             story, question, options, answer = getEncodeContent(bc, single_data)
             guessAnswer = Mymodel(story, question, options).MymodelMain()
             if guessAnswer == answer:

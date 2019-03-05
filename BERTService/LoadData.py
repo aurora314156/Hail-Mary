@@ -16,13 +16,13 @@ class LoadData():
             return
         print("Start processing datatype: %s\n" % (self.dataType))
         # iterator for get all selection dataset
-        data = []
+        dataSet = []
         for dataName in self.dataSetList:
             dataSetPath = self.joinDataSetPath(self.dataSetPath, self.dataType, dataName)
-            print(dataSetPath)
             with open(dataSetPath, 'r') as d:
-                data.append(json.load(d))
-        return data
+                dataSet.append(json.load(d))
+
+        return dataSet
 
     def joinDataSetPath(self, dataSetPath, dataType, dataName):
         if dataType == "with":
@@ -33,8 +33,8 @@ class LoadData():
 
     def checkArgs(self):
         dataType = {"with", "without"}
-        dataSet = {"train","test","dev"}
-        if self.dataType not in dataType or self.dataSetList[0] not in dataSet:
+        allDataSetName = {"train","test","dev"}
+        if self.dataType not in dataType or self.dataSetList[0] not in allDataSetName:
             print("================================")
             print("Please check your input args.")
             print("Try [-d] [with/without] [-o] [train/test/dev/all].")
