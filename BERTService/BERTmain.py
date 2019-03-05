@@ -34,6 +34,7 @@ def main():
     bc = BertClient()
     correct = 0
     for single_dataset in dataset:
+        print(type(single_dataset))
         if isinstance(single_dataset, str):
             print("Start processing dataset: %s\n" % (single_dataset))
             continue
