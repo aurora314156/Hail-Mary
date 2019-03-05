@@ -6,7 +6,7 @@ class LoadData():
     def __init__(self, dataType, dataSet):
         self.dataType = dataType
         self.dataSet = dataSet
-        self.dataSetPath = os.path.join("~/Hail-Mary","")
+        self.dataSetPath = os.path.join("~/Desktop/Hail-Mary","")
     
     def getDataSet(self):
         try:
