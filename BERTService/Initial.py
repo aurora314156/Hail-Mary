@@ -22,7 +22,15 @@ class Initial():
 
     def GetDataset(self, args):
         print("Start getting dataset.")
-        dataset = LoadData(args.dataType, args.dataSet).getDataSet()
+        dataSetList = []
+        if args.dataSet == "all":
+            dataSetList.append("test")
+            dataSetList.append("train")
+            dataSetList.append("dev")
+        else:
+            dataSetList.append(args.dataSet)
+        
+        dataset = LoadData(args.dataType, dataSetList).getDataSet()
         return dataset
 
     def LoadWord2vec(self):
