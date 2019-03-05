@@ -2,7 +2,7 @@ import os, time, json
 from numpy import array
 from Initial import Initial
 from Mymodel import Mymodel
-#from bert_serving.client import BertClient
+from bert_serving.client import BertClient
 
 def getEncodeContent(bc, single_data):
     
