@@ -41,8 +41,8 @@ def main():
         #print("Guess answer is",guessAnswer)
         #print("Actual answer is",answer)
         #print("=========================\n")
-    print("correct guess", correct)
-    print("Dataset size ", len(dataset))
+        
+    print("Dataset size ", corrct/len(dataset))
         
     print("Total cost time %.2fs." % (time.time()-tTime))
 
