@@ -37,10 +37,10 @@ def main():
         guessAnswer = Mymodel(story, question, options).MymodelMain()
         if guessAnswer == answer:
             correct += 1
-        print("=========================")
-        print("Guess answer is",guessAnswer)
-        print("Actual answer is",answer)
-        print("=========================\n")
+        #print("=========================")
+        #print("Guess answer is",guessAnswer)
+        #print("Actual answer is",answer)
+        #print("=========================\n")
     print("correctness ", correct/717)
         
     print("Total cost time %.2fs." % (time.time()-tTime))

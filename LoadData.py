@@ -13,7 +13,7 @@ class LoadData():
             self.checkArgs()
         except:
             return
-        print("Start processing %s dataset.",self.dataType)
+        print("Start processing datatype: %s\nStart processing dataset: %s" % (self.dataType, self.dataSet))
         dataSetPath = self.joinDataSetPath(self.dataSetPath, self.dataType, self.dataSet)
         with open(dataSetPath, 'r') as data:
             data = json.load(data)
