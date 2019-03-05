@@ -6,7 +6,7 @@ class LoadData():
     def __init__(self, dataType, dataSet):
         self.dataType = dataType
         self.dataSet = dataSet
-        self.dataSetPath = os.path.join("~/Desktop/Hail-Mary","")
+        self.dataSetPath = os.path.join(os.listdir("~/Hail-Mary"),"")
     
     def getDataSet(self):
         try:
@@ -14,6 +14,7 @@ class LoadData():
         except:
             return
         print("Start processing datatype: %s\nStart processing dataset: %s" % (self.dataType, self.dataSet))
+        print(self.dataSetPath)
         dataSetPath = self.joinDataSetPath(self.dataSetPath, self.dataType, self.dataSet)
         with open(dataSetPath, 'r') as data:
             data = json.load(data)

@@ -1,13 +1,14 @@
 import json
 import os
+from pathlib import Path
 
 class LoadData():
     
     def __init__(self, dataType, dataSet):
         self.dataType = dataType
         self.dataSet = dataSet
-        self.dataSetPath = os.path.join(os.getcwd(),"")
-    
+        self.dataSetPath = os.path.join(os.path.dirname("/home/wirl/Desktop/Hail-Mary/Setting.txt"),"")
+
     def getDataSet(self):
         try:
             self.checkArgs()
@@ -25,7 +26,6 @@ class LoadData():
             dataSetPath = os.path.join(dataSetPath,'data_with_punctuation', dataSet + ".json")
         elif dataType == "without":
             dataSetPath = os.path.join(dataSetPath, "data_without_punctuation", dataSet + ".json")
-        
         return dataSetPath
 
     def checkArgs(self):

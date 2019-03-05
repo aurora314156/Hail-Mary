@@ -2,7 +2,7 @@ import os, time, json
 from numpy import array
 from Initial import Initial
 from Mymodel import Mymodel
-from bert_serving.client import BertClient
+#from bert_serving.client import BertClient
 
 def getEncodeContent(bc, single_data):
     
@@ -33,6 +33,7 @@ def main():
     bc = BertClient()
     correct = 0
     for single_data in dataset:
+        print(len(dataset))
         story, question, options, answer = getEncodeContent(bc, single_data)
         guessAnswer = Mymodel(story, question, options).MymodelMain()
         if guessAnswer == answer:
