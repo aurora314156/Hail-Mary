@@ -1,20 +1,20 @@
 import json
 import os
+from pathlib import Path
 
 class LoadData():
     
     def __init__(self, dataType, dataSet):
         self.dataType = dataType
         self.dataSet = dataSet
-        self.dataSetPath = os.path.join(os.listdir("~/Hail-Mary"),"")
-    
+        self.dataSetPath = os.path.join(os.path.dirname("/home/wirl/Desktop/Hail-Mary/Setting.txt"),"")
+
     def getDataSet(self):
         try:
             self.checkArgs()
         except:
             return
         print("Start processing datatype: %s\nStart processing dataset: %s" % (self.dataType, self.dataSet))
-        print(self.dataSetPath)
         dataSetPath = self.joinDataSetPath(self.dataSetPath, self.dataType, self.dataSet)
         with open(dataSetPath, 'r') as data:
             data = json.load(data)
@@ -26,7 +26,6 @@ class LoadData():
             dataSetPath = os.path.join(dataSetPath,'data_with_punctuation', dataSet + ".json")
         elif dataType == "without":
             dataSetPath = os.path.join(dataSetPath, "data_without_punctuation", dataSet + ".json")
-            print(dataSetPath)
         return dataSetPath
 
     def checkArgs(self):

@@ -33,7 +33,6 @@ def main():
     bc = BertClient()
     correct = 0
     for single_data in dataset:
-        print(len(dataset))
         story, question, options, answer = getEncodeContent(bc, single_data)
         guessAnswer = Mymodel(story, question, options).MymodelMain()
         if guessAnswer == answer:
@@ -42,7 +41,7 @@ def main():
         #print("Guess answer is",guessAnswer)
         #print("Actual answer is",answer)
         #print("=========================\n")
-    print("correctness ", correct/717)
+    print("correctness ", correct/;len(dataset))
         
     print("Total cost time %.2fs." % (time.time()-tTime))
 
