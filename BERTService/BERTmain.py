@@ -18,7 +18,7 @@ def getEncodeContent(bc, single_data):
         for single_option_element in option:
             o_string += single_option_element + " "
         options.append(o_string)
-    
+        
     story = bc.encode([s_string])
     question = bc.encode([q_string])
     options = bc.encode(options)
@@ -41,7 +41,7 @@ def main():
         #print("Guess answer is",guessAnswer)
         #print("Actual answer is",answer)
         #print("=========================\n")
-    print("correctness ", correct/;len(dataset))
+    print("correctness ", correct/len(dataset))
         
     print("Total cost time %.2fs." % (time.time()-tTime))
 
