@@ -29,7 +29,6 @@ def getEncodeContent(bc, single_data):
 def main():
     # initial dataset
     dataset, d_model = Initial().InitialMain()
-    return 0
     tTime = time.time()
     # initial BERT model
     bc = BertClient()
