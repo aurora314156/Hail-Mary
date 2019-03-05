@@ -42,7 +42,7 @@ def main():
         #print("Actual answer is",answer)
         #print("=========================\n")
         
-    print("Dataset size ", corrct/len(dataset))
+    print("Dataset size ", correct/len(dataset))
         
     print("Total cost time %.2fs." % (time.time()-tTime))
 
