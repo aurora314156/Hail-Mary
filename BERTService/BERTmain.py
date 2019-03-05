@@ -29,12 +29,10 @@ def getEncodeContent(bc, single_data):
 def main():
     # initial dataset
     dataset, d_model = Initial().InitialMain()
-    tTime = time.time()
     # initial BERT model
     bc = BertClient()
-    correct = 0
     for single_dataset in dataset:
-        print(type(single_dataset))
+        correct, tTime = 0 ,time.time()
         if isinstance(single_dataset, str):
             print("Start processing dataset: %s\n" % (single_dataset))
             continue
@@ -47,8 +45,8 @@ def main():
         #print("Guess answer is",guessAnswer)
         #print("Actual answer is",answer)
         #print("=========================\n") 
-    print("Accuracy", correct/len(single_dataset))
-    print("Total cost time %.2fs.\n***********************************" % (time.time()-tTime))
+        print("Accuracy", correct/len(single_dataset))
+        print("Total cost time %.2fs.\n***********************************" % (time.time()-tTime))
 
 if __name__ == "__main__":
     main()
