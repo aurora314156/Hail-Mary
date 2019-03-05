@@ -25,7 +25,7 @@ class LoadData():
             dataSetPath = os.path.join(dataSetPath,'data_with_punctuation', dataSet + ".json")
         elif dataType == "without":
             dataSetPath = os.path.join(dataSetPath, "data_without_punctuation", dataSet + ".json")
-            print(dataSetPath)
+        
         return dataSetPath
 
     def checkArgs(self):
