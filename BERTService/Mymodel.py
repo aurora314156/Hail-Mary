@@ -8,7 +8,7 @@ class Mymodel():
     
     def MymodelMain(self):
         
-        F_guessAnswer = FirstModel()
+        F_guessAnswer = self.FirstModel()
         
         return F_guessAnswer
         
