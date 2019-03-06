@@ -49,7 +49,7 @@ def main():
             guessAnswer = Mymodel(story, question, options).MymodelMain()
             if guessAnswer == answer:
                 correct += 1
-        Accuracy = "Accuracy :" + str(correct/len(single_dataset))
+        Accuracy = "Accuracy: " + str(correct/len(single_dataset)) + "\n"
         CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n"
         print(Accuracy)
         print(CostTime)

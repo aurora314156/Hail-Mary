@@ -12,6 +12,7 @@ class Initial():
         return dataset, dataType, self.d_model
     
     def ArgParse(self):
+        print("***********************************")
         print("Start setting argparse.")
         # args setting
         parser = argparse.ArgumentParser()

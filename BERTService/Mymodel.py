@@ -12,12 +12,11 @@ class Mymodel():
         
         return F_guessAnswer
         
-
     def FirstModel(self):
-        merStoryQue = [x + y for x, y in zip(self.story, self.question)]
+        merStoryQue = [x + y for x, y in zip(self.softmax(self.story), self.softmax(self.question))]
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in self.options:
-            merStoryOpt = [x + y for x, y in zip(self.story, option)]
+            merStoryOpt = [x + y for x, y in zip(self.softmax(self.story), self.softmax(option))]
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, merStoryOpt)
             if tmpScore > highestScore:
                 guessAnswer = ind
@@ -25,3 +24,7 @@ class Mymodel():
             ind += 1
         
         return guessAnswer
+
+    def softmax(self, x):
+        """Compute softmax values for each sets of scores in x."""
+        return np.exp(x) / np.sum(np.exp(x), axis=0)
