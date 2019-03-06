@@ -27,7 +27,7 @@ def getEncodeContent(bc, single_data):
 
 def saveLog(Process_dataset, Accuracy, dataType, CostTime):
     with open('log.txt', 'a') as log:
-        log.write(data)
+        log.write(dataType)
         log.write(Process_dataset)
         log.write(Accuracy)
         log.write(CostTime)
@@ -37,11 +37,12 @@ def main():
     dataset, dataType, d_model = Initial().InitialMain()
     # initial BERT model
     bc = BertClient()
+    print(dataType)
     for single_dataset in dataset:
-        print(dataType)
         correct, tTime = 0, time.time()
         if isinstance(single_dataset, str):
             Process_dataset = "Start processing dataset: " + single_dataset + "\n"
+            print(Process_dataset)
             continue
         for single_data in single_dataset:
             story, question, options, answer = getEncodeContent(bc, single_data)
@@ -50,9 +51,9 @@ def main():
                 correct += 1
         Accuracy = "Accuracy :" + str(correct/len(single_dataset))
         CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n"
-        saveLog(Process_dataset, Accuracy, dataType, CostTime)
         print(Accuracy)
         print(CostTime)
+        saveLog(Process_dataset, Accuracy, dataType, CostTime)
 
 if __name__ == "__main__":
     main()
