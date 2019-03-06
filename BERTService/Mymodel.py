@@ -14,11 +14,11 @@ class Mymodel():
         return F_guessAnswer
         
     def FirstModel(self):
-        merStoryQue = [x + y for x, y in zip(self.softmax(self.story), self.softmax(self.question))]
+        merStoryQue = [x + y for x, y in zip(self.story, self.question))]
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in self.options:
-            merStoryOpt = [x + y for x, y in zip(self.softmax(self.story), self.softmax(option))]
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, merStoryOpt)
+            merStoryOpt = [x + y for x, y in zip(self.story, option]
+            tmpScore = 1 - spatial.distance.cosine(self.softmax(merStoryQue), self.softmax(merStoryOpt))
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
