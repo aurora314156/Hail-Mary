@@ -11,15 +11,18 @@ class Mymodel():
     
     def MymodelMain(self):
         
-        #F_guessAnswer = self.FirstModel()
-        S_guessAnswer = self.SecondModel()
+        guessAnswer = self.FirstModel()
+        #guessAnswer = self.SecondModel()
 
-        return S_guessAnswer
+        return guessAnswer
         
     def FirstModel(self):
         merStoryQue = [x + y for x, y in zip(self.story, self.question)]
+        print(self.story)
+        print(self.question)
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in self.options:
+            print(option)
             merStoryOpt = [x + y for x, y in zip(self.story, option)]
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, merStoryOpt)
             if tmpScore > highestScore:
