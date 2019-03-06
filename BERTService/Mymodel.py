@@ -14,7 +14,7 @@ class Mymodel():
         return F_guessAnswer
         
     def FirstModel(self):
-        merStoryQue = [x + y for x, y in zip(self.story, self.question))]
+        merStoryQue = [x + y for x, y in zip(self.story, self.question)]
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in self.options:
             merStoryOpt = [x + y for x, y in zip(self.story, option]
