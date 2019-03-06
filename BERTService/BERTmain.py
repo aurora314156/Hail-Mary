@@ -4,7 +4,7 @@ from Initial import Initial
 from Mymodel import Mymodel
 from bert_serving.client import BertClient
 
-def getEncodeContent(bc, single_data):
+def getContent(single_data):
     
     s_string, q_string, o_string, options = "", "", "", []
 
@@ -18,12 +18,8 @@ def getEncodeContent(bc, single_data):
             o_string += single_option_element + " "
         options.append(o_string)
         
-    story = bc.encode([s_string])
-    question = bc.encode([q_string])
-    options = bc.encode(options)
     answer = single_data['answer']
-
-    return story, question, options, answer
+    return s_string, q_string, options, answer
 
 def saveLog(Process_dataset, Accuracy, dataType, CostTime):
     with open('log.txt', 'a') as log:
@@ -45,8 +41,8 @@ def main():
             print(Process_dataset)
             continue
         for single_data in single_dataset:
-            story, question, options, answer = getEncodeContent(bc, single_data)
-            guessAnswer = Mymodel(story, question, options).MymodelMain()
+            s_string, q_string, options, answer = getContent(single_data)
+            guessAnswer = Mymodel(bc, s_string, q_string, options).MymodelMain()
             if guessAnswer == answer:
                 correct += 1
         Accuracy = "Accuracy: " + str(correct/len(single_dataset))
