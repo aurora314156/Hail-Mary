@@ -32,7 +32,7 @@ class Mymodel():
     def SecondModel(self):
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(self.story, self.question)]
-        for i in range(19):
+        for i in range(100):
             tmp = [x + y for x, y in zip(self.story, merStoryQue)]
             merStoryQue = tmp
 
