@@ -6,8 +6,7 @@ from bert_serving.client import BertClient
 
 def getEncodeContent(bc, single_data):
     
-    s_string, q_string, o_string = "", "", ""
-    options = []
+    s_string, q_string, o_string, options = "", "", "", []
 
     for story_element in single_data['story']:
         s_string += story_element + " "
@@ -38,19 +37,17 @@ def main():
     # initial BERT model
     bc = BertClient()
     for single_dataset in dataset:
-        correct, tTime = 0 ,time.time()
+        correct, tTime = 0, time.time()
         if isinstance(single_dataset, str):
             Process_dataset = "Start processing dataset: " + single_dataset + "\n"
-            print(Process_dataset)
             continue
         for single_data in single_dataset:
             story, question, options, answer = getEncodeContent(bc, single_data)
             guessAnswer = Mymodel(story, question, options).MymodelMain()
             if guessAnswer == answer:
                 correct += 1
-        
         Accuracy = "Accuracy" + str(correct/len(single_dataset)) + "\n"
-        CostTime = "Total cost time: "+ str(time.time()-tTime()) + "\n"
+        CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n"
         saveLog(Process_dataset, Accuracy, CostTime)
         print(Accuracy)
         print(CostTime)

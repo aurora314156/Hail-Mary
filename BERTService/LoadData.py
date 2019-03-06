@@ -24,7 +24,7 @@ class LoadData():
 
             dataSet.append(dataName)
             dataSet.append(data)
-        print(len(dataSet))
+            
         return dataSet
 
     def joinDataSetPath(self, dataSetPath, dataType, dataName):
