@@ -1,4 +1,5 @@
 from scipy import spatial
+import numpy as np
 
 class Mymodel():
     def __init__(self, story, question, options):
