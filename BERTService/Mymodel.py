@@ -18,7 +18,7 @@ class Mymodel():
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in self.options:
             merStoryOpt = [x + y for x, y in zip(self.story, option)]
-            tmpScore = 1 - spatial.distance.cosine(self.softmax(merStoryQue), self.softmax(merStoryOpt))
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, merStoryOpt)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
