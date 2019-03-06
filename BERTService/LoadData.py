@@ -14,7 +14,8 @@ class LoadData():
             self.checkArgs()
         except:
             return
-        print("***********************************\nStart processing datatype: %s\n" % (self.dataType))
+        
+        dataType = "***********************************\nStart processing datatype: " + self.dataType + "\n"
         # iterator for get all selection dataset
         dataSet = []
         for dataName in self.dataSetList:
@@ -25,7 +26,7 @@ class LoadData():
             dataSet.append(dataName)
             dataSet.append(data)
             
-        return dataSet
+        return dataSet, dataType
 
     def joinDataSetPath(self, dataSetPath, dataType, dataName):
         if dataType == "with":

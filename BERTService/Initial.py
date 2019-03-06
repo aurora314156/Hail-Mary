@@ -7,9 +7,9 @@ class Initial():
         self.d_model = 512
         
     def InitialMain(self):
-        dataset = self.GetDataset(self.ArgParse())
+        dataset,  = self.GetDataset(self.ArgParse())
         #word2vec = self.LoadWord2vec()
-        return dataset, self.d_model
+        return dataset, dataType, self.d_model
     
     def ArgParse(self):
         print("Start setting argparse.")
