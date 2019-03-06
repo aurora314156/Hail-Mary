@@ -7,7 +7,7 @@ class Initial():
         self.d_model = 512
         
     def InitialMain(self):
-        dataset,  = self.GetDataset(self.ArgParse())
+        dataset, dataType = self.GetDataset(self.ArgParse())
         #word2vec = self.LoadWord2vec()
         return dataset, dataType, self.d_model
     
