@@ -5,7 +5,7 @@ import numpy as np
 class Mymodel():
     def __init__(self, bc, s_string, q_string, options):
         self.bc = bc
-        self.story = bc.encode([story])
+        self.story = bc.encode([s_string])
         self.question = bc.encode([q_string])
         self.options = bc.encode(options)
     
