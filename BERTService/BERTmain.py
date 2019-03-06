@@ -26,6 +26,12 @@ def getEncodeContent(bc, single_data):
 
     return story, question, options, answer
 
+def saveLog(Process_dataset, Accuracy, CostTime):
+    with open('log.txt', 'a') as log:
+        log.write(Process_dataset)
+        log.write(Accuracy)
+        log.write(CostTime)
+
 def main():
     # initial dataset
     dataset, d_model = Initial().InitialMain()
@@ -34,19 +40,20 @@ def main():
     for single_dataset in dataset:
         correct, tTime = 0 ,time.time()
         if isinstance(single_dataset, str):
-            print("Start processing dataset: %s\n" % (single_dataset))
+            Process_dataset = "Start processing dataset: " + single_dataset + "\n"
+            print(Process_dataset)
             continue
         for single_data in single_dataset:
             story, question, options, answer = getEncodeContent(bc, single_data)
             guessAnswer = Mymodel(story, question, options).MymodelMain()
             if guessAnswer == answer:
                 correct += 1
-        #print("=========================")
-        #print("Guess answer is",guessAnswer)
-        #print("Actual answer is",answer)
-        #print("=========================\n") 
-        print("Accuracy", correct/len(single_dataset))
-        print("Total cost time %.2fs.\n***********************************" % (time.time()-tTime))
+        
+        Accuracy = "Accuracy" + str(correct/len(single_dataset)) + "\n"
+        CostTime = "Total cost time: "+ str(time.time()-tTime()) + "\n"
+        saveLog(Process_dataset, Accuracy, CostTime)
+        print(Accuracy)
+        print(CostTime)
 
 if __name__ == "__main__":
     main()
