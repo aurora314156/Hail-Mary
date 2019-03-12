@@ -1,8 +1,8 @@
 import os
 import json
 
-type_path = os.path.join(os.getcwd(),'data/dev')
-fileName = 'dev_data.json'
+type_path = os.path.join(os.getcwd(),'data/train')
+fileName = 'train.json'
 with open(fileName, 'w') as CQA:
     data = []
     for each_file in os.listdir(type_path):
@@ -14,7 +14,9 @@ with open(fileName, 'w') as CQA:
             for each_line in f:
                 parsed = each_line.strip().split()
                 if parsed[0] == 'SENTENCE':
-                    for p in parsed[1:-1]:
+                    for p in parsed[1:]:
+                        if p is "[" or p is "]" or p is None or p is "," or p is "?" or p is ".":
+                            continue
                         story.append(p)
                 elif parsed[0] == 'QUESTION':
                     for p in parsed[1:-1]:

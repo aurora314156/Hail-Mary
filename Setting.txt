@@ -8,3 +8,7 @@ answer
 ****** Parameters ******
 
 
+****** Datasets ******
+data_witout_punctuation : 移除所有標點符號
+data_with_punctuation : 保留問號跟句號
+****** Datasets ******

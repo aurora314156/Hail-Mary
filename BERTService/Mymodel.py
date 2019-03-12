@@ -103,7 +103,42 @@ class Mymodel():
         
         return guessAnswer
     
-    
+    def ForthModel(self, bc):
+        """
+        encode story sentences, then use each story sentences vector to calculate similarity with question
+        choose highest score story vector to calculate similarity with options
+        """
+        sentences, tmp_string = [], ""
+        for s in self.s_string:
+            if s == "." or s == "?":
+                sentences.append(tmp_string)
+                tmp_string = ""
+                continue
+            
+            tmp_string += s
+        
+        story_sentences = bc.encode(sentences)
+        question = bc.encode([self.q_string])
+        options = bc.encode(self.options)
+        ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
+        
+        for s in story_sentences:
+            tmpScore = 1 - spatial.distance.cosine(s, question)
+            if tmpScore > highestScore:
+                highestScore_storyVector = s
+                highestScore = tmpScore
+
+        highestScore = 0
+        for option in options:
+            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector)
+            if tmpScore > highestScore:
+                guessAnswer = ind
+                highestScore = tmpScore
+            ind += 1
+
+        return guessAnswer
+
+
     def softmax(self, x):
         """Compute softmax values for each sets of scores in x."""
         return np.exp(x) / np.sum(np.exp(x), axis=0)
