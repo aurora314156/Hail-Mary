@@ -14,19 +14,19 @@ class Mymodel():
         
         #guessAnswer = self.FirstModel()
         if self.model == 'SecondModel':
-            guessAnswer = self.SecondModel()
+            guessAnswer = self.SecondModel(self.bc)
         if self.model == 'SecondModelWithSoftmax':
-            guessAnswer = self.SecondModelWithSoftmax()
+            guessAnswer = self.SecondModelWithSoftmax(self.bc)
 
         return guessAnswer
     
-    def FirstModel(self):
+    def FirstModel(self,bc):
         """
         merge story and question vector by add, calculate similarity with merge story and option vector
         """
-        story = self.bc.encode([self.s_string])
-        question = self.bc.encode([self.q_string])
-        options = self.bc.encode(self.options)
+        story = bc.encode([self.s_string])
+        question = bc.encode([self.q_string])
+        options = bc.encode(self.options)
         merStoryQue = [x + y for x, y in zip(story, question)]
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
@@ -39,13 +39,13 @@ class Mymodel():
         
         return guessAnswer
     
-    def SecondModel(self):
+    def SecondModel(self, bc):
          """
         merge story and question vector by dot, calculate similarity with merge story and option vector
         """
-        story = self.bc.encode([self.s_string])
-        question = self.bc.encode([self.q_string])
-        options = self.bc.encode(self.options)
+        story = bc.encode([self.s_string])
+        question = bc.encode([self.q_string])
+        options = bc.encode(self.options)
         merStoryQue = [x * y for x, y in zip(story, question)]
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
@@ -58,13 +58,13 @@ class Mymodel():
         
         return guessAnswer
     
-    def SecondModelWithSoftmax(self):
+    def SecondModelWithSoftmax(self, bc):
          """
         merge story and question vector by dot, calculate similarity with merge story and option vector
         """
-        story = self.bc.encode([self.s_string])
-        question = self.bc.encode([self.q_string])
-        options = self.bc.encode(self.options)
+        story = bc.encode([self.s_string])
+        question = bc.encode([self.q_string])
+        options = bc.encode(self.options)
         merStoryQue = [x * y for x, y in zip(story, question)]
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
@@ -77,13 +77,13 @@ class Mymodel():
         
         return guessAnswer
 
-    def ThirdModel(self):
+    def ThirdModel(self, bc):
         """
         implementation original paper method
         """
-        story = self.bc.encode([self.s_string])
-        question = self.bc.encode([self.q_string])
-        options = self.bc.encode(self.options)
+        story = bc.encode([self.s_string])
+        question = bc.encode([self.q_string])
+        options = bc.encode(self.options)
         
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
