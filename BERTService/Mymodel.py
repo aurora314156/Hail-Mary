@@ -13,10 +13,13 @@ class Mymodel():
     def MymodelMain(self):
         
         #guessAnswer = self.FirstModel()
+        if self.model == 'FirstModel':
+            guessAnswer = self.FirstModel(self.bc)
         if self.model == 'SecondModel':
             guessAnswer = self.SecondModel(self.bc)
         if self.model == 'SecondModelWithSoftmax':
             guessAnswer = self.SecondModelWithSoftmax(self.bc)
+        
 
         return guessAnswer
     
