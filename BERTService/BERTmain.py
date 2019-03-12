@@ -21,35 +21,39 @@ def getContent(single_data):
     answer = single_data['answer']
     return s_string, q_string, options, answer
 
-def saveLog(Process_dataset, Accuracy, dataType, CostTime):
+def saveLog(dataType, Process_dataset, model, Accuracy, CostTime):
     with open('log.txt', 'a') as log:
         log.write(dataType)
         log.write(Process_dataset)
+        log.write(model)
         log.write(Accuracy)
         log.write(CostTime)
 
 def main():
     # initial dataset
-    dataset, dataType, d_model = Initial().InitialMain()
+    dataset, dataType, model, d_model = Initial().InitialMain()
     # initial BERT model
     bc = BertClient()
-    print(dataType)
-    for single_dataset in dataset:
-        correct, tTime = 0, time.time()
-        if isinstance(single_dataset, str):
-            Process_dataset = "Start processing dataset: " + single_dataset + "\n"
-            print(Process_dataset)
-            continue
-        for single_data in single_dataset:
-            s_string, q_string, options, answer = getContent(single_data)
-            guessAnswer = Mymodel(bc, s_string, q_string, options).MymodelMain()
-            if guessAnswer == answer:
-                correct += 1
-        Accuracy = "Accuracy: " + str(correct/len(single_dataset))
-        CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n"
-        print(Accuracy)
-        print(CostTime)
-        saveLog(Process_dataset, Accuracy, dataType, CostTime)
+    for m in model:
+        print(dataType)
+        model = "Start run model: " + m
+        print(model)
+        for single_dataset in dataset:
+            correct, tTime = 0, time.time()
+            if isinstance(single_dataset, str):
+                Process_dataset = "Start processing dataset: " + single_dataset + "\n"
+                print(Process_dataset)
+                continue
+            for single_data in single_dataset:
+                s_string, q_string, options, answer = getContent(single_data)
+                guessAnswer = Mymodel(bc, s_string, q_string, options, m).MymodelMain()
+                if guessAnswer == answer:
+                    correct += 1
+            Accuracy = "Accuracy: " + str(correct/len(single_dataset))
+            CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n"
+            print(Accuracy)
+            print(CostTime)
+            saveLog(dataType, Process_dataset, model, Accuracy, CostTime)
 
 if __name__ == "__main__":
     main()

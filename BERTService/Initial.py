@@ -5,11 +5,12 @@ from LoadData import LoadData
 class Initial():
     def __init__(self):
         self.d_model = 512
-        
+        # choose run model
+        self.model = ['SecondModel', 'SecondModelWithSoftmax']
     def InitialMain(self):
         dataset, dataType = self.GetDataset(self.ArgParse())
         #word2vec = self.LoadWord2vec()
-        return dataset, dataType, self.d_model
+        return dataset, dataType, self.model, self.d_model
     
     def ArgParse(self):
         print("***********************************")
