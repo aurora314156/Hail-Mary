@@ -40,7 +40,7 @@ class Mymodel():
         return guessAnswer
     
     def SecondModel(self, bc):
-         """
+        """
         merge story and question vector by dot, calculate similarity with merge story and option vector
         """
         story = bc.encode([self.s_string])
