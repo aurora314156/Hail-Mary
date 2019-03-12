@@ -17,8 +17,8 @@ class Mymodel():
             guessAnswer = self.FirstModel(self.bc)
         if self.model == 'SecondModel':
             guessAnswer = self.SecondModel(self.bc)
-        if self.model == 'SecondModelWithSoftmax':
-            guessAnswer = self.SecondModelWithSoftmax(self.bc)
+        if self.model == 'ForthModel':
+            guessAnswer = self.ForthModel(self.bc)
         
 
         return guessAnswer
