@@ -111,7 +111,8 @@ class Mymodel():
         sentences, tmp_string = [], ""
         for s in self.s_string:
             if s == "." or s == "?":
-                sentences.append(tmp_string)
+                if len(tmp_string)>1:
+                    sentences.append(tmp_string)
                 tmp_string = ""
                 continue
             
