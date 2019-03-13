@@ -120,7 +120,7 @@ class Mymodel():
                         continue
                     else:
                         sentence += t
-                if len(sentence) >1:
+                if len(sentence) >2:
                     sentences.append(sentence[:len(sentence)-1])
                 tmp_string = ""
                 continue
