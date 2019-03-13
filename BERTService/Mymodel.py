@@ -120,7 +120,8 @@ class Mymodel():
                         continue
                     else:
                         sentence += t
-                sentences.append(sentence[:len(sentence)-1])
+                if len(sentence) >1:
+                    sentences.append(sentence[:len(sentence)-1])
                 tmp_string = ""
                 continue
         # use whole story structure
