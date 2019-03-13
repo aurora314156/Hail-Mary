@@ -110,7 +110,7 @@ class Mymodel():
         """
         sentences, tmp_string = [], ""
         for s in self.s_string:
-            tmp_string += s + " "
+            tmp_string += s
             # reserve sentence structure
             if s == "." or s == "?":
                 # remove "," "." "?"
@@ -125,7 +125,7 @@ class Mymodel():
                 continue
         # use whole story structure
         if tmp_string != "":
-            sentences.append(tmp_string[:len(tmp_string)-1])
+            sentences.append(sentence[:len(tmp_string)-1])
         
         story_sentences = bc.encode(sentences)
         question = bc.encode([self.q_string])
