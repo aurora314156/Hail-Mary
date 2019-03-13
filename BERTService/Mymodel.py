@@ -109,7 +109,7 @@ class Mymodel():
         choose highest score story vector to calculate similarity with options
         """
         sentences, tmp_string = [], ""
-        for s in self.s_string:
+        for s in self.s_string[:len(self.s_string)-1]:
             tmp_string += s
             # reserve sentence structure
             if s == "." or s == "?":
@@ -120,14 +120,15 @@ class Mymodel():
                         continue
                     else:
                         sentence += t
-                if len(sentence) >2:
+                if len(sentence) >1:
                     sentences.append(sentence[:len(sentence)-1])
                 tmp_string = ""
                 continue
+
         # use whole story structure
         if tmp_string != "":
             sentences.append(sentence[:len(tmp_string)-1])
-        
+
         story_sentences = bc.encode(sentences)
         question = bc.encode([self.q_string])
         options = bc.encode(self.options)
