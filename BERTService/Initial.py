@@ -6,7 +6,7 @@ class Initial():
     def __init__(self):
         self.d_model = 512
         # choose run model
-        self.model = ['FirstModel', 'SecondModel', 'ForthModel', 'SecondModelWithSoftmax']
+        self.model = ['FirstModel', 'SecondModel', 'ForthModel']
     def InitialMain(self):
         dataset, dataType = self.GetDataset(self.ArgParse())
         #word2vec = self.LoadWord2vec()
