@@ -64,7 +64,8 @@ def main():
                 continue
             for single_data in single_dataset:
                 s_string, q_string, options, answer = getContent(single_data)
-                guessAnswer = Mymodel(model, token_dict, s_string, q_string, options, model_id).MymodelMain()
+                guessAnswer = Mymodel(model, token_dict, s_string, q_string, options, m).MymodelMain()
+                return 0
                 if guessAnswer == answer:
                     correct += 1
             Accuracy = "Accuracy: " + str(correct/len(single_dataset)) + "\n"

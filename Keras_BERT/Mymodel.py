@@ -2,10 +2,10 @@ from scipy import spatial
 import numpy as np
 
 class Mymodel():
-    def __init__(self, model, token_dict, s_string, q_string, options, model_id):
+    def __init__(self, model, token_dict, s_string, q_string, options, m):
         self.model = model
         self.token_dict = token_dict
-        self.model_id = model_id
+        self.model_id = m
         self.s_string = s_string
         self.q_string = q_string
         self.options = options
@@ -13,12 +13,11 @@ class Mymodel():
     def MymodelMain(self):
         guessAnswer = ""
         #guessAnswer = self.FirstModel()
-        if self.model_id == 'ForthModel':
-            print(self.model_id)
+        if self.model_id == "ForthModel":
             guessAnswer = self.ForthModel()
-        if self.model_id == 'FirstModel':
+        if self.model_id == "FirstModel":
             guessAnswer = self.FirstModel()
-        if self.model_id == 'SecondModel':
+        if self.model_id == "SecondModel":
             guessAnswer = self.SecondModel()
         
         return guessAnswer
@@ -109,12 +108,12 @@ class Mymodel():
         choose highest score story vector to calculate similarity with options
         """
         print("run forthModel")
-        sentences = self.getParsetResStrToList()
+        sentences = self.getParserResStrToList()
         sentences, question, options = self.preprocess(sentences, self.q_string, self.options)
 
         story_sentences, options = [], []
         for s in sentences:
-            story_setences.append(self.getSentenceEmbedWithPool(s))
+            story_sentences.append(self.getSentenceEmbedWithPool(s))
         for o in options:
             options.append(self.getSentenceEmbedWithPool(o))
 
@@ -171,20 +170,41 @@ class Mymodel():
         due to original code limit
         """
         print("start preprocess data vector")
-        question = ['[CLS]'] + question
-        question.append('[SEP]')
+        tmp_question = []
+        tmp_question.append("[CLS]")
+        for q in question.split(" "):
+            if q != "":
+                tmp_question.append(q)
+        tmp_question.append("[SEP]")
+
         tmp_sentences = []
         for sentence in sentences:
-            sentence = ['[CLS]'] + sentence
-            sentence.append('[SEP]')
-            tmp_sentences.append(sentence)
+            if len(sentence) ==0:
+                continue
+            t_sentence = []
+            t_sentence.append("[CLS]")
+            for s in sentence.split(" "):
+                if s != "":
+                    t_sentence.append(s)
+            t_sentence.append("[SEP]")
+            tmp_sentences.append(t_sentence)
+        
+        print(tmp_sentences)
+        print(options)
         tmp_options = []
         for option in options:
-            option = ['[CLS]'] + option
-            option.append('[SEP]')
-            tmp_options.append(option)
+            if len(option) ==0:
+                continue
+            t_option = []
+            t_option.append("[CLS]")
+            for o in option.split(" "):
+                if o != "":
+                    t_option.append(o)
+            t_option.append("[SEP]")
+            tmp_options.append(t_option)
+        print(tmp_options)
 
-        return tmp_sentences, question, tmp_options
+        return tmp_sentences, tmp_question, tmp_options
 
     def softmax(self, x):
         """Compute softmax values for each sets of scores in x."""
