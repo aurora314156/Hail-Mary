@@ -142,10 +142,9 @@ class Mymodel():
         print("get sentence embed with pooling")
         tmp_token = []
         for token in tokens:
-            try self.token_dict[token]:
+            if token in token_dict:
                 tmp_token.append(self.token_dict[token])
-            except KeyError:
-                continue
+            
         tokens = tmp_token
             
         token_input = np.asarray([[self.token_dict[token] for token in tokens] + [0] * (512 - len(tokens))])
