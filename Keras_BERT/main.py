@@ -63,6 +63,7 @@ def main():
                 print(Process_dataset)
                 continue
             for single_data in single_dataset:
+                print(single_data['storyName'])
                 s_string, q_string, options, answer = getContent(single_data)
                 guessAnswer = Mymodel(model, token_dict, s_string, q_string, options, m).MymodelMain()
                 if guessAnswer == answer:
