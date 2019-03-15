@@ -107,7 +107,6 @@ class Mymodel():
         encode story sentences, then use each story sentences vector to calculate similarity with question
         choose highest score story vector to calculate similarity with options
         """
-        print("run forthModel")
         sentences = self.getParserResStrToList()
         sentences, question, options = self.preprocess(sentences, self.q_string, self.options)
 
@@ -116,7 +115,10 @@ class Mymodel():
             story_sentences.append(self.getSentenceEmbedWithPool(s))
         for o in options:
             options.append(self.getSentenceEmbedWithPool(o))
-
+        print(story_sentences.shape)
+        print(options.shape)
+        question = self.getSentenceEmbedWithPool(question)
+        print(question.shape)
         ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
         for s in story_sentences:
             tmpScore = 1 - spatial.distance.cosine(s, question)
@@ -141,16 +143,15 @@ class Mymodel():
         for token in tokens:
             if token in self.token_dict:
                 tmp_token[token] = self.token_dict[token]
-        print(tmp_token)
             
         tokens = tmp_token
             
         token_input = np.asarray([[self.token_dict[token] for token in tokens] + [0] * (512 - len(tokens))])
         seg_input = np.asarray([[0] * len(tokens) + [0] * (512 - len(tokens))])
 
-        print('Inputs:', token_input[0][:len(tokens)])
+        #print('Inputs:', token_input[0][:len(tokens)])
         predicts = self.model.predict([token_input, seg_input])[0]
-        print('Pooled:', predicts.tolist()[:5])
+        #print('Pooled:', predicts.tolist()[:5])
         
         return predicts
 
