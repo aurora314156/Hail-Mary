@@ -117,9 +117,6 @@ class Mymodel():
         for o in options:
             options.append(self.getSentenceEmbedWithPool(o))
 
-        print(story_sentences.shape)
-        print(options.shape)
-
         ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
         for s in story_sentences:
             tmpScore = 1 - spatial.distance.cosine(s, question)
@@ -140,10 +137,11 @@ class Mymodel():
     
     def getSentenceEmbedWithPool(self, tokens):
         print("get sentence embed with pooling")
-        tmp_token = []
+        tmp_token = {}
         for token in tokens:
             if token in self.token_dict:
-                tmp_token.append(self.token_dict[token])
+                tmp_token[token] = self.token_dict[token]
+        print(tmp_token)
             
         tokens = tmp_token
             
