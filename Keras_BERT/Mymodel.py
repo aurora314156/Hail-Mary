@@ -143,12 +143,10 @@ class Mymodel():
         token_input = np.asarray([[self.token_dict[token] for token in tokens] + [0] * (512 - len(tokens))])
         seg_input = np.asarray([[0] * len(tokens) + [0] * (512 - len(tokens))])
 
-        #print('Inputs:', token_input[0][:len(tokens)])
-        print("Inputs shape: ", token_input[0][:len(tokens)].shape)
+        print('Inputs:', token_input[0][:len(tokens)])
         predicts = self.model.predict([token_input, seg_input])[0]
-        #print('Pooled:', predicts.tolist()[:5])
-        print('Pooled shape: ', predicts.tolist()[:5].shape)
-
+        print('Pooled:', predicts.tolist()[:5])
+        
         return predicts
 
     def getParserResStrToList(self):
@@ -191,8 +189,6 @@ class Mymodel():
             t_sentence.append("[SEP]")
             tmp_sentences.append(t_sentence)
         
-        print(tmp_sentences)
-        print(options)
         tmp_options = []
         for option in options:
             if len(option) ==0:
@@ -204,7 +200,6 @@ class Mymodel():
                     t_option.append(o)
             t_option.append("[SEP]")
             tmp_options.append(t_option)
-        print(tmp_options)
 
         return tmp_sentences, tmp_question, tmp_options
 
