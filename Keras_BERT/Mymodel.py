@@ -143,10 +143,12 @@ class Mymodel():
         token_input = np.asarray([[self.token_dict[token] for token in tokens] + [0] * (512 - len(tokens))])
         seg_input = np.asarray([[0] * len(tokens) + [0] * (512 - len(tokens))])
 
-        print('Inputs:', token_input[0][:len(tokens)])
-        predicts = model.predict([token_input, seg_input])[0]
-        print('Pooled:', predicts.tolist()[:5])
-        
+        #print('Inputs:', token_input[0][:len(tokens)])
+        print("Inputs shape: ", token_input[0][:len(tokens)].shape)
+        predicts = self.model.predict([token_input, seg_input])[0]
+        #print('Pooled:', predicts.tolist()[:5])
+        print('Pooled shape: ', predicts.tolist()[:5].shape)
+
         return predicts
 
     def getParserResStrToList(self):
