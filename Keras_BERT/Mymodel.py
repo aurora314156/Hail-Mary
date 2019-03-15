@@ -142,7 +142,7 @@ class Mymodel():
         print("get sentence embed with pooling")
         tmp_token = []
         for token in tokens:
-            if token in token_dict:
+            if token in self.token_dict:
                 tmp_token.append(self.token_dict[token])
             
         tokens = tmp_token
