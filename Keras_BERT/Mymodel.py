@@ -160,7 +160,7 @@ class Mymodel():
         #print("Start parser string to list")
         sentences, tmp_string = [], ""
         for s in self.s_string:
-            if s == "." or s == "?":
+            if s == "." or s == "?" or s == "!":
                 sentences.append(tmp_string)
                 tmp_string = ""
                 continue
