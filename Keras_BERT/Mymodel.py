@@ -107,18 +107,19 @@ class Mymodel():
         encode story sentences, then use each story sentences vector to calculate similarity with question
         choose highest score story vector to calculate similarity with options
         """
+        # preprocess
         sentences = self.getParserResStrToList()
         sentences, question, options = self.preprocess(sentences, self.q_string, self.options)
 
+        # get bert model result
         story_sentences, options = [], []
         for s in sentences:
             story_sentences.append(self.getSentenceEmbedWithPool(s))
         for o in options:
             options.append(self.getSentenceEmbedWithPool(o))
-        print(story_sentences.shape)
-        print(options.shape)
+        
         question = self.getSentenceEmbedWithPool(question)
-        print(question.shape)
+        
         ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
         for s in story_sentences:
             tmpScore = 1 - spatial.distance.cosine(s, question)
