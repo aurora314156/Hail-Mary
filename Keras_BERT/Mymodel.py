@@ -139,7 +139,7 @@ class Mymodel():
     
     
     def getSentenceEmbedWithPool(self, tokens):
-        print("get sentence embed with pooling")
+        #print("get sentence embed with pooling")
         tmp_token = {}
         for token in tokens:
             if token in self.token_dict:
@@ -157,7 +157,7 @@ class Mymodel():
         return predicts
 
     def getParserResStrToList(self):
-        print("Start parser string to list")
+        #print("Start parser string to list")
         sentences, tmp_string = [], ""
         for s in self.s_string:
             if s == "." or s == "?":
@@ -176,7 +176,7 @@ class Mymodel():
         """
         due to original code limit
         """
-        print("start preprocess data vector")
+        #print("start preprocess data vector")
         tmp_question = []
         tmp_question.append("[CLS]")
         for q in question.split(" "):
