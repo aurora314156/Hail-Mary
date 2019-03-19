@@ -133,7 +133,8 @@ class Mymodel():
         print(tmp_string)
         # use whole story structure
         if tmp_string != "":
-            sentences.append(sentence[:len(tmp_string)-1])
+            sentences.append(tmp_string)
+        print(sentences)
 
         story_sentences = bc.encode(sentences)
         question = bc.encode([self.q_string])
