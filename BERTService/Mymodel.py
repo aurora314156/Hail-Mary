@@ -129,7 +129,8 @@ class Mymodel():
                         sentences.append(sentence)
                 tmp_string = ""
                 continue
-
+        print(sentences)
+        print(tmp_string)
         # use whole story structure
         if tmp_string != "":
             sentences.append(sentence[:len(tmp_string)-1])
