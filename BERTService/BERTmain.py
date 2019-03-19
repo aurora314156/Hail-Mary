@@ -16,10 +16,10 @@ def getContent(single_data):
         o_string = ""
         for single_option_element in option:
             o_string += single_option_element + " "
-        options.append(o_string)
+        options.append(o_string[:-1])
         
     answer = single_data['answer']
-    return s_string, q_string, options, answer
+    return s_string[:-1], q_string[:-1], options, answer
 
 def saveLog(dataType, Process_dataset, model, Accuracy, CostTime):
     with open('log.txt', 'a') as log:

@@ -121,9 +121,11 @@ class Mymodel():
                     else:
                         sentence += t
                 if len(sentence) >1:
+                    tmpSen = []
                     for sen in sentence.split(" "):
                         if sen is not "":
-                            sentences.append(sen)
+                            tmpSen.append(sen)
+                sentences.append(tmpSen)
                 tmp_string = ""
                 continue
 
