@@ -112,7 +112,7 @@ class Mymodel():
         for s in self.s_string[:len(self.s_string)-1]:
             tmp_string += s
             # reserve sentence structure
-            if s == "." or s == "?":
+            if s == "." or s == "?" or s == "!":
                 # remove "," "." "?"
                 sentence = ""
                 for t in tmp_string:
@@ -129,21 +129,21 @@ class Mymodel():
         if tmp_string != "":
             sentences.append(sentence[:len(tmp_string)-1])
 
-        story_sentences = bc.encode(sentences)
-        question = bc.encode([self.q_string])
-        options = bc.encode(self.options)
+        story_sentences = bc.encode(sentences , show_tokens=True)
+        question = bc.encode([self.q_string], show_tokens=True)
+        options = bc.encode(self.options, show_tokens=True)
         ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
         
         for s in story_sentences:
             tmpScore = 1 - spatial.distance.cosine(s, question)
-            if tmpScore > highestScore:
+            if tmpScore < highestScore:
                 highestScore_storyVector = s
                 highestScore = tmpScore
 
         highestScore = 0
         for option in options:
             tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector)
-            if tmpScore > highestScore:
+            if tmpScore < highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
             ind += 1
