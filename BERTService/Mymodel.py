@@ -9,7 +9,7 @@ class Mymodel():
         self.s_string = s_string
         self.q_string = q_string
         self.options = options
-        self.run_model = ['FirstModel','SecondModel', 'ThirdModel', 'ForthModel', 'FifthModel']
+        self.run_model = ['FirstModel','SecondModel', 'ThirdModel', 'ForthModel', 'FifthModel', 'SixthModel']
     def MymodelMain(self):
         #guessAnswer = self.FirstModel()
         if self.model in self.run_model:
@@ -20,6 +20,8 @@ class Mymodel():
             guessAnswer = self.ForthModel(self.bc)
         if self.model in self.run_model:
             guessAnswer = self.FifthModel(self.bc)
+        if self.model in self.run_model:
+            guessAnswer = self.SixthModel(self.bc)
 
         return guessAnswer
     
@@ -108,7 +110,7 @@ class Mymodel():
         encode story sentences, then use each story sentences vector to calculate similarity with question
         choose highest score story vector to calculate similarity with options
         """
-        sentences, tmp_string = [], ""
+        sentences, tmp_string, sentence = [], "", ""
         for s in self.s_string[:len(self.s_string)-1]:
             tmp_string += s
             # reserve sentence structure
@@ -161,6 +163,22 @@ class Mymodel():
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
+            if tmpScore > highestScore:
+                guessAnswer = ind
+                highestScore = tmpScore
+            ind += 1
+        
+        return guessAnswer
+    
+    def SixthModel(self, bc):
+        story = bc.encode([self.s_string])
+        for i in range(len(self.options):
+            self.options[i] = self.q_string + self.options[i]
+        merQueOpts = bc.encode(self.options)
+
+        ind, guessAnswer, highestScore = 0, 0, 0
+        for option in merQueOpts:
+            tmpScore = 1 - spatial.distance.cosine(story, option)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
