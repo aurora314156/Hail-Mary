@@ -9,15 +9,17 @@ class Mymodel():
         self.s_string = s_string
         self.q_string = q_string
         self.options = options
-    
+        self.run_model = ['FirstModel','SecondModel', 'ThirdModel', 'ForthModel', 'FifthModel']
     def MymodelMain(self):
         #guessAnswer = self.FirstModel()
-        if self.model == 'FirstModel':
+        if self.model in self.run_model:
             guessAnswer = self.FirstModel(self.bc)
-        if self.model == 'SecondModel':
+        if self.model in self.run_model:
             guessAnswer = self.SecondModel(self.bc)
-        if self.model == 'ForthModel':
+        if self.model in self.run_model:
             guessAnswer = self.ForthModel(self.bc)
+        if self.model in self.run_model:
+            guessAnswer = self.FifthModel(self.bc)
 
         return guessAnswer
     
@@ -151,7 +153,7 @@ class Mymodel():
 
         return guessAnswer
 
-    def FifthModel(self):
+    def FifthModel(self, bc):
 
         merStoryQue = bc.encode([self.s_string + self.q_string]) 
         options = bc.encode(self.options)
