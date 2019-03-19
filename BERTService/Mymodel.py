@@ -146,11 +146,16 @@ class Mymodel():
         print(options)
 
         for s in story_sentences:
+            print("---------------------------")
+            print(s)
+            print(question)
+            print("---------------------------")
             tmpScore = 1 - spatial.distance.cosine(s, question)
             if tmpScore < highestScore:
                 highestScore_storyVector = s
                 highestScore = tmpScore
 
+        print(highestScore_storyVector)
         highestScore = 0
         for option in options:
             tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector)
