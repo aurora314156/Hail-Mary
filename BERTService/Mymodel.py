@@ -136,9 +136,9 @@ class Mymodel():
         print(self.q_string)
         print(self.options)
 
-        story_sentences = bc.encode(sentences, show_tokens=True)
-        question = bc.encode([self.q_string], show_tokens=True)
-        options = bc.encode(self.options, show_tokens=True)
+        story_sentences = bc.encode(sentences)
+        question = bc.encode([self.q_string])
+        options = bc.encode(self.options)
         ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
         
         print(story_sentences)
