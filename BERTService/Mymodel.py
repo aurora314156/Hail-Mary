@@ -151,7 +151,7 @@ class Mymodel():
             print(question)
             print("---------------------------")
             tmpScore = 1 - spatial.distance.cosine(s, question)
-            if tmpScore < highestScore:
+            if tmpScore > highestScore:
                 highestScore_storyVector = s
                 highestScore = tmpScore
 
@@ -159,7 +159,7 @@ class Mymodel():
         highestScore = 0
         for option in options:
             tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector)
-            if tmpScore < highestScore:
+            if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
             ind += 1
