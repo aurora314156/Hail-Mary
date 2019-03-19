@@ -129,7 +129,11 @@ class Mymodel():
         if tmp_string != "":
             sentences.append(sentence[:len(tmp_string)-1])
 
-        story_sentences = bc.encode(sentences , show_tokens=True)
+        print(sentences)
+        print(self.q_string)
+        print(self.options)
+
+        story_sentences = bc.encode(sentences, show_tokens=True)
         question = bc.encode([self.q_string], show_tokens=True)
         options = bc.encode(self.options, show_tokens=True)
         ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
