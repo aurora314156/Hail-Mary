@@ -11,7 +11,6 @@ class Mymodel():
         self.options = options
     
     def MymodelMain(self):
-        
         #guessAnswer = self.FirstModel()
         if self.model == 'FirstModel':
             guessAnswer = self.FirstModel(self.bc)
@@ -19,7 +18,6 @@ class Mymodel():
             guessAnswer = self.SecondModel(self.bc)
         if self.model == 'ForthModel':
             guessAnswer = self.ForthModel(self.bc)
-        
 
         return guessAnswer
     
@@ -132,30 +130,17 @@ class Mymodel():
         if tmp_string != "":
             sentences.append(sentence[:len(tmp_string)-1])
 
-        print(sentences)
-        print(self.q_string)
-        print(self.options)
-
         story_sentences = bc.encode(sentences)
         question = bc.encode([self.q_string])
         options = bc.encode(self.options)
         ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
-        
-        print(story_sentences)
-        print(question)
-        print(options)
 
         for s in story_sentences:
-            print("---------------------------")
-            print(s)
-            print(question)
-            print("---------------------------")
             tmpScore = 1 - spatial.distance.cosine(s, question)
             if tmpScore > highestScore:
                 highestScore_storyVector = s
                 highestScore = tmpScore
 
-        print(highestScore_storyVector)
         highestScore = 0
         for option in options:
             tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector)
