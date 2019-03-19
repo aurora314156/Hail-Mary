@@ -123,6 +123,8 @@ class Mymodel():
                 if len(sentence) >1:
                     if sentence[0] == "":
                         sentences.append(sentence[:-1])
+                    else:
+                        sentences.append(sentence)
                 tmp_string = ""
                 continue
 
