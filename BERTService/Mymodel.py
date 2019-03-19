@@ -141,6 +141,10 @@ class Mymodel():
         options = bc.encode(self.options, show_tokens=True)
         ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
         
+        print(story_sentences.shape)
+        print(question.shape)
+        print(options.shape)
+
         for s in story_sentences:
             tmpScore = 1 - spatial.distance.cosine(s, question)
             if tmpScore < highestScore:
