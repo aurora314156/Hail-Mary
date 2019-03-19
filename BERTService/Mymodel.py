@@ -121,7 +121,7 @@ class Mymodel():
                     else:
                         sentence += t
                 if len(sentence) >1:
-                    if sentence[0] == "":
+                    if sentence[0] == " ":
                         sentences.append(sentence[:-1])
                     else:
                         sentences.append(sentence)
