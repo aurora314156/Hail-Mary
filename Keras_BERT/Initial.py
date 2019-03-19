@@ -9,6 +9,7 @@ class Initial():
         #self.model = ['FirstModel', 'SecondModel', 'ForthModel', 'SecondModelWithSoftmax']
         self.model = ["ForthModel"]
     def InitialMain(self):
+        self.createLogFile()
         dataset, dataType = self.GetDataset(self.ArgParse())
         #word2vec = self.LoadWord2vec()
         return dataset, dataType, self.model
@@ -43,3 +44,8 @@ class Initial():
         # get vector with weight of words from w2v model
         model_weight_vector = model.wv
         return model_weight_vector
+    
+    def createLogFile(self):
+        # create log file
+        with open('log.txt', 'w') as log:
+            log.close()

@@ -151,7 +151,22 @@ class Mymodel():
 
         return guessAnswer
 
+    def FifthModel(self):
 
+        merStoryQue = bc.encode([self.s_string + self.q_string]) 
+        options = bc.encode(self.options)
+
+        ind, guessAnswer, highestScore = 0, 0, 0
+        for option in options:
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
+            if tmpScore > highestScore:
+                guessAnswer = ind
+                highestScore = tmpScore
+            ind += 1
+        
+        return guessAnswer
+    
+    
     def softmax(self, x):
         """Compute softmax values for each sets of scores in x."""
         return np.exp(x) / np.sum(np.exp(x), axis=0)
