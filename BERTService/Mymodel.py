@@ -172,8 +172,9 @@ class Mymodel():
     
     def SixthModel(self, bc):
         story = bc.encode([self.s_string])
-        for i in range(len(self.options):
+        for i in range(len(self.options)):
             self.options[i] = self.q_string + self.options[i]
+        
         merQueOpts = bc.encode(self.options)
 
         ind, guessAnswer, highestScore = 0, 0, 0
