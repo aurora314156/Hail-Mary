@@ -36,7 +36,7 @@ def main():
     bc = BertClient()
     for m in model:
         print(dataType)
-        model = "Start run model: " + m
+        model = "Start run model: " + m + "\n"
         print(model)
         for single_dataset in dataset:
             correct, tTime = 0, time.time()
@@ -50,7 +50,7 @@ def main():
                 guessAnswer = Mymodel(bc, s_string, q_string, options, m).MymodelMain()
                 if guessAnswer == answer:
                     correct += 1
-            Accuracy = "Accuracy: " + str(correct/len(single_dataset))
+            Accuracy = "Accuracy: " + str(correct/len(single_dataset)) + "\n"
             CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n"
             print(Accuracy)
             print(CostTime)
