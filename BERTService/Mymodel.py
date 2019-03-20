@@ -9,7 +9,7 @@ class Mymodel():
         self.s_string = s_string
         self.q_string = q_string
         self.options = options
-        self.run_model = ['FirstModel','SecondModel', 'ThirdModel', 'ForthModel', 'FifthModel', 'SixthModel']
+        self.run_model = ['FirstModel','SecondModel', 'ThirdModel', 'ForthModel', 'FifthModel', 'SixthModel', 'SeventhModel']
     def MymodelMain(self):
         #guessAnswer = self.FirstModel()
         if self.model in self.run_model:
@@ -189,6 +189,22 @@ class Mymodel():
         
         return guessAnswer
     
+    def SeventhModel(self, bc):
+        question = bc.encode([self.q_string])
+        # merge story and options
+        for o in range(len(self.options)):
+            self.options[o] = self.options[o] + self.s_string
+        merStoryOpt = bc.encode(self.options)
+
+        ind, guessAnswer, highestScore = 0, 0, 0
+        for option in merStoryOpt:
+            tmpScore = 1 - spatial.distance.cosine(option, question)
+            if tmpScore > highestScore:
+                guessAnswer = ind
+                highestScore = tmpScore
+            ind += 1
+        
+        return guessAnswer
     
     def softmax(self, x):
         """Compute softmax values for each sets of scores in x."""
