@@ -9,19 +9,23 @@ class Mymodel():
         self.s_string = s_string
         self.q_string = q_string
         self.options = options
-        self.run_model = ['FirstModel','SecondModel', 'ThirdModel', 'ForthModel', 'FifthModel', 'SixthModel', 'SeventhModel']
+       
     def MymodelMain(self):
         #guessAnswer = self.FirstModel()
-        if self.model in self.run_model:
+        if self.model == 'FirstModel':
             guessAnswer = self.FirstModel(self.bc)
-        if self.model in self.run_model:
+        if self.model == 'SecondModel':
             guessAnswer = self.SecondModel(self.bc)
-        if self.model in self.run_model:
+        if self.model == 'ThirdModel':
+            guessAnswer = self.ThirdModel(self.bc)
+        if self.model == 'ForthModel:
             guessAnswer = self.ForthModel(self.bc)
-        if self.model in self.run_model:
+        if self.model == 'FifthModel':
             guessAnswer = self.FifthModel(self.bc)
-        if self.model in self.run_model:
+        if self.model == 'SixthModel':
             guessAnswer = self.SixthModel(self.bc)
+        if self.model == 'SeventhModel':
+            guessAnswer = self.SeventhModel(self.bc)
 
         return guessAnswer
     
