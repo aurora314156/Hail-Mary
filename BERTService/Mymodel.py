@@ -18,7 +18,7 @@ class Mymodel():
             guessAnswer = self.SecondModel(self.bc)
         if self.model == 'ThirdModel':
             guessAnswer = self.ThirdModel(self.bc)
-        if self.model == 'ForthModel:
+        if self.model == 'ForthModel':
             guessAnswer = self.ForthModel(self.bc)
         if self.model == 'FifthModel':
             guessAnswer = self.FifthModel(self.bc)
