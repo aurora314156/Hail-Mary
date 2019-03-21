@@ -28,7 +28,8 @@ class Mymodel():
             guessAnswer = self.SeventhModel(self.bc)
         if self.model == 'EighthModel':
             guessAnswer = self.EighthModel(self.bc)
-            
+        if self.model == 'NinthModel':
+            guessAnswer = self.NinthModel(self.bc)
 
         return guessAnswer
     
@@ -222,6 +223,23 @@ class Mymodel():
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
+            if tmpScore > highestScore:
+                guessAnswer = ind
+                highestScore = tmpScore
+            ind += 1
+        
+        return guessAnswer
+    
+    def NinthModel(self, bc):
+        merStoryQue = bc.encode([self.s_string + self.q_string]) 
+        # merge story and options
+        for o in range(len(self.options)):
+            self.options[o] = self.options[o] + self.s_string
+        merStoryOpt = bc.encode(self.options)
+
+        ind, guessAnswer, highestScore = 0, 0, 0
+        for option in merStoryOpt:
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
             if tmpScore > highestScore:
                 guessAnswer = ind
