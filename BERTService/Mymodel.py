@@ -26,6 +26,9 @@ class Mymodel():
             guessAnswer = self.SixthModel(self.bc)
         if self.model == 'SeventhModel':
             guessAnswer = self.SeventhModel(self.bc)
+        if self.model == 'EighthModel':
+            guessAnswer = self.EighthModel(self.bc)
+            
 
         return guessAnswer
     
@@ -209,7 +212,24 @@ class Mymodel():
             ind += 1
         
         return guessAnswer
-    
+
+    def EighthModel(self, bc):
+        
+        story = bc.encode([self.s_string])
+        question = bc.encode([self.q_string])
+        merStoryQue = [x + y for x, y in zip(story, question)]
+        options = bc.encode(self.options)
+
+        ind, guessAnswer, highestScore = 0, 0, 0
+        for option in options:
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
+            if tmpScore > highestScore:
+                guessAnswer = ind
+                highestScore = tmpScore
+            ind += 1
+        
+        return guessAnswer
+
     def softmax(self, x):
         """Compute softmax values for each sets of scores in x."""
         return np.exp(x) / np.sum(np.exp(x), axis=0)
