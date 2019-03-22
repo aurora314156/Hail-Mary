@@ -7,7 +7,8 @@ class LoadData():
     def __init__(self, dataType, dataSetList):
         self.dataType = dataType
         self.dataSetList = dataSetList
-        self.dataSetPath = os.path.join(os.path.dirname("/home/wirl/Desktop/Hail-Mary/Setting.txt"),"")
+        #self.dataSetPath = os.path.join(os.path.dirname("/home/wirl/Desktop/Hail-Mary/Setting.txt"),"")
+        self.dataSetPath = os.path.join(os.path.dirname("/home/wirl/hdd/30043/Divh/Hail-Mary/Setting.txt"),"")
 
     def getDataSet(self):
         try:
