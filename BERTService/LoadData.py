@@ -8,7 +8,7 @@ class LoadData():
         self.dataType = dataType
         self.dataSetList = dataSetList
         #self.dataSetPath = os.path.join(os.path.dirname("/home/wirl/Desktop/Hail-Mary/Setting.txt"),"")
-        self.dataSetPath = os.path.join(os.path.dirname("/home/wirl/hdd/30043/Divh/Hail-Mary"),"")
+        self.dataSetPath = os.path.join(os.path.dirname("/home/wirl/hdd/30043/Divh/Hail-Mary/data_wtih_punctuation"),"")
 
     def getDataSet(self):
         try:
