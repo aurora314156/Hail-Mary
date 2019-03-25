@@ -28,7 +28,6 @@ class LoadData():
                 print(dataSetPath)
                 with open(dataSetPath, 'r') as d:
                     data = json.load(d)
-
                 dataSet.append(dataName)
                 dataSet.append(data)
         
@@ -38,7 +37,7 @@ class LoadData():
         print("-----------")
         print(len(dataSet))
 
-        return dataSet, self.dataType
+        return dataSet
 
     def joinDataSetPath(self, dataSetPath, dataType, dataName):
         if dataType == "with":

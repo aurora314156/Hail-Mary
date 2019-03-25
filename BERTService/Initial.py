@@ -40,7 +40,7 @@ class Initial():
             dataType.append(args.dataType)
 
         dataset = LoadData(dataType, dataSetList).getDataSetMain()
-        return dataset, args.dataType
+        return dataset, dataType
 
     def LoadWord2vec(self):
         print("Start loading word2vec.")
