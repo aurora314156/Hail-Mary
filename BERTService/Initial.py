@@ -6,7 +6,7 @@ class Initial():
     def __init__(self):
         self.d_model = 512
         # choose run model
-        self.model = ['ThirdModelWithSoftmax','TenthModel']
+        self.model = ['ThirdModel','ThirdModelWithSoftmax','TenthModel']
     def InitialMain(self):
         self.createLogFile()
         dataset, dataType = self.GetDataset(self.ArgParse())
