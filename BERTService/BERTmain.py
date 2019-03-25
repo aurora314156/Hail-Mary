@@ -35,12 +35,16 @@ def main():
     # initial BERT model
     bc = BertClient()
     for m in model:
+        print("***********************************\nStart getting datatype: ")
         print(dataType)
+        print("***********************************\n)
         model = "Start run model: " + m + "\n"
         print(model)
+        typeChange=0
         for single_dataset in dataset:
             correct, tTime = 0, time.time()
             if isinstance(single_dataset, str):
+                typeChange+=1
                 Process_dataset = "Start processing dataset: " + single_dataset + "\n"
                 print(Process_dataset)
                 continue
@@ -54,7 +58,11 @@ def main():
             CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n"
             print(Accuracy)
             print(CostTime)
-            saveLog(dataType, Process_dataset, model, Accuracy, CostTime)
+            if typeChange <3:
+                saveLog(dataType[0], Process_dataset, model, Accuracy, CostTime)
+            else:
+                saveLog(dataType[1], Process_dataset, model, Accuracy, CostTime)
+            
 
 if __name__ == "__main__":
     main()

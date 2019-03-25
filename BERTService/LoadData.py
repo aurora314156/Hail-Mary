@@ -20,7 +20,7 @@ class LoadData():
         # iterator for get all selection dataset
         dataSet = []
         for dataType in self.dataType:
-            print("***********************************\nStart processing datatype: " + dataType + "\n")
+            print("***********************************\nStart getting datatype: " + dataType + "\n")
             for dataName in self.dataSetList:
                 dataSetPath = self.joinDataSetPath(self.dataSetPath, dataType, dataName)
                 print(dataSetPath)
