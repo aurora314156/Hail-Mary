@@ -55,7 +55,7 @@ def main():
                 if guessAnswer == answer:
                     correct += 1
             Accuracy = "Accuracy: " + str(correct/len(single_dataset)) + "\n"
-            CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n"
+            CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n\n"
             print(Accuracy)
             print(CostTime)
             if typeChange <3:

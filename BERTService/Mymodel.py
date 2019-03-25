@@ -104,7 +104,7 @@ class Mymodel():
         
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
-        for i in range(30):
+        for i in range(20):
             tmp = [x + y for x, y in zip(story, merStoryQue)]
             merStoryQue = tmp
 
@@ -127,7 +127,7 @@ class Mymodel():
         
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
-        for i in range(30):
+        for i in range(20):
             tmp = [x + y for x, y in zip(story, merStoryQue)]
             merStoryQue = self.softmax(tmp)
 
