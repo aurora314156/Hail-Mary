@@ -99,6 +99,7 @@ class Mymodel():
         implementation original paper method
         """
         story = self.relu(bc.encode([self.s_string]))
+        print(type(story))
         question = self.relu(bc.encode([self.q_string]))
         options = self.relu(bc.encode(self.options))
         
@@ -164,12 +165,10 @@ class Mymodel():
                         sentences.append(sentence)
                 tmp_string = ""
                 continue
-        print(sentences)
-        print(tmp_string)
+
         # use whole story structure
         if tmp_string != "":
             sentences.append(tmp_string)
-        print(sentences)
 
         story_sentences = bc.encode(sentences)
         question = bc.encode([self.q_string])
@@ -295,9 +294,12 @@ class Mymodel():
         return np.exp(x) / np.sum(np.exp(x), axis=0)
 
     def relu(self, x):
-        for i in range(len(x)):
-            if x[i] <= 0:
-                x[i] = 0
-            else:
-                x[i] = 1
+        # for i in range(len(x)):
+        #     if x[i] <= 0:
+        #         x[i] = 0
+        #     else:
+        #         x[i] = 1
+        # return x
+        x[x<=0] = 0
+        x[x>0] = 1
         return x
