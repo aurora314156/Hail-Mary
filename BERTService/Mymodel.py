@@ -40,7 +40,7 @@ class Mymodel():
     def FirstModel(self,bc):
         """
         merge story and question vector by add, calculate similarity with merge story and option vector
-        """
+        """s
         story = bc.encode([self.s_string])
         question = bc.encode([self.q_string])
         options = bc.encode(self.options)
@@ -98,11 +98,9 @@ class Mymodel():
         """
         implementation original paper method
         """
-        story = bc.encode([self.s_string])
-        print(story.shape)
-        question = bc.encode([self.q_string])
-        question = self.relu(question.tolist())
-        options = bc.encode(self.options)
+        story = self.relu(bc.encode([self.s_string]))
+        question = self.relu(bc.encode([self.q_string]))
+        options = self.relu(bc.encode(self.options))
         
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
@@ -295,12 +293,9 @@ class Mymodel():
         return np.exp(x) / np.sum(np.exp(x), axis=0)
 
     def relu(self, x):
-        for i in range(len(x)):
-            if x[i] <= 0:
-                x[i] = 0
+        for i in range(len(x[0])):
+            if x[0][i] <= 0:
+                x[0][i] = 0
             else:
-                x[i] = 1
+                x[0][i] = 1
         return x
-        # x[x<=0] = 0
-        # x[x>0] = 1
-        # return x
