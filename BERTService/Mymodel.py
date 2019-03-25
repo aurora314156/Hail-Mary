@@ -130,7 +130,7 @@ class Mymodel():
         merStoryQue = [x + y for x, y in zip(story, question)]
         for i in range(20):
             tmp = [x + y for x, y in zip(story, merStoryQue)]
-            merStoryQue = self.relu(tmp)
+            merStoryQue = self.relu(np.assary(tmp))
 
         for option in options:
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
