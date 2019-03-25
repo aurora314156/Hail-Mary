@@ -98,9 +98,9 @@ class Mymodel():
         """
         implementation original paper method
         """
-        story = bc.encode([self.s_string])
-        question = bc.encode([self.q_string])
-        options = bc.encode(self.options)
+        story = self.softmax(bc.encode([self.s_string]))
+        question = self.softmax(bc.encode([self.q_string]))
+        options = self.softmax(bc.encode(self.options))
         
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
@@ -109,7 +109,7 @@ class Mymodel():
             merStoryQue = tmp
 
         for option in options:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, self.softmax(option))
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -121,9 +121,9 @@ class Mymodel():
         """
         implementation original paper method
         """
-        story = bc.encode([self.s_string])
-        question = bc.encode([self.q_string])
-        options = bc.encode(self.options)
+        story = self.softmax(bc.encode([self.s_string]))
+        question = self.softmax(bc.encode([self.q_string]))
+        options = self.softmax(bc.encode(self.options))
         
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
@@ -132,7 +132,7 @@ class Mymodel():
             merStoryQue = self.softmax(tmp)
 
         for option in options:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, self.softmax(option))
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
