@@ -99,9 +99,9 @@ class Mymodel():
         """
         implementation original paper method
         """
-        story = self.softmax(bc.encode([self.s_string]))
-        question = self.softmax(bc.encode([self.q_string]))
-        options = self.softmax(bc.encode(self.options))
+        story = bc.encode([self.s_string])
+        question = bc.encode([self.q_string])
+        options = bc.encode(self.options)
         
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
@@ -290,42 +290,11 @@ class Mymodel():
 
 
     def softmax(self, x):
-        # """Compute softmax values for each sets of scores in x."""
-        # return np.exp(x) / np.sum(np.exp(x), axis=0)
-        """
-        Compute the softmax function for each row of the input x.
-
-        Arguments:
-        x -- A N dimensional vector or M x N dimensional numpy matrix.
-
-        Return:
-        x -- You are allowed to modify x in-place
-        """
-        orig_shape = x.shape
-
-        if len(x.shape) > 1:
-            # Matrix
-            exp_minmax = lambda x: np.exp(x - np.max(x))
-            denom = lambda x: 1.0 / np.sum(x)
-            x = np.apply_along_axis(exp_minmax,1,x)
-            denominator = np.apply_along_axis(denom,1,x) 
-            
-            if len(denominator.shape) == 1:
-                denominator = denominator.reshape((denominator.shape[0],1))
-            
-            x = x * denominator
-        else:
-            # Vector
-            x_max = np.max(x)
-            x = x - x_max
-            numerator = np.exp(x)
-            denominator =  1.0 / np.sum(numerator)
-            x = numerator.dot(denominator)
+        """Compute softmax values for each sets of scores in x."""
+        return np.exp(x) / np.sum(np.exp(x), axis=0)
         
-        assert x.shape == orig_shape
-        return x
-
     def relu(self, x):
         return x * (x > 0)
+
     def drelu(self, x):
         return 1. * (x > 0)
