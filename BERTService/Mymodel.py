@@ -98,7 +98,7 @@ class Mymodel():
         """
         implementation original paper method
         """
-        story = self.relu(bc.encode([self.s_string]))
+        story = bc.encode([self.s_string])
         print(type(story))
         question = self.relu(bc.encode([self.q_string]))
         options = self.relu(bc.encode(self.options))
