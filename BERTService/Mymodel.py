@@ -99,9 +99,9 @@ class Mymodel():
         """
         implementation original paper method
         """
-        story = self.relu(bc.encode([self.s_string]))
-        question = self.relu(bc.encode([self.q_string]))
-        options = self.relu(bc.encode(self.options))
+        story = self.softmax(bc.encode([self.s_string]))
+        question = self.softmax(bc.encode([self.q_string]))
+        options = self.softmax(bc.encode(self.options))
         
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
@@ -122,15 +122,15 @@ class Mymodel():
         """
         implementation original paper method
         """
-        story = self.relu(bc.encode([self.s_string]))
-        question = self.relu(bc.encode([self.q_string]))
-        options = self.relu(bc.encode(self.options))
+        story = self.softmax(bc.encode([self.s_string]))
+        question = self.softmax(bc.encode([self.q_string]))
+        options = self.softmax(bc.encode(self.options))
         
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
         for i in range(20):
             tmp = [x + y for x, y in zip(story, merStoryQue)]
-            merStoryQue = self.relu(np.asarray(tmp))
+            merStoryQue = self.softmax(tmp)
 
         for option in options:
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
@@ -327,3 +327,5 @@ class Mymodel():
 
     def relu(self, x):
         return x * (x > 0)
+    def drelu(self, x):
+        return 1. * (x > 0)
