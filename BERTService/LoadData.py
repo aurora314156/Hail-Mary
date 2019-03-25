@@ -20,6 +20,7 @@ class LoadData():
         # iterator for get all selection dataset
         dataSet = []
         for dataType in self.dataType:
+            print(dataType)
             for dataName in self.dataSetList:
                 dataSetPath = self.joinDataSetPath(self.dataSetPath, dataType, dataName)
                 print(dataSetPath)
@@ -41,8 +42,17 @@ class LoadData():
     def checkArgs(self):
         dataType = {"with", "without"}
         allDataSetName = {"train","test","dev"}
-        if self.dataType not in dataType or self.dataSetList[0] not in allDataSetName:
-            print("================================")
-            print("Please check your input args.")
-            print("Try [-d] [with/without] [-o] [train/test/dev/all].")
-            print("================================")
+        
+        for d in self.dataSetList:
+            if d not in allDataSetName:
+                print("================================")
+                print("Please check your input args.")
+                print("Try [-d] [with/without/all] [-o] [train/test/dev/all].")
+                print("================================")
+
+        for t in self.dataType:
+            if t not in allDataSetName:
+                print("================================")
+                print("Please check your input args.")
+                print("Try [-d] [with/without/all] [-o] [train/test/dev/all].")
+                print("================================")
