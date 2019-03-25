@@ -54,13 +54,14 @@ def saveLogExcel(AccuracyList):
     for a in AccuracyList:
         sheet.write(ind_y, ind_x, str(a))
         ind_x += 1
-        if ind_x % 4 == 0:
-            ind_x +=1
-            continue
         if ind_x % 8 == 0:
             ind_y += 1
             ind_x = 1
             continue
+        if ind_x % 4 == 0:
+            ind_x +=1
+            continue
+        
 
     wb.save('experiment.xls')
 
