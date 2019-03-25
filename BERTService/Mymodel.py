@@ -289,7 +289,9 @@ class Mymodel():
         return guessAnswer
 
 
-    def softmax(x):
+    def softmax(self, x):
+        # """Compute softmax values for each sets of scores in x."""
+        # return np.exp(x) / np.sum(np.exp(x), axis=0)
         """
         Compute the softmax function for each row of the input x.
 
@@ -319,7 +321,7 @@ class Mymodel():
             numerator = np.exp(x)
             denominator =  1.0 / np.sum(numerator)
             x = numerator.dot(denominator)
-
+        
         assert x.shape == orig_shape
         return x
 
