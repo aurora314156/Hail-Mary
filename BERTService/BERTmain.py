@@ -37,7 +37,7 @@ def main():
     for m in model:
         print("***********************************\nStart getting datatype: ")
         print(dataType)
-        print("***********************************\n)
+        print("***********************************\n")
         model = "Start run model: " + m + "\n"
         print(model)
         typeChange=0
