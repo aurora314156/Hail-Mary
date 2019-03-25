@@ -31,8 +31,8 @@ class Initial():
             dataSetList.append("dev")
         else:
             dataSetList.append(args.dataSet)
-        
-        if args.dataType == 'all':
+
+        if args.dataType == "all":
             dataType.append("with")
             dataType.append("without")
         
