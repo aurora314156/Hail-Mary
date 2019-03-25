@@ -101,7 +101,9 @@ class Mymodel():
         """
         story = self.relu(bc.encode([self.s_string]))
         question = self.relu(bc.encode([self.q_string]))
+        print(question.shape)
         options = bc.encode(self.options)
+        print(options.shape)
         
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
@@ -110,7 +112,7 @@ class Mymodel():
             merStoryQue = tmp
 
         for option in options:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, self.softmax(option))
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -133,7 +135,7 @@ class Mymodel():
             merStoryQue = self.softmax(tmp)
 
         for option in options:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, self.softmax(option))
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -293,10 +295,5 @@ class Mymodel():
         """Compute softmax values for each sets of scores in x."""
         return np.exp(x) / np.sum(np.exp(x), axis=0)
 
-    def relu(self, x):
-        relu_x = np.zeros((1, len(x[0])))
-
-        for i in range(len(x[0])):
-            if x[0][i] > 0:
-                relu_x[0][i] = 1
-        return relu_x
+    def reLU(self, x):
+        return x * (x > 0)
