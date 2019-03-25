@@ -103,7 +103,6 @@ class Mymodel():
         question = self.relu(bc.encode([self.q_string]))
         print(question.shape)
         options = bc.encode(self.options)
-        print(options.shape)
         
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
@@ -112,6 +111,7 @@ class Mymodel():
             merStoryQue = tmp
 
         for option in options:
+            print(option.shape)
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
             if tmpScore > highestScore:
                 guessAnswer = ind
