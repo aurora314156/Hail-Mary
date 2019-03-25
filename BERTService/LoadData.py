@@ -30,7 +30,9 @@ class LoadData():
 
                 dataSet.append(dataName)
                 dataSet.append(data)
-            
+        
+        print(dataSet)
+
         return dataSet, self.dataType
 
     def joinDataSetPath(self, dataSetPath, dataType, dataName):
@@ -59,3 +61,5 @@ class LoadData():
                 print("Try [-d] [with/without/all] [-o] [train/test/dev/all].")
                 print("================================")
                 bug = 1
+
+        return bug
