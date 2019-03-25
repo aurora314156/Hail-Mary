@@ -36,7 +36,7 @@ class Initial():
         if args.dataType == "all":
             dataType.append("with")
             dataType.append("without")
-        elif args.dataType!= "all":
+        elif args.dataType != "all":
             dataType.append(args.dataType)
 
         dataset = LoadData(dataType, dataSetList).getDataSetMain()
