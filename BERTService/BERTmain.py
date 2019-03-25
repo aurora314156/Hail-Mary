@@ -40,8 +40,6 @@ def main():
         print(model)
         for single_dataset in dataset:
             correct, tTime = 0, time.time()
-            print(single_dataset)
-            print(type(single_dataset))
             if isinstance(single_dataset, str):
                 Process_dataset = "Start processing dataset: " + single_dataset + "\n"
                 print(Process_dataset)

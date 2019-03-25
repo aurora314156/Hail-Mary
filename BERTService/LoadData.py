@@ -11,9 +11,7 @@ class LoadData():
         self.dataSetPath = os.path.join(os.path.dirname("/project/Divh/Hail-Mary/data_wtih_punctuation"),"")
 
     def getDataSetMain(self):
-        print(self.dataType)
-        print(self.dataSetList)
-        
+        # check data path setting correct
         bug = self.checkArgs()
         if bug == 1:
             print("*************\nData args error\n*************")
@@ -30,12 +28,6 @@ class LoadData():
                     data = json.load(d)
                 dataSet.append(dataName)
                 dataSet.append(data)
-        
-        print(dataSet[0])
-        print(dataSet[2])
-        print(dataSet[4])
-        print("-----------")
-        print(len(dataSet))
 
         return dataSet
 
