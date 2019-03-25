@@ -116,4 +116,5 @@ dmypy.json
 
 # project ignore
 log.txt
+experiment.xls
 bertmodel/
