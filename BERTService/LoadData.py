@@ -35,6 +35,7 @@ class LoadData():
         print(dataSet[0])
         print(dataSet[2])
         print(dataSet[4])
+        print()
 
         return dataSet, self.dataType
 
