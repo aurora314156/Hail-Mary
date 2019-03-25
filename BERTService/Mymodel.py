@@ -122,8 +122,8 @@ class Mymodel():
         """
         implementation original paper method
         """
-        story = self.softmax(bc.encode([self.s_string]))
-        question = self.softmax(bc.encode([self.q_string]))
+        story = self.relu(bc.encode([self.s_string]))
+        question = self.relu(bc.encode([self.q_string]))
         options = self.relu(bc.encode(self.options))
         
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
