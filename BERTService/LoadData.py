@@ -11,9 +11,11 @@ class LoadData():
         self.dataSetPath = os.path.join(os.path.dirname("/project/Divh/Hail-Mary/data_wtih_punctuation"),"")
 
     def getDataSetMain(self):
+        print(self.dataType)
+        print(self.dataSetList)
         try:
-            self.checkArgs()
-        except:
+            bug = self.checkArgs()
+        except bug == 1:
             return
         
         dataType = "***********************************\nStart processing datatype: " + self.dataType + "\n"
@@ -42,13 +44,14 @@ class LoadData():
     def checkArgs(self):
         dataType = {"with", "without"}
         allDataSetName = {"train","test","dev"}
-        
+        bug = 0
         for d in self.dataSetList:
             if d not in allDataSetName:
                 print("================================")
                 print("Please check your input args.")
                 print("Try [-d] [with/without/all] [-o] [train/test/dev/all].")
                 print("================================")
+                bug = 1
 
         for t in self.dataType:
             if t not in allDataSetName:
@@ -56,3 +59,4 @@ class LoadData():
                 print("Please check your input args.")
                 print("Try [-d] [with/without/all] [-o] [train/test/dev/all].")
                 print("================================")
+                bug = 1
