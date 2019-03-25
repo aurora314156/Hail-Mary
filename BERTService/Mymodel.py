@@ -101,8 +101,7 @@ class Mymodel():
         """
         story = self.relu(bc.encode([self.s_string]))
         question = self.relu(bc.encode([self.q_string]))
-        print(question.shape)
-        options = bc.encode(self.options)
+        options = self.relu(bc.encode(self.options))
         
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
@@ -111,7 +110,6 @@ class Mymodel():
             merStoryQue = tmp
 
         for option in options:
-            print(option.shape)
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
             if tmpScore > highestScore:
                 guessAnswer = ind
@@ -126,13 +124,13 @@ class Mymodel():
         """
         story = self.softmax(bc.encode([self.s_string]))
         question = self.softmax(bc.encode([self.q_string]))
-        options = bc.encode(self.options)
+        options = self.relu(bc.encode(self.options))
         
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
         for i in range(20):
             tmp = [x + y for x, y in zip(story, merStoryQue)]
-            merStoryQue = self.softmax(tmp)
+            merStoryQue = self.relu(tmp)
 
         for option in options:
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
