@@ -58,7 +58,7 @@ def main():
             CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n\n"
             print(Accuracy)
             print(CostTime)
-            if typeChange <3:
+            if typeChange <4:
                 dataTypeLog = "Data type: " + dataType[0] + "\n"
             else:
                 dataTypeLog = "Data type: " + dataType[1] + "\n"
