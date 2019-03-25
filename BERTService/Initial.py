@@ -12,6 +12,7 @@ class Initial():
         dataset, dataType = self.GetDataset(self.ArgParse())
         #word2vec = self.LoadWord2vec()
         return dataset, dataType, self.model, self.d_model
+
     def ArgParse(self):
         print("***********************************")
         print("Start setting argparse.")
@@ -37,9 +38,9 @@ class Initial():
             dataType.append("without")
         else:
             dataType.append(args.dataType)
-            
+
         dataset = LoadData(dataType, dataSetList).getDataSetMain()
-        return dataset
+        return dataset, args.dataType
 
     def LoadWord2vec(self):
         print("Start loading word2vec.")
