@@ -33,7 +33,7 @@ class Mymodel():
         if self.model == 'NinthModel':
             guessAnswer = self.NinthModel(self.bc)
         if self.model == 'TenthModel':
-            guessAnswer = self.NinthModel(self.bc)
+            guessAnswer = self.TenthModel(self.bc)
 
 
         return guessAnswer
