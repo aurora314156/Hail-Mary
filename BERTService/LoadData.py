@@ -18,11 +18,10 @@ class LoadData():
         except bug == 1:
             return
         
-        dataType = "***********************************\nStart processing datatype: " + self.dataType + "\n"
         # iterator for get all selection dataset
         dataSet = []
         for dataType in self.dataType:
-            print(dataType)
+            print("***********************************\nStart processing datatype: " + dataType + "\n")
             for dataName in self.dataSetList:
                 dataSetPath = self.joinDataSetPath(self.dataSetPath, dataType, dataName)
                 print(dataSetPath)
