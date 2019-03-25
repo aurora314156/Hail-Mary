@@ -31,7 +31,9 @@ class LoadData():
                 dataSet.append(dataName)
                 dataSet.append(data)
         
-        print(dataSet)
+        print(dataSet[0])
+        print(dataSet[2])
+        print(dataSet[4])
 
         return dataSet, self.dataType
 
