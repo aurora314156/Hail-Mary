@@ -24,7 +24,7 @@ class Initial():
 
     def GetDataset(self, args):
         print("Start getting dataset.")
-        dataSetList = []
+        dataSetList, dataType = [], []
         if args.dataSet == "all":
             dataSetList.append("test")
             dataSetList.append("train")
@@ -32,7 +32,11 @@ class Initial():
         else:
             dataSetList.append(args.dataSet)
         
-        dataset = LoadData(args.dataType, dataSetList).getDataSet()
+        if args.dataType == 'all':
+            dataType.append("with")
+            dataType.append("without")
+        
+        dataset = LoadData(dataType, dataSetList).getDataSetMain()
         return dataset
 
     def LoadWord2vec(self):

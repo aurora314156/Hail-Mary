@@ -10,7 +10,7 @@ class LoadData():
         #self.dataSetPath = os.path.join(os.path.dirname("/home/wirl/Desktop/Hail-Mary/Setting.txt"),"")
         self.dataSetPath = os.path.join(os.path.dirname("/project/Divh/Hail-Mary/data_wtih_punctuation"),"")
 
-    def getDataSet(self):
+    def getDataSetMain(self):
         try:
             self.checkArgs()
         except:
@@ -19,14 +19,15 @@ class LoadData():
         dataType = "***********************************\nStart processing datatype: " + self.dataType + "\n"
         # iterator for get all selection dataset
         dataSet = []
-        for dataName in self.dataSetList:
-            dataSetPath = self.joinDataSetPath(self.dataSetPath, self.dataType, dataName)
-            print(dataSetPath)
-            with open(dataSetPath, 'r') as d:
-                data = json.load(d)
+        for dataType in self.dataType:
+            for dataName in self.dataSetList:
+                dataSetPath = self.joinDataSetPath(self.dataSetPath, dataType, dataName)
+                print(dataSetPath)
+                with open(dataSetPath, 'r') as d:
+                    data = json.load(d)
 
-            dataSet.append(dataName)
-            dataSet.append(data)
+                dataSet.append(dataName)
+                dataSet.append(data)
             
         return dataSet, dataType
 
