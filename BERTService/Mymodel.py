@@ -18,6 +18,8 @@ class Mymodel():
             guessAnswer = self.SecondModel(self.bc)
         if self.model == 'ThirdModel':
             guessAnswer = self.ThirdModel(self.bc)
+        if self.model == 'ThirdModelWithSoftmax':
+            guessAnswer = self.ThirdModelWithSoftmax(self.bc)
         if self.model == 'ForthModel':
             guessAnswer = self.ForthModel(self.bc)
         if self.model == 'FifthModel':
@@ -30,6 +32,9 @@ class Mymodel():
             guessAnswer = self.EighthModel(self.bc)
         if self.model == 'NinthModel':
             guessAnswer = self.NinthModel(self.bc)
+        if self.model == 'TenthModel':
+            guessAnswer = self.NinthModel(self.bc)
+
 
         return guessAnswer
     
@@ -100,11 +105,11 @@ class Mymodel():
         
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
-        for i in range(100):
+        for i in range(200):
             tmp = [x + y for x, y in zip(story, merStoryQue)]
             merStoryQue = tmp
 
-        for option in self.options:
+        for option in options:
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
             if tmpScore > highestScore:
                 guessAnswer = ind
@@ -112,7 +117,30 @@ class Mymodel():
             ind += 1
         
         return guessAnswer
-    
+
+    def ThirdModelWithSoftmax(self, bc):
+        """
+        implementation original paper method
+        """
+        story = bc.encode([self.s_string])
+        question = bc.encode([self.q_string])
+        options = bc.encode(self.options)
+        
+        tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
+        merStoryQue = [x + y for x, y in zip(story, question)]
+        for i in range(200):
+            tmp = [x + y for x, y in zip(story, merStoryQue)]
+            merStoryQue = self.softmax(tmp)
+
+        for option in options:
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
+            if tmpScore > highestScore:
+                guessAnswer = ind
+                highestScore = tmpScore
+            ind += 1
+        
+        return guessAnswer
+
     def ForthModel(self, bc):
         """
         encode story sentences, then use each story sentences vector to calculate similarity with question
@@ -247,6 +275,21 @@ class Mymodel():
             ind += 1
         
         return guessAnswer
+
+    def TenthModel(self, bc):
+        story = bc.encode([self.s_string]) 
+        options = bc.encode(self.options)
+
+        ind, guessAnswer, highestScore = 0, 0, 0
+        for option in options:
+            tmpScore = 1 - spatial.distance.cosine(story, option)
+            if tmpScore > highestScore:
+                guessAnswer = ind
+                highestScore = tmpScore
+            ind += 1
+        
+        return guessAnswer
+
 
     def softmax(self, x):
         """Compute softmax values for each sets of scores in x."""
