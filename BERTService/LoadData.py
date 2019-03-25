@@ -29,7 +29,7 @@ class LoadData():
                 dataSet.append(dataName)
                 dataSet.append(data)
             
-        return dataSet, dataType
+        return dataSet, self.dataType
 
     def joinDataSetPath(self, dataSetPath, dataType, dataName):
         if dataType == "with":
