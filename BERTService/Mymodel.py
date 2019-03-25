@@ -40,7 +40,7 @@ class Mymodel():
     def FirstModel(self,bc):
         """
         merge story and question vector by add, calculate similarity with merge story and option vector
-        """s
+        """
         story = bc.encode([self.s_string])
         question = bc.encode([self.q_string])
         options = bc.encode(self.options)
