@@ -35,7 +35,6 @@ class Mymodel():
         if self.model == 'TenthModel':
             guessAnswer = self.TenthModel(self.bc)
 
-
         return guessAnswer
     
     def FirstModel(self,bc):
@@ -105,7 +104,7 @@ class Mymodel():
         
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
-        for i in range(500):
+        for i in range(30):
             tmp = [x + y for x, y in zip(story, merStoryQue)]
             merStoryQue = tmp
 
@@ -128,7 +127,7 @@ class Mymodel():
         
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
-        for i in range(200):
+        for i in range(30):
             tmp = [x + y for x, y in zip(story, merStoryQue)]
             merStoryQue = self.softmax(tmp)
 
