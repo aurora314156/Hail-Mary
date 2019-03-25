@@ -293,12 +293,9 @@ class Mymodel():
         return np.exp(x) / np.sum(np.exp(x), axis=0)
 
     def relu(self, x):
-        # numpy array directly operation setting
-        x.flags.writeable = True
-        
+        relu_x = np.zeros((1, len(x[0])))
+
         for i in range(len(x[0])):
-            if x[0][i] <= 0:
-                x[0][i] = 0
-            else:
-                x[0][i] = 1
-        return x
+            if x[0][i] > 0:
+                relu_x[0][i] = 1
+        return relu_x
