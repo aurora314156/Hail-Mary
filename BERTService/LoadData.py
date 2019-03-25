@@ -13,9 +13,10 @@ class LoadData():
     def getDataSetMain(self):
         print(self.dataType)
         print(self.dataSetList)
-        try:
-            bug = self.checkArgs()
-        except bug == 1:
+        
+        bug = self.checkArgs()
+        if bug == 1:
+            print("*************\nData args error\n*************")
             return
         
         # iterator for get all selection dataset
@@ -57,7 +58,7 @@ class LoadData():
                 bug = 1
 
         for t in self.dataType:
-            if t not in allDataSetName:
+            if t not in dataType:
                 print("================================")
                 print("Please check your input args.")
                 print("Try [-d] [with/without/all] [-o] [train/test/dev/all].")
