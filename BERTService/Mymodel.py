@@ -130,7 +130,7 @@ class Mymodel():
         merStoryQue = [x + y for x, y in zip(story, question)]
         for i in range(20):
             tmp = [x + y for x, y in zip(story, merStoryQue)]
-            merStoryQue = self.softmax(tmp)
+            merStoryQue = self.softmax(np.asarray(tmp))
 
         for option in options:
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
