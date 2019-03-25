@@ -105,7 +105,7 @@ class Mymodel():
         
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
-        for i in range(200):
+        for i in range(500):
             tmp = [x + y for x, y in zip(story, merStoryQue)]
             merStoryQue = tmp
 
