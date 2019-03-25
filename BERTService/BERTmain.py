@@ -3,6 +3,10 @@ from numpy import array
 from Initial import Initial
 from Mymodel import Mymodel
 from bert_serving.client import BertClient
+import xlwt
+from xlwt import Workbook
+from xlrd import open_workbook
+from xlutils.copy import copy
 
 def getContent(single_data):
     
@@ -29,11 +33,43 @@ def saveLog(dataType, Process_dataset, model, Accuracy, CostTime):
         log.write(Accuracy)
         log.write(CostTime)
 
+def saveLogExcel(AccuracyList):
+    rb = open_workbook("experiment.xls")
+    wb = copy(rb)
+
+    sheet = wb.get_sheet(0)
+
+    sheet.write(0, 0, 'model') 
+    sheet.write(0, 1, 'test') 
+    sheet.write(0, 2, 'train') 
+    sheet.write(0, 3, 'dev') 
+    sheet.write(0, 4, '')
+    sheet.write(0, 5, 'test')
+    sheet.write(0, 6, 'train')
+    sheet.write(0, 7, 'dev')
+    for i in range(1,11):
+        sheet.write(i, 0, str(i))
+
+    ind_x, ind_y = 1, 1
+    for a in AccuracyList:
+        sheet.write(ind_y, ind_x, str(a))
+        ind_x += 1
+        if ind_x % 4 == 0:
+            ind_x +=1
+            continue
+        if ind_x % 8 == 0:
+            ind_y += 1
+            ind_x = 1
+            continue
+
+    wb.save('experiment.xls')
+
 def main():
     # initial dataset
     dataset, dataType, model, d_model = Initial().InitialMain()
     # initial BERT model
     bc = BertClient()
+    AccuracyList = []
     for m in model:
         print("***********************************\nStart getting datatype: ")
         print(dataType)
@@ -56,6 +92,7 @@ def main():
                     correct += 1
             Accuracy = "Accuracy: " + str(correct/len(single_dataset)) + "\n"
             CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n\n"
+            AccuracyList.append(correct/len(single_dataset))
             print(Accuracy)
             print(CostTime)
             if typeChange <4:
@@ -64,6 +101,7 @@ def main():
                 dataTypeLog = "Data type: " + dataType[1] + "\n"
 
             saveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime)
+    saveLogExcel(AccuracyList)
             
 
 if __name__ == "__main__":
