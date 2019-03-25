@@ -295,5 +295,5 @@ class Mymodel():
         """Compute softmax values for each sets of scores in x."""
         return np.exp(x) / np.sum(np.exp(x), axis=0)
 
-    def reLU(self, x):
+    def relu(self, x):
         return x * (x > 0)
