@@ -59,9 +59,11 @@ def main():
             print(Accuracy)
             print(CostTime)
             if typeChange <3:
-                saveLog(dataType[0], Process_dataset, model, Accuracy, CostTime)
+                dataTypeLog = "Data type: " + dataType[0] + "\n"
             else:
-                saveLog(dataType[1], Process_dataset, model, Accuracy, CostTime)
+                dataTypeLog = "Data type: " + dataType[1] + "\n"
+
+            saveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime)
             
 
 if __name__ == "__main__":
