@@ -41,9 +41,9 @@ class Mymodel():
         """
         merge story and question vector by add, calculate similarity with merge story and option vector
         """
-        story = bc.encode([self.s_string])
-        question = bc.encode([self.q_string])
-        options = bc.encode(self.options)
+        story = self.softmax(bc.encode([self.s_string]))
+        question = self.softmax(bc.encode([self.q_string]))
+        options = self.softmax(bc.encode(self.options))
         merStoryQue = [x + y for x, y in zip(story, question)]
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
@@ -60,34 +60,14 @@ class Mymodel():
         """
         merge story and question vector by dot, calculate similarity with merge story and option vector
         """
-        story = bc.encode([self.s_string])
-        question = bc.encode([self.q_string])
-        options = bc.encode(self.options)
+        story = self.softmax(bc.encode([self.s_string]))
+        question = self.softmax(bc.encode([self.q_string]))
+        options = self.softmax(bc.encode(self.options))
         merStoryQue = [x * y for x, y in zip(story, question)]
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
             merStoryOpt = [x * y for x, y in zip(story, option)]
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, merStoryOpt)
-            if tmpScore > highestScore:
-                guessAnswer = ind
-                highestScore = tmpScore
-            ind += 1
-        
-        return guessAnswer
-    
-    def SecondModelWithSoftmax(self, bc):
-        """
-        merge story and question vector by dot, calculate similarity with merge story and option vector
-        """
-        story = bc.encode([self.s_string])
-        question = bc.encode([self.q_string])
-        options = bc.encode(self.options)
-
-        merStoryQue = [x * y for x, y in zip(story, question)]
-        ind, guessAnswer, highestScore = 0, 0, 0
-        for option in options:
-            merStoryOpt = [x * y for x, y in zip(story, option)]
-            tmpScore = 1 - spatial.distance.cosine(self.softmax(merStoryQue), self.softmax(merStoryOpt))
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -170,9 +150,9 @@ class Mymodel():
         if tmp_string != "":
             sentences.append(tmp_string)
 
-        story_sentences = bc.encode(sentences)
-        question = bc.encode([self.q_string])
-        options = bc.encode(self.options)
+        story_sentences = self.softmax(bc.encode(sentences))
+        question = self.softmax(bc.encode([self.q_string]))
+        options = self.softmax(bc.encode(self.options))
         ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
 
         for s in story_sentences:
@@ -192,9 +172,9 @@ class Mymodel():
         return guessAnswer
 
     def FifthModel(self, bc):
-
-        merStoryQue = bc.encode([self.s_string + self.q_string]) 
-        options = bc.encode(self.options)
+        
+        merStoryQue = self.softmax(bc.encode([self.s_string + self.q_string]))
+        options = self.softmax(bc.encode(self.options))
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
@@ -207,11 +187,11 @@ class Mymodel():
         return guessAnswer
     
     def SixthModel(self, bc):
-        story = bc.encode([self.s_string])
+        story = self.softmax(bc.encode([self.s_string]))
         for i in range(len(self.options)):
             self.options[i] = self.q_string + self.options[i]
         
-        merQueOpts = bc.encode(self.options)
+        merQueOpts = self.softmax(bc.encode(self.options))
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in merQueOpts:
@@ -224,11 +204,11 @@ class Mymodel():
         return guessAnswer
     
     def SeventhModel(self, bc):
-        question = bc.encode([self.q_string])
+        question = self.softmax(bc.encode([self.q_string]))
         # merge story and options
         for o in range(len(self.options)):
             self.options[o] = self.options[o] + self.s_string
-        merStoryOpt = bc.encode(self.options)
+        merStoryOpt = self.softmax(bc.encode(self.options))
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in merStoryOpt:
@@ -242,10 +222,10 @@ class Mymodel():
 
     def EighthModel(self, bc):
         
-        story = bc.encode([self.s_string])
-        question = bc.encode([self.q_string])
+        story = self.softmax(bc.encode([self.s_string]))
+        question = self.softmax(bc.encode([self.q_string]))
         merStoryQue = [x + y for x, y in zip(story, question)]
-        options = bc.encode(self.options)
+        options = self.softmax(bc.encode(self.options))
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
@@ -258,11 +238,11 @@ class Mymodel():
         return guessAnswer
     
     def NinthModel(self, bc):
-        merStoryQue = bc.encode([self.s_string + self.q_string]) 
+        merStoryQue = self.softmax(bc.encode([self.s_string + self.q_string]))
         # merge story and options
         for o in range(len(self.options)):
             self.options[o] = self.options[o] + self.s_string
-        merStoryOpt = bc.encode(self.options)
+        merStoryOpt = self.softmax(bc.encode(self.options))
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in merStoryOpt:
@@ -275,8 +255,8 @@ class Mymodel():
         return guessAnswer
 
     def TenthModel(self, bc):
-        story = bc.encode([self.s_string]) 
-        options = bc.encode(self.options)
+        story = self.softmax(bc.encode([self.s_string])) 
+        options = self.softmax(bc.encode(self.options))
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
