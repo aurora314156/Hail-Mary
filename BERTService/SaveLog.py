@@ -28,15 +28,15 @@ class SaveLog():
         sheet = wb.get_sheet(0)
 
         sheet.write(0, 0, 'model')
-        sheet.write(0, 1, 'train')
+        sheet.write(0, 1, 'test')
         sheet.write(0, 2, 'dev')
-        sheet.write(0, 3, 'test') 
+        sheet.write(0, 3, 'train') 
         sheet.write(0, 4, '')
         sheet.write(0, 5, '')
         sheet.write(0, 6, 'model')
-        sheet.write(0, 7, 'train')
+        sheet.write(0, 7, 'test')
         sheet.write(0, 8, 'dev')
-        sheet.write(0, 9, 'test')
+        sheet.write(0, 9, 'train')
         for i in range(1,11):
             sheet.write(i, 0, str(i))
 

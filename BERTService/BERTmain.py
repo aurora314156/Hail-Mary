@@ -29,7 +29,7 @@ def main():
                 continue
             for single_data in single_dataset:
                 print(single_data['storyName'])
-                s_string, q_string, options, answer = ContentParser.getContent(single_data)
+                s_string, q_string, options, answer = ContentParser(single_data).getContent()
                 guessAnswer = Mymodel(bc, s_string, q_string, options, m).MymodelMain()
                 if guessAnswer == answer:
                     correct += 1
