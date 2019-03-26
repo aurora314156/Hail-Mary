@@ -27,6 +27,7 @@ class LoadData():
                 with open(dataSetPath, 'r') as d:
                     data = json.load(d)
                 dataSet.append(dataName)
+                print(dataName)
                 dataSet.append(data)
 
         return dataSet

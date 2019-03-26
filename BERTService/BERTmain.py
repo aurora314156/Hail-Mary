@@ -3,7 +3,7 @@ from numpy import array
 from Initial import Initial
 from Mymodel import Mymodel
 from SaveLog import SaveLog
-from ContentParser import getContent
+from ContentParser import ContentParser
 from bert_serving.client import BertClient
 
 
@@ -43,8 +43,8 @@ def main():
             else:
                 dataTypeLog = "Data type: " + dataType[1] + "\n"
 
-            SaveLog.saveLogTxt(dataTypeLog, Process_dataset, model, Accuracy, CostTime)
-    SaveLog.saveLogExcel(AccuracyList)
+            SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime).saveLogTxt()
+    SaveLog(AccuracyList).saveLogExcel()
             
 
 if __name__ == "__main__":

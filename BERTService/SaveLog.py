@@ -5,7 +5,7 @@ from xlrd import open_workbook
 from xlutils.copy import copy
 
 class SaveLog():
-    def __init__(self, dataType, Process_dataset, model, Accuracy, CostTime, AccuracyList):
+    def __init__(self, dataType="", Process_dataset="", model="", Accuracy="", CostTime="", AccuracyList=""):
         self.dataType = dataType
         self.Process_dataset = Process_dataset
         self.model = model
@@ -13,15 +13,15 @@ class SaveLog():
         self.CostTime = CostTime
         self.AccuracyList = AccuracyList
 
-    def saveLogTxt(self, dataType, Process_dataset, model, Accuracy, CostTime):
+    def saveLogTxt(self):
         with open('log.txt', 'a') as log:
-            log.write(dataType)
-            log.write(Process_dataset)
-            log.write(model)
-            log.write(Accuracy)
-            log.write(CostTime)
+            log.write(self.dataType)
+            log.write(self.Process_dataset)
+            log.write(self.model)
+            log.write(self.Accuracy)
+            log.write(self.CostTime)
 
-    def saveLogExcel(self, AccuracyList):
+    def saveLogExcel(self):
         rb = open_workbook("experiment.xls")
         wb = copy(rb)
 
@@ -41,7 +41,7 @@ class SaveLog():
             sheet.write(i, 0, str(i))
 
         ind_x, ind_y = 1, 1
-        for a in AccuracyList:
+        for a in self.AccuracyList:
             sheet.write(ind_y, ind_x, str(a))
             ind_x += 1
             if ind_x % 8 == 0:
