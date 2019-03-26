@@ -175,7 +175,7 @@ class Mymodel():
 
     def FifthModel(self, bc):
         
-        merStoryQue = self.softmax(bc.encode([self.s_string + self.q_string]))
+        merStoryQue = self.softmax(bc.encode([self.q_string + self.s_string]))
         options = self.softmax(bc.encode(self.options))
 
         ind, guessAnswer, highestScore = 0, 0, 0
@@ -191,7 +191,7 @@ class Mymodel():
     def SixthModel(self, bc):
         story = self.softmax(bc.encode([self.s_string]))
         for i in range(len(self.options)):
-            self.options[i] = self.q_string + self.options[i]
+            self.options[i] = self.options[i] + self.q_string 
         
         merQueOpts = self.softmax(bc.encode(self.options))
 
@@ -240,7 +240,7 @@ class Mymodel():
         return guessAnswer
     
     def NinthModel(self, bc):
-        merStoryQue = self.softmax(bc.encode([self.s_string + self.q_string]))
+        merStoryQue = self.softmax(bc.encode([self.q_string + self.s_string]))
         # merge story and options
         for o in range(len(self.options)):
             self.options[o] = self.options[o] + self.s_string
