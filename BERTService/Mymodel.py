@@ -271,7 +271,7 @@ class Mymodel():
         return guessAnswer
 
     def EleventhModel(self, bc):
-        merStoryQue = self.softmax(bc.encode([self.q_string + self.s_string]))
+        merStoryQue = self.softmax(bc.encode([self.s_string + self.q_string]))
         for i in range(len(self.options)):
             self.options[i] = self.q_string + self.options[i]
         
