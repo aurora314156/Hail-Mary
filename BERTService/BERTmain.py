@@ -33,7 +33,8 @@ def main():
                 guessAnswer = Mymodel(bc, s_string, q_string, options, m).MymodelMain()
                 if guessAnswer == answer:
                     correct += 1
-            Accuracy = "Accuracy: " + str(round(correct/len(single_dataset),3)) + "\n"
+            accuracy = round(correct/len(single_dataset),3)
+            Accuracy = "Accuracy: " + str() + "\n"
             CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n\n"
             AccuracyList.append(correct/len(single_dataset))
             print(Accuracy)

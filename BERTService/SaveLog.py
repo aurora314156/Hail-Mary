@@ -41,7 +41,6 @@ class SaveLog():
             sheet.write(i, 0, str(i))
 
         ind_x, ind_y = 1, 1
-        print(len(self.AccuracyList))
         for a in self.AccuracyList:
             sheet.write(ind_y, ind_x, str(a))
             ind_x += 1
