@@ -39,14 +39,16 @@ def saveLogExcel(AccuracyList):
 
     sheet = wb.get_sheet(0)
 
-    sheet.write(0, 0, 'model') 
-    sheet.write(0, 1, 'test') 
-    sheet.write(0, 2, 'train') 
-    sheet.write(0, 3, 'dev') 
+    sheet.write(0, 0, 'model')
+    sheet.write(0, 1, 'train')
+    sheet.write(0, 2, 'dev')
+    sheet.write(0, 3, 'test') 
     sheet.write(0, 4, '')
-    sheet.write(0, 5, 'test')
-    sheet.write(0, 6, 'train')
-    sheet.write(0, 7, 'dev')
+    sheet.write(0, 5, '')
+    sheet.write(0, 6, 'model')
+    sheet.write(0, 7, 'train')
+    sheet.write(0, 8, 'dev')
+    sheet.write(0, 9, 'test')
     for i in range(1,11):
         sheet.write(i, 0, str(i))
 
