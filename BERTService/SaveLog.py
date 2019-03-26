@@ -5,7 +5,7 @@ from xlrd import open_workbook
 from xlutils.copy import copy
 
 class SaveLog():
-    def __init__(self, dataType="", Process_dataset="", model="", Accuracy="", CostTime="", AccuracyList=""):
+    def __init__(self, dataType="", Process_dataset="", model="", Accuracy="", CostTime="", AccuracyList=[]):
         self.dataType = dataType
         self.Process_dataset = Process_dataset
         self.model = model
@@ -30,7 +30,7 @@ class SaveLog():
         sheet.write(0, 0, 'model')
         sheet.write(0, 1, 'test')
         sheet.write(0, 2, 'dev')
-        sheet.write(0, 3, 'train') 
+        sheet.write(0, 3, 'train')
         sheet.write(0, 4, '')
         sheet.write(0, 5, '')
         sheet.write(0, 6, 'model')
@@ -41,6 +41,7 @@ class SaveLog():
             sheet.write(i, 0, str(i))
 
         ind_x, ind_y = 1, 1
+        print(len(self.AccuracyList))
         for a in self.AccuracyList:
             sheet.write(ind_y, ind_x, str(a))
             ind_x += 1

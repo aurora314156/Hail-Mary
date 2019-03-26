@@ -44,7 +44,7 @@ def main():
                 dataTypeLog = "Data type: " + dataType[1] + "\n"
 
             SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime).saveLogTxt()
-    SaveLog(AccuracyList).saveLogExcel()
+    SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime, AccuracyList).saveLogExcel()
             
 
 if __name__ == "__main__":
