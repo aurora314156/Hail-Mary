@@ -1,7 +1,7 @@
 
 
-
 class ContentParser():
+    
     def getContent(self, single_data):
     
         s_string, q_string, o_string, options = "", "", "", []
@@ -18,4 +18,3 @@ class ContentParser():
             
         answer = single_data['answer']
         return s_string[:-1], q_string[:-1], options, answer
-        

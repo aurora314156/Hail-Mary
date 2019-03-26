@@ -3,7 +3,7 @@ from numpy import array
 from Initial import Initial
 from Mymodel import Mymodel
 from SaveLog import SaveLog
-from ContentParser import ContentParser
+from ContentParser import getContent
 from bert_serving.client import BertClient
 
 

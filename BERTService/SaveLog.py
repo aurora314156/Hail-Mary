@@ -5,7 +5,14 @@ from xlrd import open_workbook
 from xlutils.copy import copy
 
 class SaveLog():
-    
+    def __init__(self, dataType, Process_dataset, model, Accuracy, CostTime, AccuracyList):
+        self.dataType = dataType
+        self.Process_dataset = Process_dataset
+        self.model = model
+        self.Accuracy = Accuracy
+        self.CostTime = CostTime
+        self.AccuracyList = AccuracyList
+
     def saveLogTxt(self, dataType, Process_dataset, model, Accuracy, CostTime):
         with open('log.txt', 'a') as log:
             log.write(dataType)
