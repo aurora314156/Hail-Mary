@@ -273,7 +273,7 @@ class Mymodel():
     def EleventhModel(self, bc):
         merStoryQue = self.softmax(bc.encode([self.q_string + self.s_string]))
         for i in range(len(self.options)):
-            self.options[i] = self.options[i] + self.q_string 
+            self.options[i] = self.q_string + self.options[i]
         
         merQueOpts = self.softmax(bc.encode(self.options))
 
