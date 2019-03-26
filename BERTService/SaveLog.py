@@ -49,7 +49,7 @@ class SaveLog():
                 ind_x = 1
                 continue
             if ind_x % 4 == 0:
-                ind_x +=1
+                ind_x +=2
                 continue
             
         wb.save('experiment.xls')
