@@ -34,6 +34,8 @@ class Mymodel():
             guessAnswer = self.NinthModel(self.bc)
         if self.model == 'TenthModel':
             guessAnswer = self.TenthModel(self.bc)
+        if self.model == 'EleventhModel':
+            guessAnswer = self.EleventhModel(self.bc)
 
         return guessAnswer
     
@@ -261,6 +263,23 @@ class Mymodel():
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
             tmpScore = 1 - spatial.distance.cosine(story, option)
+            if tmpScore > highestScore:
+                guessAnswer = ind
+                highestScore = tmpScore
+            ind += 1
+        
+        return guessAnswer
+
+    def EleventhModel(self, bc):
+        merStoryQue = self.softmax(bc.encode([self.s_string + self.q_string]))
+        for i in range(len(self.options)):
+            self.options[i] = self.q_string + self.options[i]
+        
+        merQueOpts = self.softmax(bc.encode(self.options))
+
+        ind, guessAnswer, highestScore = 0, 0, 0
+        for option in merQueOpts:
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
