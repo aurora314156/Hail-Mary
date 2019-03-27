@@ -40,8 +40,8 @@ class Mymodel():
             guessAnswer = self.ThirteenthModel(self.bc)
         if self.model == 'FourteenthModel':
             guessAnswer = self.FourteenthModel(self.bc)
-        if self.model == 'test':
-            guessAnswer = self.test(self.bc)
+        if self.model == 'TestModel':
+            guessAnswer = self.TestModel(self.bc)
         
         return guessAnswer
     
@@ -348,7 +348,7 @@ class Mymodel():
                 highestScore = tmpScore
             ind += 1
         
-    def test(self,bc):
+    def TestModel(self,bc):
 
         merStoryQue = self.s_string + self.q_string
         for i in range(len(self.options)):
