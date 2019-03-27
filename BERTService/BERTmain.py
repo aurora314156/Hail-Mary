@@ -34,7 +34,7 @@ def main():
                 if guessAnswer == answer:
                     correct += 1
             accuracy = round(correct/len(single_dataset),3)
-            Accuracy = "Accuracy: " + str() + "\n"
+            Accuracy = "Accuracy: " + str(accuracy) + "\n"
             CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n\n"
             AccuracyList.append(correct/len(single_dataset))
             print(Accuracy)
