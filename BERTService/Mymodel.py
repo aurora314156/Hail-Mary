@@ -352,13 +352,13 @@ class Mymodel():
 
     def TestModel(self,bc):
 
-        merStoryQue = self.softmax(bc.encode([self.s_string + self.q_string]))
-
         merStoryQue = self.s_string + self.q_string
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + merStoryQue
         
         merStoryQueOpts = self.softmax(bc.encode(self.options))
+
+        merStoryQue = self.softmax(bc.encode([self.s_string + self.q_string]))
 
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         for option in merStoryQueOpts:
