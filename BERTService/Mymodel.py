@@ -350,19 +350,16 @@ class Mymodel():
         
     def TestModel(self,bc):
 
+        story = self.softmax(bc.encode([self.s_string]))
+
         merStoryQue = self.s_string + self.q_string
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + merStoryQue
         
         merStoryQueOpts = self.softmax(bc.encode(self.options))
 
-        for i in range(len(self.options)):
-            self.options[i] = self.options[i] + self.q_string
-        
-        merQueOpts = self.softmax(bc.encode(self.options))
-
-        for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQueOpts, option)
+        for option in merStoryQueOpts:
+            tmpScore = 1 - spatial.distance.cosine(story, option)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
