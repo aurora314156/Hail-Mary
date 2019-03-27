@@ -277,7 +277,7 @@ class Mymodel():
     def TwelfthModel(self, bc):
 
         story = self.softmax(bc.encode([self.s_string]))
-        question = self.softmax(bc.encode(self.q_string))
+        question = self.softmax(bc.encode([self.q_string]))
         
         merStoryQue = [x + y for x, y in zip(story, question)]
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
@@ -302,7 +302,7 @@ class Mymodel():
     def ThirteenthModel(self, bc):
 
         story = self.softmax(bc.encode([self.s_string]))
-        question = self.softmax(bc.encode(self.q_string))
+        question = self.softmax(bc.encode([self.q_string]))
         
         merStoryQue = [x + y for x, y in zip(story, question)]
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
