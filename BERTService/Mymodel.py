@@ -40,7 +40,7 @@ class Mymodel():
             guessAnswer = self.ThirteenthModel(self.bc)
         if self.model == 'FourteenthModel':
             guessAnswer = self.FourteenthModel(self.bc)
-        if self.model == 'TestModel':
+        if self.model == 'TestModel2':
             guessAnswer = self.TestModel(self.bc)
         
         return guessAnswer
@@ -363,6 +363,24 @@ class Mymodel():
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         for option in merStoryQueOpts:
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
+            if tmpScore > highestScore:
+                guessAnswer = ind
+                highestScore = tmpScore
+            ind += 1
+        
+        return guessAnswer
+    
+    def TestModel2(self,bc):
+
+        question = self.softmax(bc.encode([self.q_string]))
+        for i in range(len(self.options)):
+            self.options[i] = self.options[i] + self.q_string 
+        
+        merQueOpts = self.softmax(bc.encode(self.options))
+
+        tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
+        for option in merQueOpts:
+            tmpScore = 1 - spatial.distance.cosine(option, question)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
