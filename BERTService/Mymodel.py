@@ -347,6 +347,8 @@ class Mymodel():
                 guessAnswer = ind
                 highestScore = tmpScore
             ind += 1
+            
+        return guessAnswer
         
     def TestModel(self,bc):
 
