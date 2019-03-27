@@ -358,6 +358,7 @@ class Mymodel():
         
         merStoryQueOpts = self.softmax(bc.encode(self.options))
 
+        tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         for option in merStoryQueOpts:
             tmpScore = 1 - spatial.distance.cosine(story, option)
             if tmpScore > highestScore:
