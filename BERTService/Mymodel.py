@@ -38,7 +38,11 @@ class Mymodel():
             guessAnswer = self.TwelfthModel(self.bc)
         if self.model == 'ThirteenthModel':
             guessAnswer = self.ThirteenthModel(self.bc)
-
+        if self.model == 'FourteenthModel':
+            guessAnswer = self.FourteenthModel(self.bc)
+        if self.model == 'test':
+            guessAnswer = self.test(self.bc)
+        
         return guessAnswer
     
     def FirstModel(self,bc):
@@ -320,7 +324,53 @@ class Mymodel():
             ind += 1
         
         return guessAnswer
-       
+
+    def FourteenthModel(self, bc):
+
+        merStoryQue = self.softmax(bc.encode([self.s_string + self.q_string]))
+        question = self.softmax(bc.encode([self.q_string]))
+
+        merStoryQue = [x + y for x, y in zip(merStoryQue, question)]
+        tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
+        for i in range(20):
+            tmp = [x + y for x, y in zip(merStoryQue, question)]
+            merStoryQue = tmp
+
+        for i in range(len(self.options)):
+            self.options[i] = self.options[i] + self.q_string
+        
+        merQueOpts = self.softmax(bc.encode(self.options))
+
+        for option in merQueOpts:
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
+            if tmpScore > highestScore:
+                guessAnswer = ind
+                highestScore = tmpScore
+            ind += 1
+        
+    def test(self,bc):
+
+        merStoryQue = self.s_string + self.q_string
+        for i in range(len(self.options)):
+            self.options[i] = self.options[i] + merStoryQue
+        
+        merStoryQueOpts = self.softmax(bc.encode(self.options))
+
+        for i in range(len(self.options)):
+            self.options[i] = self.options[i] + self.q_string
+        
+        merQueOpts = self.softmax(bc.encode(self.options))
+
+        for option in merQueOpts:
+            tmpScore = 1 - spatial.distance.cosine(merStoryQueOpts, option)
+            if tmpScore > highestScore:
+                guessAnswer = ind
+                highestScore = tmpScore
+            ind += 1
+        
+        return guessAnswer
+        
+
 
     def softmax(self, x):
         """Compute softmax values for each sets of scores in x."""
