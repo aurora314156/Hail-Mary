@@ -45,10 +45,8 @@ class SaveLog():
             if ind_x == 9:
                 ind_y += 1
                 ind_x = 1
-                continue
-            if ind_x == 4:
+            elif ind_x == 4:
                 ind_x +=2
-                continue
             sheet.write(ind_y, ind_x, str(a))
             ind_x += 1
             
