@@ -36,7 +36,7 @@ def main():
             accuracy = round(correct/len(single_dataset),3)
             Accuracy = "Accuracy: " + str(accuracy) + "\n"
             CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n\n"
-            AccuracyList.append(correct/len(single_dataset))
+            AccuracyList.append(accuracy)
             print(Accuracy)
             print(CostTime)
             if typeChange <4:

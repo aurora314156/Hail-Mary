@@ -22,10 +22,11 @@ class SaveLog():
             log.write(self.CostTime)
 
     def saveLogExcel(self):
-        rb = open_workbook("experiment.xls")
-        wb = copy(rb)
+        os.remove("experiment.xls")
+        print("remove original xls")
+        wb = Workbook()
 
-        sheet = wb.get_sheet(0)
+        sheet = wb.add_sheet('Sheet 1')
 
         sheet.write(0, 0, 'model')
         sheet.write(0, 1, 'test')
