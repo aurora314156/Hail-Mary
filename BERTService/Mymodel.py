@@ -11,7 +11,7 @@ class Mymodel():
         self.options = options
        
     def MymodelMain(self):
-        #guessAnswer = self.FirstModel()
+        
         if self.model == 'FirstModel':
             guessAnswer = self.FirstModel(self.bc)
         if self.model == 'SecondModel':

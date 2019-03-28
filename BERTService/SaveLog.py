@@ -37,7 +37,7 @@ class SaveLog():
         sheet.write(0, 6, 'test')
         sheet.write(0, 7, 'dev')
         sheet.write(0, 8, 'train')
-        for i in range(1,11):
+        for i in range(1,17):
             sheet.write(i, 0, str(i))
 
         ind_x, ind_y = 1, 1
