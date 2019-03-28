@@ -33,10 +33,9 @@ class SaveLog():
         sheet.write(0, 3, 'train')
         sheet.write(0, 4, '')
         sheet.write(0, 5, '')
-        sheet.write(0, 6, 'model')
-        sheet.write(0, 7, 'test')
-        sheet.write(0, 8, 'dev')
-        sheet.write(0, 9, 'train')
+        sheet.write(0, 6, 'test')
+        sheet.write(0, 7, 'dev')
+        sheet.write(0, 8, 'train')
         for i in range(1,11):
             sheet.write(i, 0, str(i))
 
