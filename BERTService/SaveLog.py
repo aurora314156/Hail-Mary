@@ -41,14 +41,14 @@ class SaveLog():
 
         ind_x, ind_y = 1, 1
         for a in self.AccuracyList:
-            sheet.write(ind_y, ind_x, str(a))
-            ind_x += 1
-            if ind_x % 8 == 0:
+            if ind_x == 9:
                 ind_y += 1
                 ind_x = 1
                 continue
-            elif ind_x % 4 == 0:
+            if ind_x == 4:
                 ind_x +=2
                 continue
+            sheet.write(ind_y, ind_x, str(a))
+            ind_x += 1
             
         wb.save('experiment.xls')
