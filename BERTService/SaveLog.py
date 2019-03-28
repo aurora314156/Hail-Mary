@@ -43,7 +43,7 @@ class SaveLog():
         for a in self.AccuracyList:
             sheet.write(ind_y, ind_x, str(a))
             ind_x += 1
-            if ind_x % 8 == 0:
+            if ind_x % 9 == 0:
                 ind_y += 1
                 ind_x = 1
                 continue
