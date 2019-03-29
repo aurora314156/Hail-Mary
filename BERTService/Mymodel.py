@@ -464,8 +464,6 @@ class Mymodel():
 
         return guessAnswer
 
-
-
     def TestModel(self,bc):
 
         merStoryQue = self.s_string + self.q_string
