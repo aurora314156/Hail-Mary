@@ -10,9 +10,9 @@ class TFIDF():
 
     def getTFIDFWeigths(self):
         corpus = []
-        corpus.append(s_string)
-        corpus.append(q_string)
-        for o in options:
+        corpus.append(self.s_string)
+        corpus.append(self.q_string)
+        for o in self.options:
             corpus.append(o)
 
         #将文本中的词语转换为词频矩阵
