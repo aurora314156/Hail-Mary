@@ -44,6 +44,8 @@ class Mymodel():
             guessAnswer = self.FifteenthModel(self.bc)
         if self.model == 'SixteenthModel':
             guessAnswer = self.SixteenthModel(self.bc)
+        if self.model == 'SeventeenthModel':
+            guessAnswer = self.SeventeenthModel(self.bc)
         if self.model == 'TestModel2':
             guessAnswer = self.TestModel(self.bc)
         
@@ -463,6 +465,62 @@ class Mymodel():
             ind += 1
 
         return guessAnswer
+    
+    def SeventeenthModel(self, bc):
+        """
+        encode eacht story sentences with question sentence, then calculate similarity with wholte story and question
+        choose highest vector to calculate similarity with question and options
+        """
+        sentences, tmp_string, sentence = [], "", ""
+        for s in self.s_string[:len(self.s_string)-1]:
+            tmp_string += s
+            # reserve sentence structure
+            if s == "." or s == "?" or s == "!":
+                # remove "," "." "?"
+                sentence = ""
+                for t in tmp_string:
+                    if t is "," or t is "." or t is "?":
+                        continue
+                    else:
+                        sentence += t
+                if len(sentence) >1:
+                    if sentence[0] == " ":
+                        sentences.append(sentence[:-1])
+                    else:
+                        sentences.append(sentence)
+                tmp_string = ""
+                continue
+
+        # use whole story structure
+        if tmp_string != "":
+            sentences.append(tmp_string)
+
+        storySentences = self.softmax(bc.encode(sentences))
+        question = self.softmax(bc.encode([self.q_string]))
+
+        for i in range(len(self.options)):
+            self.options[i] = self.options[i] + self.q_string
+        
+        merQueOpts = self.softmax(bc.encode(self.options))
+
+        ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
+
+        for s in storySentences:
+            tmpScore = 1 - spatial.distance.cosine(s, question)
+            if tmpScore > highestScore:
+                highestScore_storyVector = s
+                highestScore = tmpScore
+
+        highestScore = 0
+        for option in merQueOpts:
+            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector)
+            if tmpScore > highestScore:
+                guessAnswer = ind
+                highestScore = tmpScore
+            ind += 1
+
+        return guessAnswer
+    
 
     def TestModel(self,bc):
 
