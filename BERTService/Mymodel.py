@@ -1,4 +1,5 @@
 from scipy import spatial
+from TFIDF import TFIDF
 from bert_serving.client import BertClient
 import numpy as np
 
@@ -11,7 +12,7 @@ class Mymodel():
         self.options = options
        
     def MymodelMain(self):
-        
+
         if self.model == 'FirstModel':
             guessAnswer = self.FirstModel(self.bc)
         if self.model == 'SecondModel':
@@ -361,6 +362,10 @@ class Mymodel():
         encode eacht story sentences with question sentence, then calculate similarity with wholte story and question
         choose highest vector to calculate similarity with question and options
         """
+
+        TFIDFWeights = TFIDF.getTFIDFWeigths(self.s_string, self.q_string, self.options)
+
+
         sentences, tmp_string, sentence = [], "", ""
         for s in self.s_string[:len(self.s_string)-1]:
             tmp_string += s

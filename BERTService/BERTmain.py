@@ -31,6 +31,7 @@ def main():
                 print(single_data['storyName'])
                 s_string, q_string, options, answer = ContentParser(single_data).getContent()
                 guessAnswer = Mymodel(bc, s_string, q_string, options, m).MymodelMain()
+                return 0
                 if guessAnswer == answer:
                     correct += 1
             accuracy = round(correct/len(single_dataset),3)
