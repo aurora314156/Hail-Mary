@@ -291,7 +291,7 @@ class Mymodel():
         
         merStoryQue = [x + y for x, y in zip(story, question)]
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
-        for i in range(20):
+        for i in range(200):
             tmp = [x + y for x, y in zip(merStoryQue, question)]
             merStoryQue = tmp
 
@@ -316,7 +316,7 @@ class Mymodel():
         
         merStoryQue = [x + y for x, y in zip(story, question)]
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
-        for i in range(20):
+        for i in range(200):
             tmp = [x + y for x, y in zip(merStoryQue, question)]
             merStoryQue = tmp
 
@@ -338,7 +338,7 @@ class Mymodel():
 
         merStoryQue = [x + y for x, y in zip(merStoryQue, question)]
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
-        for i in range(20):
+        for i in range(200):
             tmp = [x + y for x, y in zip(merStoryQue, question)]
             merStoryQue = tmp
 
