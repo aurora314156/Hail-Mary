@@ -117,14 +117,13 @@ class Mymodel():
 
         for option in self.options:
             tmp = 0
-            for o in option:
-                print(type(o))
-                print(o)
+            for o in option.split(" "):
                 if o not in TF_words:
                     continue
                 tmp += TF_scores[0][TF_words.index(o)]
             options_tfscores.append(tmp)
         
+        print(options_tfscores)
         
         for option in merQueOpts:
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + options_tfscores[ind]
