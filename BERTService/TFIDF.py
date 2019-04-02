@@ -22,9 +22,9 @@ class TFIDF():
         X = vectorizer.fit_transform(corpus)
         #获取词袋中所有文本关键词
         word = vectorizer.get_feature_names()
-        print(word)
+        #print(word)
         #查看词频结果
-        print(X.toarray())
+        #print(X.toarray())
         #类调用
         transformer = TfidfTransformer()
         #print(transformer)
