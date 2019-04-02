@@ -10,6 +10,7 @@ class Mymodel():
         self.s_string = s_string
         self.q_string = q_string
         self.options = options
+        self.stop_words = ["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", "its", "itself", "they", "them", "their", "theirs", "themselves", "what", "which", "who", "whom", "this", "that", "these", "those", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does", "did", "doing", "a", "an", "the", "and", "but", "if", "or", "because", "as", "until", "while", "of", "at", "by", "for", "with", "about", "against", "between", "into", "through", "during", "before", "after", "above", "below", "to", "from", "up", "down", "in", "out", "on", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t", "can", "will", "just", "don", "should", "now"]
        
     def MymodelMain(self):
 
@@ -118,13 +119,13 @@ class Mymodel():
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o not in TF_words:
+                if o not in TF_words or o in self.stop_words:
                     continue
                 tmp += TF_scores[0][TF_words.index(o)]
             options_tfscores.append(tmp)
         
         print(options_tfscores)
-        
+
         for option in merQueOpts:
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + options_tfscores[ind]
             print(tmpScore)
@@ -208,9 +209,24 @@ class Mymodel():
         
         merQueOpts = self.softmax(bc.encode(self.options))
 
+        # test add tf-idf score
+        TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
+
+        options_tfscores = []
+
+        for option in self.options:
+            tmp = 0
+            for o in option.split(" "):
+                if o not in TF_words or o in self.stop_words:
+                    continue
+                tmp += TF_scores[0][TF_words.index(o)]
+            options_tfscores.append(tmp)
+        
+        print(options_tfscores)
+
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(story, option)
+            tmpScore = 1 - spatial.distance.cosine(story, option) + options_tfscores[ind]
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -316,8 +332,24 @@ class Mymodel():
         
         merQueOpts = self.softmax(bc.encode(self.options))
 
+
+        # test add tf-idf score
+        TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
+
+        options_tfscores = []
+
+        for option in self.options:
+            tmp = 0
+            for o in option.split(" "):
+                if o not in TF_words or o in self.stop_words:
+                    continue
+                tmp += TF_scores[0][TF_words.index(o)]
+            options_tfscores.append(tmp)
+        
+        print(options_tfscores)
+
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + options_tfscores[ind]
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -338,8 +370,24 @@ class Mymodel():
 
         options = self.softmax(bc.encode(self.options))
 
+
+        # test add tf-idf score
+        TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
+
+        options_tfscores = []
+
+        for option in self.options:
+            tmp = 0
+            for o in option.split(" "):
+                if o not in TF_words or o in self.stop_words:
+                    continue
+                tmp += TF_scores[0][TF_words.index(o)]
+            options_tfscores.append(tmp)
+        
+        print(options_tfscores)
+
         for option in options:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + options_tfscores[ind]
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -363,8 +411,23 @@ class Mymodel():
         
         merQueOpts = self.softmax(bc.encode(self.options))
 
+        # test add tf-idf score
+        TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
+
+        options_tfscores = []
+
+        for option in self.options:
+            tmp = 0
+            for o in option.split(" "):
+                if o not in TF_words or o in self.stop_words:
+                    continue
+                tmp += TF_scores[0][TF_words.index(o)]
+            options_tfscores.append(tmp)
+        
+        print(options_tfscores)
+
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + options_tfscores[ind]
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -488,9 +551,23 @@ class Mymodel():
                 highestScore_storyVector = s
                 highestScore = tmpScore
 
+        # test add tf-idf score
+        TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
+
+        options_tfscores = []
+
+        for option in self.options:
+            tmp = 0
+            for o in option:
+                if o not in TF_words:
+                    continue
+                tmp += TF_scores[0][TF_words.index(o)]
+            options_tfscores.append(tmp)
+        
+
         highestScore = 0
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector)
+            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector) + options_tfscores[ind]
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -543,9 +620,22 @@ class Mymodel():
                 highestScore_storyVector = s
                 highestScore = tmpScore
 
+        # test add tf-idf score
+        TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
+
+        options_tfscores = []
+
+        for option in self.options:
+            tmp = 0
+            for o in option:
+                if o not in TF_words:
+                    continue
+                tmp += TF_scores[0][TF_words.index(o)]
+            options_tfscores.append(tmp)
+
         highestScore = 0
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector)
+            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector) + options_tfscores[ind]
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
