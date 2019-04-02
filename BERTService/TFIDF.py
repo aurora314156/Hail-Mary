@@ -29,6 +29,15 @@ class TFIDF():
         #print(transformer)
         #将词频矩阵X统计成TF-IDF值
         tfidf = transformer.fit_transform(X)
-        #查看数据结构 tfidf[i][j]表示i类文本中的tf-idf权重
-        print(tfidf.toarray())
+        # get words and scores
+        tfidf_word = vectorizer.get_feature_names()
+        tfidf_scores = tfidf.toarray()
+        
+        for i in range(len(weight)):
+            print(u"-------这里输出第",i,u"类文本的词语tf-idf权重------")
+            for j in range(len(word)):
+                print("word: {}, score: {}".format(word[j],weight[i][j]))
+
         print("done")
+
+        return tfidf_word, tfidf_scores

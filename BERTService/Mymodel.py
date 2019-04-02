@@ -363,7 +363,7 @@ class Mymodel():
         choose highest vector to calculate similarity with question and options
         """
 
-        TFIDFWeights = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
+        TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
 
 
         sentences, tmp_string, sentence = [], "", ""
