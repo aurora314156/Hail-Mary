@@ -33,10 +33,10 @@ class TFIDF():
         tfidf_word = vectorizer.get_feature_names()
         tfidf_scores = tfidf.toarray()
         
-        for i in range(len(weight)):
+        for i in range(len(tfidf_scores)):
             print(u"-------这里输出第",i,u"类文本的词语tf-idf权重------")
-            for j in range(len(word)):
-                print("word: {}, score: {}".format(word[j],weight[i][j]))
+            for j in range(len(tfidf_word)):
+                print("word: {}, score: {}".format(tfidf_word[j],tfidf_scores[i][j]))
 
         print("done")
 
