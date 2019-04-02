@@ -1,6 +1,7 @@
 
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.preprocessing import Normalizer
 
 class TFIDF():
     def __init__(self, s_string, q_string, options):
@@ -33,7 +34,10 @@ class TFIDF():
         # get words and scores
         tfidf_word = vectorizer.get_feature_names()
         tfidf_scores = tfidf.toarray()
-        print(type(tfidf_scores))
+
+        # normalizer
+        norm1 = Normalizer(norm='l2')
+        normalizer_scores = norm1.fit_transform(tfidf_scores)
         
         # for i in range(len(tfidf_scores)):
         #     print(u"-------这里输出第",i,u"类文本的词语tf-idf权重------")
@@ -43,4 +47,4 @@ class TFIDF():
 
         # print("done")
 
-        return tfidf_word, tfidf_scores
+        return tfidf_word, normalizer_scores
