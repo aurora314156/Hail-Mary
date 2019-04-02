@@ -40,6 +40,9 @@ class TFIDF():
                 if tfidf_scores[i][j] > 0:
                     print("word: {}, score: {}".format(tfidf_word[j],tfidf_scores[i][j]))
 
+        print(len(tfidf_scores))
+        print(len(tfidf_word))
+
 
         print("done")
 

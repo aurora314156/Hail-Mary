@@ -363,9 +363,6 @@ class Mymodel():
         choose highest vector to calculate similarity with question and options
         """
 
-        TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
-
-
         sentences, tmp_string, sentence = [], "", ""
         for s in self.s_string[:len(self.s_string)-1]:
             tmp_string += s
@@ -406,9 +403,24 @@ class Mymodel():
                 highestScore_storyVector = s
                 highestScore = tmpScore
 
+
+        # test add tf-idf score
+        TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
+
+        options_tfscores = []
+
+        for option in self.options:
+            tmp = 0
+            for o in option:
+                if o not in TF_words:
+                    continue
+                tmp += TF_scores[0][TF_words.index(o)]
+            options_tfscores.append(tmp)
+
+
         highestScore = 0
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector)
+            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector) + options_tfscores[ind]
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
