@@ -489,11 +489,13 @@ class Mymodel():
 
         for option in self.options:
             tmp = 0
-            for o in option:
-                if o not in TF_words:
+            for o in option.split(" "):
+                if o not in TF_words or o in self.stop_words:
                     continue
                 tmp += TF_scores[0][TF_words.index(o)]
             options_tfscores.append(tmp)
+        
+        print(options_tfscores)
 
 
         highestScore = 0
@@ -558,11 +560,13 @@ class Mymodel():
 
         for option in self.options:
             tmp = 0
-            for o in option:
-                if o not in TF_words:
+            for o in option.split(" "):
+                if o not in TF_words or o in self.stop_words:
                     continue
                 tmp += TF_scores[0][TF_words.index(o)]
             options_tfscores.append(tmp)
+        
+        print(options_tfscores)
         
 
         highestScore = 0
@@ -627,11 +631,13 @@ class Mymodel():
 
         for option in self.options:
             tmp = 0
-            for o in option:
-                if o not in TF_words:
+            for o in option.split(" "):
+                if o not in TF_words or o in self.stop_words:
                     continue
                 tmp += TF_scores[0][TF_words.index(o)]
             options_tfscores.append(tmp)
+        
+        print(options_tfscores)
 
         highestScore = 0
         for option in merQueOpts:
