@@ -10,10 +10,11 @@ class TFIDF():
 
     def getTFIDFWeigths(self):
         corpus = []
-        corpus.append(self.s_string)
-        corpus.append(self.q_string)
+        tmp = self.s_string + self.q_string
         for o in self.options:
-            corpus.append(o)
+            tmp += o
+        
+        corpus.append(tmp)
 
         #将文本中的词语转换为词频矩阵
         vectorizer = CountVectorizer()
@@ -36,7 +37,9 @@ class TFIDF():
         for i in range(len(tfidf_scores)):
             print(u"-------这里输出第",i,u"类文本的词语tf-idf权重------")
             for j in range(len(tfidf_word)):
-                print("word: {}, score: {}".format(tfidf_word[j],tfidf_scores[i][j]))
+                if tfidf_scores[i][j] > 0:
+                    print("word: {}, score: {}".format(tfidf_word[j],tfidf_scores[i][j]))
+
 
         print("done")
 
