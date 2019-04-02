@@ -104,15 +104,28 @@ class Mymodel():
             tmp = [x + y for x, y in zip(story, merStoryQue)]
             merStoryQue = tmp
 
-        # test
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + self.q_string
         
         merQueOpts = self.softmax(bc.encode(self.options))
 
 
+        # test add tf-idf score
+        TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
+
+        options_tfscores = []
+
+        for option in self.options:
+            tmp = 0
+            for o in option:
+                if o not in TF_words:
+                    continue
+                tmp += TF_scores[0][TF_words.index(o)]
+            options_tfscores.append(tmp)
+
+
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + options_tfscores[ind]
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
