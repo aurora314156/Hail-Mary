@@ -11,7 +11,8 @@ class Mymodel():
         self.q_string = q_string
         self.options = options
         self.stop_words = ["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", "its", "itself", "they", "them", "their", "theirs", "themselves", "what", "which", "who", "whom", "this", "that", "these", "those", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does", "did", "doing", "a", "an", "the", "and", "but", "if", "or", "because", "as", "until", "while", "of", "at", "by", "for", "with", "about", "against", "between", "into", "through", "during", "before", "after", "above", "below", "to", "from", "up", "down", "in", "out", "on", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t", "can", "will", "just", "don", "should", "now"]
-       
+        self.activationF = "softmax"
+
     def MymodelMain(self):
 
         if self.model == 'FirstModel':
@@ -57,9 +58,9 @@ class Mymodel():
         """
         merge story and question vector by add, calculate similarity with merge story and option vector
         """
-        story = self.softmax(bc.encode([self.s_string]))
-        question = self.softmax(bc.encode([self.q_string]))
-        options = self.softmax(bc.encode(self.options))
+        story = self.activationFunction(bc.encode([self.s_string]))
+        question = self.activationFunction(bc.encode([self.q_string]))
+        options = self.activationFunction(bc.encode(self.options))
         merStoryQue = [x + y for x, y in zip(story, question)]
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
@@ -76,9 +77,9 @@ class Mymodel():
         """
         merge story and question vector by dot, calculate similarity with merge story and option vector
         """
-        story = self.softmax(bc.encode([self.s_string]))
-        question = self.softmax(bc.encode([self.q_string]))
-        options = self.softmax(bc.encode(self.options))
+        story = self.activationFunction(bc.encode([self.s_string]))
+        question = self.activationFunction(bc.encode([self.q_string]))
+        options = self.activationFunction(bc.encode(self.options))
         merStoryQue = [x * y for x, y in zip(story, question)]
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
@@ -95,9 +96,9 @@ class Mymodel():
         """
         implementation original paper method
         """
-        story = self.softmax(bc.encode([self.s_string]))
-        question = self.softmax(bc.encode([self.q_string]))
-        options = self.softmax(bc.encode(self.options))
+        story = self.activationFunction(bc.encode([self.s_string]))
+        question = self.activationFunction(bc.encode([self.q_string]))
+        options = self.activationFunction(bc.encode(self.options))
         
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
@@ -108,7 +109,7 @@ class Mymodel():
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + self.q_string
         
-        merQueOpts = self.softmax(bc.encode(self.options))
+        merQueOpts = self.activationFunction(bc.encode(self.options))
 
 
         # test add tf-idf score
@@ -166,9 +167,9 @@ class Mymodel():
         if tmp_string != "":
             sentences.append(tmp_string)
 
-        story_sentences = self.softmax(bc.encode(sentences))
-        question = self.softmax(bc.encode([self.q_string]))
-        options = self.softmax(bc.encode(self.options))
+        story_sentences = self.activationFunction(bc.encode(sentences))
+        question = self.activationFunction(bc.encode([self.q_string]))
+        options = self.activationFunction(bc.encode(self.options))
         ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
 
         for s in story_sentences:
@@ -189,8 +190,8 @@ class Mymodel():
 
     def FifthModel(self, bc):
         
-        merStoryQue = self.softmax(bc.encode([self.q_string + self.s_string]))
-        options = self.softmax(bc.encode(self.options))
+        merStoryQue = self.activationFunction(bc.encode([self.q_string + self.s_string]))
+        options = self.activationFunction(bc.encode(self.options))
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
@@ -203,11 +204,11 @@ class Mymodel():
         return guessAnswer
     
     def SixthModel(self, bc):
-        story = self.softmax(bc.encode([self.s_string]))
+        story = self.activationFunction(bc.encode([self.s_string]))
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + self.q_string 
         
-        merQueOpts = self.softmax(bc.encode(self.options))
+        merQueOpts = self.activationFunction(bc.encode(self.options))
 
         # test add tf-idf score
         TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
@@ -235,11 +236,11 @@ class Mymodel():
         return guessAnswer
     
     def SeventhModel(self, bc):
-        question = self.softmax(bc.encode([self.q_string]))
+        question = self.activationFunction(bc.encode([self.q_string]))
         # merge story and options
         for o in range(len(self.options)):
             self.options[o] = self.options[o] + self.s_string
-        merStoryOpt = self.softmax(bc.encode(self.options))
+        merStoryOpt = self.activationFunction(bc.encode(self.options))
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in merStoryOpt:
@@ -253,10 +254,10 @@ class Mymodel():
 
     def EighthModel(self, bc):
         
-        story = self.softmax(bc.encode([self.s_string]))
-        question = self.softmax(bc.encode([self.q_string]))
+        story = self.activationFunction(bc.encode([self.s_string]))
+        question = self.activationFunction(bc.encode([self.q_string]))
         merStoryQue = [x + y for x, y in zip(story, question)]
-        options = self.softmax(bc.encode(self.options))
+        options = self.activationFunction(bc.encode(self.options))
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
@@ -269,11 +270,11 @@ class Mymodel():
         return guessAnswer
     
     def NinthModel(self, bc):
-        merStoryQue = self.softmax(bc.encode([self.q_string + self.s_string]))
+        merStoryQue = self.activationFunction(bc.encode([self.q_string + self.s_string]))
         # merge story and options
         for o in range(len(self.options)):
             self.options[o] = self.options[o] + self.s_string
-        merStoryOpt = self.softmax(bc.encode(self.options))
+        merStoryOpt = self.activationFunction(bc.encode(self.options))
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in merStoryOpt:
@@ -286,8 +287,8 @@ class Mymodel():
         return guessAnswer
 
     def TenthModel(self, bc):
-        story = self.softmax(bc.encode([self.s_string])) 
-        options = self.softmax(bc.encode(self.options))
+        story = self.activationFunction(bc.encode([self.s_string])) 
+        options = self.activationFunction(bc.encode(self.options))
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
@@ -300,11 +301,11 @@ class Mymodel():
         return guessAnswer
 
     def EleventhModel(self, bc):
-        merStoryQue = self.softmax(bc.encode([self.s_string + self.q_string]))
+        merStoryQue = self.activationFunction(bc.encode([self.s_string + self.q_string]))
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + self.q_string
         
-        merQueOpts = self.softmax(bc.encode(self.options))
+        merQueOpts = self.activationFunction(bc.encode(self.options))
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in merQueOpts:
@@ -318,8 +319,8 @@ class Mymodel():
 
     def TwelfthModel(self, bc):
 
-        story = self.softmax(bc.encode([self.s_string]))
-        question = self.softmax(bc.encode([self.q_string]))
+        story = self.activationFunction(bc.encode([self.s_string]))
+        question = self.activationFunction(bc.encode([self.q_string]))
         
         merStoryQue = [x + y for x, y in zip(story, question)]
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
@@ -330,7 +331,7 @@ class Mymodel():
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + self.q_string
         
-        merQueOpts = self.softmax(bc.encode(self.options))
+        merQueOpts = self.activationFunction(bc.encode(self.options))
 
 
         # test add tf-idf score
@@ -359,8 +360,8 @@ class Mymodel():
     
     def ThirteenthModel(self, bc):
 
-        story = self.softmax(bc.encode([self.s_string]))
-        question = self.softmax(bc.encode([self.q_string]))
+        story = self.activationFunction(bc.encode([self.s_string]))
+        question = self.activationFunction(bc.encode([self.q_string]))
         
         merStoryQue = [x + y for x, y in zip(story, question)]
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
@@ -368,7 +369,7 @@ class Mymodel():
             tmp = [x + y for x, y in zip(merStoryQue, question)]
             merStoryQue = tmp
 
-        options = self.softmax(bc.encode(self.options))
+        options = self.activationFunction(bc.encode(self.options))
 
 
         # test add tf-idf score
@@ -397,8 +398,8 @@ class Mymodel():
 
     def FourteenthModel(self, bc):
 
-        merStoryQue = self.softmax(bc.encode([self.s_string + self.q_string]))
-        question = self.softmax(bc.encode([self.q_string]))
+        merStoryQue = self.activationFunction(bc.encode([self.s_string + self.q_string]))
+        question = self.activationFunction(bc.encode([self.q_string]))
 
         merStoryQue = [x + y for x, y in zip(merStoryQue, question)]
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
@@ -409,7 +410,7 @@ class Mymodel():
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + self.q_string
         
-        merQueOpts = self.softmax(bc.encode(self.options))
+        merQueOpts = self.activationFunction(bc.encode(self.options))
 
         # test add tf-idf score
         TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
@@ -465,13 +466,13 @@ class Mymodel():
         if tmp_string != "":
             sentences.append(tmp_string)
 
-        storySentencesMerQuestion = self.softmax(bc.encode(sentences))
-        question = self.softmax(bc.encode([self.q_string]))
+        storySentencesMerQuestion = self.activationFunction(bc.encode(sentences))
+        question = self.activationFunction(bc.encode([self.q_string]))
 
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + self.q_string
         
-        merQueOpts = self.softmax(bc.encode(self.options))
+        merQueOpts = self.activationFunction(bc.encode(self.options))
 
         ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
 
@@ -537,13 +538,13 @@ class Mymodel():
         if tmp_string != "":
             sentences.append(tmp_string)
 
-        storySentencesMerQuestion = self.softmax(bc.encode(sentences))
-        storyMerQue = self.softmax(bc.encode([self.s_string + self.q_string]))
+        storySentencesMerQuestion = self.activationFunction(bc.encode(sentences))
+        storyMerQue = self.activationFunction(bc.encode([self.s_string + self.q_string]))
 
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + self.q_string
         
-        merQueOpts = self.softmax(bc.encode(self.options))
+        merQueOpts = self.activationFunction(bc.encode(self.options))
 
         ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
 
@@ -608,13 +609,13 @@ class Mymodel():
         if tmp_string != "":
             sentences.append(tmp_string)
 
-        storySentences = self.softmax(bc.encode(sentences))
-        question = self.softmax(bc.encode([self.q_string]))
+        storySentences = self.activationFunction(bc.encode(sentences))
+        question = self.activationFunction(bc.encode([self.q_string]))
 
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + self.q_string
         
-        merQueOpts = self.softmax(bc.encode(self.options))
+        merQueOpts = self.activationFunction(bc.encode(self.options))
 
         ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
 
@@ -656,9 +657,9 @@ class Mymodel():
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + merStoryQue
         
-        merStoryQueOpts = self.softmax(bc.encode(self.options))
+        merStoryQueOpts = self.activationFunction(bc.encode(self.options))
 
-        merStoryQue = self.softmax(bc.encode([self.s_string + self.q_string]))
+        merStoryQue = self.activationFunction(bc.encode([self.s_string + self.q_string]))
 
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         for option in merStoryQueOpts:
@@ -672,11 +673,11 @@ class Mymodel():
     
     def TestModel2(self,bc):
 
-        question = self.softmax(bc.encode([self.q_string]))
+        question = self.activationFunction(bc.encode([self.q_string]))
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + self.q_string 
         
-        merQueOpts = self.softmax(bc.encode(self.options))
+        merQueOpts = self.activationFunction(bc.encode(self.options))
 
         tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         for option in merQueOpts:
@@ -687,6 +688,17 @@ class Mymodel():
             ind += 1
         
         return guessAnswer
+
+    def activationFunction(self, x):
+        if self.activationF == 'softmax':
+            return self.softmax(x)
+        elif self.activationF == 'relu':
+            return self.relu(x)
+        elif self.activationF == 'drelu':
+            return self.drelu(x)
+        else:
+            print("Activation function setting error.")
+            return 0
 
     def softmax(self, x):
         """Compute softmax values for each sets of scores in x."""
