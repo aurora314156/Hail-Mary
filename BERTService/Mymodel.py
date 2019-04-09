@@ -127,7 +127,6 @@ class Mymodel():
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
         
-        print(options_tfscores)
 
         for option in merQueOpts:
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + options_tfscores[ind]
@@ -223,8 +222,7 @@ class Mymodel():
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
-        
-        print(options_tfscores)
+
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in merQueOpts:
@@ -347,7 +345,6 @@ class Mymodel():
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
         
-        print(options_tfscores)
 
         for option in merQueOpts:
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + options_tfscores[ind]
@@ -384,7 +381,6 @@ class Mymodel():
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
         
-        print(options_tfscores)
 
         for option in options:
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + options_tfscores[ind]
@@ -422,8 +418,7 @@ class Mymodel():
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
-        
-        print(options_tfscores)
+
 
         for option in merQueOpts:
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + options_tfscores[ind]
@@ -492,9 +487,6 @@ class Mymodel():
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
-        
-        print(options_tfscores)
-
 
         highestScore = 0
         for option in merQueOpts:
@@ -562,9 +554,6 @@ class Mymodel():
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
-        
-        print(options_tfscores)
-        
 
         highestScore = 0
         for option in merQueOpts:
@@ -632,8 +621,6 @@ class Mymodel():
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
-        
-        print(options_tfscores)
 
         highestScore = 0
         for option in merQueOpts:
