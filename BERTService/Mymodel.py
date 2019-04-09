@@ -130,7 +130,6 @@ class Mymodel():
 
         for option in merQueOpts:
             tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + options_tfscores[ind]
-            print(tmpScore)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
