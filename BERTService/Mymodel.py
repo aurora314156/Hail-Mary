@@ -3,6 +3,7 @@ from TFIDF import TFIDF
 from bert_serving.client import BertClient
 import numpy as np
 
+
 class Mymodel():
     def __init__(self, bc, s_string, q_string, options, m, TF_words, TF_scores):
         self.bc = bc
@@ -120,7 +121,7 @@ class Mymodel():
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o not in self.TF_words:
+                if o.lower() not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
@@ -216,7 +217,7 @@ class Mymodel():
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o not in self.TF_words:
+                if o.lower() not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
@@ -338,7 +339,7 @@ class Mymodel():
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o not in self.TF_words:
+                if o.lower() not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
@@ -374,7 +375,7 @@ class Mymodel():
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o not in self.TF_words:
+                if o.lower() not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
@@ -412,7 +413,7 @@ class Mymodel():
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o not in self.TF_words:
+                if o.lower() not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
@@ -481,7 +482,7 @@ class Mymodel():
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o not in self.TF_words:
+                if o.lower() not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
@@ -550,7 +551,7 @@ class Mymodel():
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o not in self.TF_words:
+                if o.lower() not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
@@ -619,7 +620,7 @@ class Mymodel():
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o not in self.TF_words:
+                if o.lower() not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
