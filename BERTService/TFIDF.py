@@ -67,7 +67,7 @@ class TFIDF():
                 tmp = tmp.lower().split(" ")
                 for t in tmp:
                     print(t)
-                    if t is " " or t[0] is None or t is "":
+                    if t is " " or t is None or t is "":
                         continue
                     elif t in self.stop_words:
                         continue
