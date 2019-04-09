@@ -72,7 +72,7 @@ class TFIDF():
                     elif t in self.stop_words:
                         continue
                     else:
-                        oneCorpusContent += oneCorpusContent + " "
+                        oneCorpusContent += t + " "
                 print("one CorpusContent len: ", len(oneCorpusContent))
                 corpus.append(oneCorpusContent[:-1])
         return corpus
