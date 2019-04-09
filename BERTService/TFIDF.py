@@ -46,7 +46,7 @@ class TFIDF():
         return tfidf_word, normalizer_scores
 
     def getListOfAllData(self):
-
+        print("start get list of all data\n")
         corpus = []
         for single_dataset in self.dataset:
             if isinstance(single_dataset, str):
@@ -57,16 +57,13 @@ class TFIDF():
                 tmp = s_string + q_string
                 for o in options:
                     tmp += o
-                print(tmp)
                 # remove stop words
                 tmp = self.remove_punctuation(tmp)
-                print("remove stop words done")
-                print(tmp)
+                print("remove stop words done\n")
                 oneCorpusContent = ""
                 # content transfer to lower and split into list by space
                 tmp = tmp.lower().split(" ")
                 for t in tmp:
-                    print(t)
                     if t is " " or t is None or t is "":
                         continue
                     elif t in self.stop_words:
