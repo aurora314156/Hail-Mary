@@ -41,7 +41,6 @@ def main():
             AccuracyList.append(accuracy)
             print(Accuracy)
             print(CostTime)
-            print("typeChange: ", typeChange)
             if typeChange <4:
                 dataTypeLog = "Data type: " + dataType[0] + "\n"
             else:
