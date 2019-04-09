@@ -44,26 +44,26 @@ class TFIDF():
 
         return tfidf_word, normalizer_scores
 
-        def getListOfAllData(self):
+    def getListOfAllData(self):
 
-            corpus = []
-            for single_dataset in self.dataset:
-                if isinstance(single_dataset, str):
-                    continue
-                for single_data in single_dataset:
-                    s_string, q_string, options, answer = ContentParser(single_data).getContent()
-                    tmp = ""
-                    tmp = s_string + q_string
-                    for o in options:
-                        tmp += o
-                    
-                    # remove stop words
-                    oneCorpusContent = ""
-                    for t in tmp.lower().split(" "):
-                        if t in self.stop_words:
-                            continue
-                        else:
-                            oneCorpusContent += oneCorpusContent + " "
+        corpus = []
+        for single_dataset in self.dataset:
+            if isinstance(single_dataset, str):
+                continue
+            for single_data in single_dataset:
+                s_string, q_string, options, answer = ContentParser(single_data).getContent()
+                tmp = ""
+                tmp = s_string + q_string
+                for o in options:
+                    tmp += o
+                
+                # remove stop words
+                oneCorpusContent = ""
+                for t in tmp.lower().split(" "):
+                    if t in self.stop_words:
+                        continue
+                    else:
+                        oneCorpusContent += oneCorpusContent + " "
 
-                    corpus.append(oneCorpusContent[:-1])
-            return corpus
+                corpus.append(oneCorpusContent[:-1])
+        return corpus
