@@ -30,7 +30,7 @@ def main():
                 print(Process_dataset)
                 continue
             for single_data in single_dataset:
-                #print(single_data['storyName'])
+                print(single_data['storyName'])
                 s_string, q_string, options, answer = ContentParser(single_data).getContent()
                 guessAnswer = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores).MymodelMain()
                 if guessAnswer == answer:
