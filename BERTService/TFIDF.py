@@ -67,8 +67,11 @@ class TFIDF():
                 tmp = tmp.lower().split(" ")
                 for t in tmp:
                     print(t)
-                    if t is "" or t in self.stop_words:
+                    if t is " " or t is None or t is "":
                         continue
+                    if t in self.stop_words:
+                        continue
+                    print(t)
                     else:
                         oneCorpusContent += oneCorpusContent + " "
                 print("one CorpusContent len: ", len(oneCorpusContent))
