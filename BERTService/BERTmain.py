@@ -30,18 +30,18 @@ def main():
                 print(Process_dataset)
                 continue
             for single_data in single_dataset:
-                print(single_data['storyName'])
+                #print(single_data['storyName'])
                 s_string, q_string, options, answer = ContentParser(single_data).getContent()
                 guessAnswer = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores).MymodelMain()
                 if guessAnswer == answer:
                     correct += 1
-
             accuracy = round(correct/len(single_dataset),3)
             Accuracy = "Accuracy: " + str(accuracy) + "\n"
             CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n\n"
             AccuracyList.append(accuracy)
             print(Accuracy)
             print(CostTime)
+            print("typeChang: ", typeChange)
             if typeChange <4:
                 dataTypeLog = "Data type: " + dataType[0] + "\n"
             else:
