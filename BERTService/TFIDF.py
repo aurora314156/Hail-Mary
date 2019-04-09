@@ -71,5 +71,5 @@ class TFIDF():
                 corpus.append(oneCorpusContent[:-1])
         return corpus
 
-    def remove_punctuation(s):
+    def remove_punctuation(self, s):
         return s.translate(str.maketrans('', '', string.punctuation))
