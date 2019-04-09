@@ -66,8 +66,7 @@ class TFIDF():
                 # content transfer to lower and split into list by space
                 tmp = tmp.lower().split(" ")
                 for t in tmp:
-                    print(t)
-                    if t in self.stop_words:
+                    if t is None or t in self.stop_words:
                         continue
                     else:
                         oneCorpusContent += oneCorpusContent + " "
