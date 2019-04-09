@@ -60,9 +60,11 @@ class TFIDF():
                 print(tmp)
                 # remove stop words
                 tmp = self.remove_punctuation(tmp)
-                
+                print("remove stop words done")
+                print(tmp)
                 oneCorpusContent = ""
-                for t in tmp.lower().split(" "):
+                tmp = tmp.lower()
+                for t in tmp.split(" "):
                     if t in self.stop_words:
                         continue
                     else:
