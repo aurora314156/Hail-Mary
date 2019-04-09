@@ -3,6 +3,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.preprocessing import Normalizer
 from ContentParser import ContentParser
+import string
 
 class TFIDF():
     def __init__(self, dataset):
@@ -56,14 +57,20 @@ class TFIDF():
                 tmp = s_string + q_string
                 for o in options:
                     tmp += o
-                
+                    
                 # remove stop words
+                tmp = self.remove_punctuation(tmp)
+                
                 oneCorpusContent = ""
                 for t in tmp.lower().split(" "):
                     if t in self.stop_words:
                         continue
                     else:
                         oneCorpusContent += oneCorpusContent + " "
-
+                print("one CorpusContent len: ", len(oneCorpusContent))
                 corpus.append(oneCorpusContent[:-1])
         return corpus
+
+    def remove_punctuation(s):
+        table = string.maketrans("","")
+        return s.translate(table, string.punctuation)
