@@ -72,5 +72,4 @@ class TFIDF():
         return corpus
 
     def remove_punctuation(s):
-        table = string.maketrans("","")
-        return s.translate(table, string.punctuation)
+        return s.translate(str.maketrans('', '', string.punctuation))
