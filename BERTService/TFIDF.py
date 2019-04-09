@@ -71,7 +71,6 @@ class TFIDF():
                         continue
                     elif t in self.stop_words:
                         continue
-                    print(t)
                     else:
                         oneCorpusContent += oneCorpusContent + " "
                 print("one CorpusContent len: ", len(oneCorpusContent))
