@@ -11,7 +11,7 @@ class TFIDF():
 
     def getTFIDFWeigths(self):
         
-        corpus = getListOfAllData()
+        corpus = self.getListOfAllData()
         #将文本中的词语转换为词频矩阵
         vectorizer = CountVectorizer()
         #计算个词语出现的次数
