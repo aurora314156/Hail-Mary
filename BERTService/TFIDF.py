@@ -63,9 +63,10 @@ class TFIDF():
                 print("remove stop words done")
                 print(tmp)
                 oneCorpusContent = ""
+                # content transfer to lower and split into list by space
                 tmp = tmp.lower().split(" ")
                 for t in tmp:
-                    print("hi")
+                    print(t)
                     if t in self.stop_words:
                         continue
                     else:
