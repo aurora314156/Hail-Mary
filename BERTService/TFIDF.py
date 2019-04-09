@@ -59,7 +59,6 @@ class TFIDF():
                     tmp += o
                 # remove stop words
                 tmp = self.remove_punctuation(tmp)
-                print("remove stop words done\n")
                 oneCorpusContent = ""
                 # content transfer to lower and split into list by space
                 tmp = tmp.lower().split(" ")

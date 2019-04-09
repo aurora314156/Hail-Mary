@@ -54,5 +54,6 @@ class Initial():
 
     def createLogFile(self):
         # create log file
+        print("create log file")
         with open('log.txt', 'w') as log:
             log.close()
