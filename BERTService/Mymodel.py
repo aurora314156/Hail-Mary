@@ -121,7 +121,8 @@ class Mymodel():
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o.lower() not in self.TF_words:
+                o = o.lower()
+                if o not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
@@ -217,7 +218,8 @@ class Mymodel():
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o.lower() not in self.TF_words:
+                o = o.lower()
+                if o not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
@@ -339,7 +341,8 @@ class Mymodel():
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o.lower() not in self.TF_words:
+                o = o.lower()
+                if o not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
@@ -375,7 +378,8 @@ class Mymodel():
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o.lower() not in self.TF_words:
+                o = o.lower()
+                if o not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
@@ -413,7 +417,8 @@ class Mymodel():
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o.lower() not in self.TF_words:
+                o = o.lower()
+                if o not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
@@ -482,7 +487,8 @@ class Mymodel():
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o.lower() not in self.TF_words:
+                o = o.lower()
+                if o not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
@@ -551,7 +557,8 @@ class Mymodel():
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o.lower() not in self.TF_words:
+                o = o.lower()
+                if o not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
@@ -620,7 +627,8 @@ class Mymodel():
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o.lower() not in self.TF_words:
+                o = o.lower()
+                if o not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
