@@ -70,7 +70,7 @@ class TFIDF():
                         continue
                     else:
                         oneCorpusContent += t + " "
-                print("one CorpusContent len: ", len(oneCorpusContent))
+
                 corpus.append(oneCorpusContent[:-1])
         return corpus
 
