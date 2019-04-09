@@ -1,5 +1,6 @@
 import os, time, json
 from numpy import array
+from TFIDF import TFIDF
 from Initial import Initial
 from Mymodel import Mymodel
 from SaveLog import SaveLog
@@ -10,6 +11,7 @@ from bert_serving.client import BertClient
 def main():
     # initial dataset
     dataset, dataType, model, d_model = Initial().InitialMain()
+    TF_words, TF_scores = TFIDF(dataset).getTFIDFWeigths()
     # initial BERT model
     bc = BertClient()
     AccuracyList = []
@@ -30,9 +32,10 @@ def main():
             for single_data in single_dataset:
                 print(single_data['storyName'])
                 s_string, q_string, options, answer = ContentParser(single_data).getContent()
-                guessAnswer = Mymodel(bc, s_string, q_string, options, m).MymodelMain()
+                guessAnswer = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores).MymodelMain()
                 if guessAnswer == answer:
                     correct += 1
+                time.sleep(1)
             accuracy = round(correct/len(single_dataset),3)
             Accuracy = "Accuracy: " + str(accuracy) + "\n"
             CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n\n"

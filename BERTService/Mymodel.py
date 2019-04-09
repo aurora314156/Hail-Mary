@@ -4,13 +4,15 @@ from bert_serving.client import BertClient
 import numpy as np
 
 class Mymodel():
-    def __init__(self, bc, s_string, q_string, options, m):
+    def __init__(self, bc, s_string, q_string, options, m, TF_words, TF_scores):
         self.bc = bc
         self.model = m
         self.s_string = s_string
         self.q_string = q_string
         self.options = options
         self.stop_words = ["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", "its", "itself", "they", "them", "their", "theirs", "themselves", "what", "which", "who", "whom", "this", "that", "these", "those", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does", "did", "doing", "a", "an", "the", "and", "but", "if", "or", "because", "as", "until", "while", "of", "at", "by", "for", "with", "about", "against", "between", "into", "through", "during", "before", "after", "above", "below", "to", "from", "up", "down", "in", "out", "on", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t", "can", "will", "just", "don", "should", "now"]
+        self.TF_words = TF_words
+        self.TF_scores = TF_scores
         self.activationF = "softmax"
 
     def MymodelMain(self):
@@ -113,16 +115,14 @@ class Mymodel():
 
 
         # test add tf-idf score
-        TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
-
         options_tfscores = []
 
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o not in TF_words or o in self.stop_words:
+                if o not in self.TF_words:
                     continue
-                tmp += TF_scores[0][TF_words.index(o)]
+                tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
         
         print(options_tfscores)
@@ -211,16 +211,14 @@ class Mymodel():
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
         # test add tf-idf score
-        TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
-
         options_tfscores = []
 
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o not in TF_words or o in self.stop_words:
+                if o not in self.TF_words:
                     continue
-                tmp += TF_scores[0][TF_words.index(o)]
+                tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
         
         print(options_tfscores)
@@ -335,16 +333,14 @@ class Mymodel():
 
 
         # test add tf-idf score
-        TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
-
         options_tfscores = []
 
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o not in TF_words or o in self.stop_words:
+                if o not in self.TF_words:
                     continue
-                tmp += TF_scores[0][TF_words.index(o)]
+                tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
         
         print(options_tfscores)
@@ -373,16 +369,14 @@ class Mymodel():
 
 
         # test add tf-idf score
-        TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
-
         options_tfscores = []
 
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o not in TF_words or o in self.stop_words:
+                if o not in self.TF_words:
                     continue
-                tmp += TF_scores[0][TF_words.index(o)]
+                tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
         
         print(options_tfscores)
@@ -413,16 +407,14 @@ class Mymodel():
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
         # test add tf-idf score
-        TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
-
         options_tfscores = []
 
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o not in TF_words or o in self.stop_words:
+                if o not in self.TF_words:
                     continue
-                tmp += TF_scores[0][TF_words.index(o)]
+                tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
         
         print(options_tfscores)
@@ -484,16 +476,14 @@ class Mymodel():
 
 
         # test add tf-idf score
-        TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
-
         options_tfscores = []
 
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o not in TF_words or o in self.stop_words:
+                if o not in self.TF_words:
                     continue
-                tmp += TF_scores[0][TF_words.index(o)]
+                tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
         
         print(options_tfscores)
@@ -555,16 +545,14 @@ class Mymodel():
                 highestScore = tmpScore
 
         # test add tf-idf score
-        TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
-
         options_tfscores = []
 
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o not in TF_words or o in self.stop_words:
+                if o not in self.TF_words:
                     continue
-                tmp += TF_scores[0][TF_words.index(o)]
+                tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
         
         print(options_tfscores)
@@ -626,16 +614,14 @@ class Mymodel():
                 highestScore = tmpScore
 
         # test add tf-idf score
-        TF_words, TF_scores = TFIDF(self.s_string, self.q_string, self.options).getTFIDFWeigths()
-
         options_tfscores = []
 
         for option in self.options:
             tmp = 0
             for o in option.split(" "):
-                if o not in TF_words or o in self.stop_words:
+                if o not in self.TF_words:
                     continue
-                tmp += TF_scores[0][TF_words.index(o)]
+                tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
         
         print(options_tfscores)
