@@ -57,7 +57,7 @@ class TFIDF():
                 tmp = s_string + q_string
                 for o in options:
                     tmp += o
-                    
+                print(tmp)
                 # remove stop words
                 tmp = self.remove_punctuation(tmp)
                 
