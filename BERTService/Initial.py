@@ -1,4 +1,4 @@
-import argparse, logging
+import argparse, logging, os
 from gensim.models import KeyedVectors
 from LoadData import LoadData
 
@@ -55,5 +55,6 @@ class Initial():
     def createLogFile(self):
         # create log file
         print("create log file")
+        os.remove("log.txt")
         with open('log.txt', 'w') as log:
             log.close()

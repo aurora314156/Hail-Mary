@@ -23,9 +23,7 @@ class SaveLog():
 
     def saveLogExcel(self):
         os.remove("experiment.xls")
-        
         wb = Workbook()
-
         sheet = wb.add_sheet('Sheet 1')
 
         sheet.write(0, 0, 'model')
