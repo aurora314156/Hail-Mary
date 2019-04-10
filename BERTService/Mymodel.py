@@ -5,7 +5,7 @@ import numpy as np
 
 
 class Mymodel():
-    def __init__(self, bc, s_string, q_string, options, m, TF_words, TF_scores):
+    def __init__(self, bc, s_string, q_string, options, m, TF_words, TF_scores, constant):
         self.bc = bc
         self.model = m
         self.s_string = s_string
@@ -15,6 +15,7 @@ class Mymodel():
         self.TF_words = TF_words
         self.TF_scores = TF_scores
         self.activationF = "softmax"
+        self.constant = constant
 
     def MymodelMain(self):
 
@@ -129,7 +130,7 @@ class Mymodel():
         
 
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * 0.1)
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -225,7 +226,7 @@ class Mymodel():
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(story, option) + (options_tfscores[ind] * 0.1)
+            tmpScore = 1 - spatial.distance.cosine(story, option) + (options_tfscores[ind] * self.constant)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -346,7 +347,7 @@ class Mymodel():
         
 
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * 0.1)
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -382,7 +383,7 @@ class Mymodel():
         
 
         for option in options:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * 0.1)
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -420,7 +421,7 @@ class Mymodel():
 
 
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * 0.1)
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -489,7 +490,7 @@ class Mymodel():
 
         highestScore = 0
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector) + (options_tfscores[ind] * 0.1)
+            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector) + (options_tfscores[ind] * self.constant)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -556,7 +557,7 @@ class Mymodel():
 
         highestScore = 0
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector) + (options_tfscores[ind] * 0.1)
+            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector) + (options_tfscores[ind] * self.constant)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -623,7 +624,7 @@ class Mymodel():
 
         highestScore = 0
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector) + (options_tfscores[ind] * 0.1)
+            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector) + (options_tfscores[ind] * self.constant)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
