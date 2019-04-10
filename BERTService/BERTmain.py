@@ -16,8 +16,8 @@ def main():
     bc = BertClient()
     AccuracyList = []
     constant = 0.01
-    for iterator in range(9):
-        for m in model:
+    for m in model:
+        for i in range(9):
             print("***********************************\nStart getting datatype: ")
             print(dataType)
             print("***********************************\n")
