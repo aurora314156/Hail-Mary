@@ -32,8 +32,8 @@ class TFIDF():
         tfidf_scores = tfidf.toarray()
 
         # normalizer
-        norm1 = Normalizer(norm='l2')
-        normalizer_scores = norm1.fit_transform(tfidf_scores)
+        #norm1 = Normalizer(norm='l2')
+        #normalizer_scores = norm1.fit_transform(tfidf_scores)
         
         # for i in range(len(tfidf_scores)):
         #     print(u"-------这里输出第",i,u"类文本的词语tf-idf权重------")
@@ -43,7 +43,7 @@ class TFIDF():
 
         # print("done")
 
-        return tfidf_word, normalizer_scores
+        return tfidf_word, tfidf_scores
 
     def getListOfAllData(self):
         print("start get list of all data\n")
