@@ -48,7 +48,7 @@ def main():
                 else:
                     dataTypeLog = "Data type: " + dataType[1] + "\n"
                 SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime).saveLogTxt()
-        constant += 0.01
+            constant += 0.01
     SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime, AccuracyList).saveLogExcel()
             
 
