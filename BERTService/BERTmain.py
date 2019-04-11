@@ -15,7 +15,7 @@ def main():
     # initial BERT model
     bc = BertClient()
     AccuracyList = []
-    constant = 0.01
+    constant = 0.0001
     for m in model:
         for i in range(9):
             print("***********************************\nStart getting datatype: ")
@@ -48,7 +48,7 @@ def main():
                 else:
                     dataTypeLog = "Data type: " + dataType[1] + "\n"
                 SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime).saveLogTxt()
-            constant += 0.01
+            constant += 0.0001
     SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime, AccuracyList).saveLogExcel()
             
 
