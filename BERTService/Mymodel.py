@@ -712,8 +712,13 @@ class Mymodel():
                 tmpStoryQueOpt = tmp
             merStoryQueOpt.append(tmpStoryQueOpt)
 
+        for i in range(len(self.options)):
+            self.options[i] = self.options[i] + self.q_string
+        
+        merQueOpts = self.activationFunction(bc.encode(self.options))
+
         for mSQO in merStoryQueOpt:
-            for o in options:
+            for o in merQueOpts:
                 tmpScore = 1 - spatial.distance.cosine(o, mSQO)
                 if tmpScore > highestScore:
                     guessAnswer = ind
