@@ -705,17 +705,17 @@ class Mymodel():
 
         merStoryQueOpt, ind, guessAnswer, highestScore, o_ind = [], 0, 0, 0, 0 
         
-        for o in options:
+        for i in range(len(self.options)):
+            self.options[i] = self.options[i] + self.q_string
+        
+        merQueOpts = self.activationFunction(bc.encode(self.options))
+
+        for o in merQueOpts:
             tmpStoryQueOpt = merStoryQue
             for i in range(50):
                 tmp = [x + y for x, y in zip(tmpStoryQueOpt, o)]
                 tmpStoryQueOpt = tmp
             merStoryQueOpt.append(tmpStoryQueOpt)
-
-        for i in range(len(self.options)):
-            self.options[i] = self.options[i] + self.q_string
-        
-        merQueOpts = self.activationFunction(bc.encode(self.options))
 
         for mSQO in merStoryQueOpt:
             for o in merQueOpts:
