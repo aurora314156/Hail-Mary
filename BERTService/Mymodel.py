@@ -696,6 +696,31 @@ class Mymodel():
         
         return guessAnswer
     
+    def NineteenthModel(self, bc):
+        
+        merStoryQue = self.activationFunction(bc.encode([self.s_string + self.q_string]))
+        options = self.activationFunction(bc.encode(self.options))
+
+        merStoryQueOpt, ind, guessAnswer, highestScore, o_ind = [], 0, 0, 0, 0 
+        
+        for o in options:
+            tmpStoryQueOpt = merStoryQue
+            for i in range(50):
+                tmp = [x + y for x, y in zip(tmpStoryQueOpt, o)]
+                tmpStoryQueOpt = tmp
+            merStoryQueOpt[o_ind] = tmpStoryQueOpt
+            o_ind += 1
+
+        for mSQO in merStoryQueOpt:
+            for o in options:
+                tmpScore = 1 - spatial.distance.cosine(o, mSQO)
+                if tmpScore > highestScore:
+                    guessAnswer = ind
+                    highestScore = tmpScore
+            ind += 1
+        
+        return guessAnswer
+
 
     def TestModel(self,bc):
 
