@@ -55,6 +55,8 @@ class Mymodel():
             guessAnswer = self.SeventeenthModel(self.bc)
         if self.model == 'EighteenthModel':
             guessAnswer = self.EighteenthModel(self.bc)
+        if self.model == 'NineteenthModel':
+            guessAnswer = self.NineteenthModel(self.bc)
         if self.model == 'TestModel2':
             guessAnswer = self.TestModel(self.bc)
         
