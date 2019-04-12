@@ -663,7 +663,7 @@ class Mymodel():
             sentences.append(tmp_string)
         
         storySentences = self.activationFunction(bc.encode(sentences))
-        print(storySentences.shape)
+        
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + self.q_string
         
