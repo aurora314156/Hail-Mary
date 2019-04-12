@@ -633,6 +633,7 @@ class Mymodel():
             ind += 1
 
         return guessAnswer
+
     def EighteenthModel(self, bc):
         """
         encode eacht story sentences, then calculate similarity with question and options
@@ -669,11 +670,23 @@ class Mymodel():
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
+         # test add tf-idf score
+        options_tfscores = []
+
+        for option in self.options:
+            tmp = 0
+            for o in option.split(" "):
+                o = o.lower()
+                if o not in self.TF_words:
+                    continue
+                tmp += self.TF_scores[0][self.TF_words.index(o)]
+            options_tfscores.append(tmp)
+
         ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
 
         for m in merQueOpts:
             for s in storySentences:
-                tmpScore = 1 - spatial.distance.cosine(s, m)
+                tmpScore = 1 - spatial.distance.cosine(s, m) + (options_tfscores[ind] * self.constant)
                 if tmpScore > highestScore:
                     guessAnswer = ind
                     highestScore = tmpScore
