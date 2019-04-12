@@ -682,14 +682,15 @@ class Mymodel():
                 tmp += self.TF_scores[0][self.TF_words.index(word)]
             sentences_tfscores.append(tmp)
 
-        ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
+        s_ind, ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, 0, []
 
         for m in merQueOpts:
             for s in storySentences:
-                tmpScore = 1 - spatial.distance.cosine(s, m) + (sentences_tfscores[ind] * self.constant)
+                tmpScore = 1 - spatial.distance.cosine(s, m) + (sentences_tfscores[s_ind] * self.constant)
                 if tmpScore > highestScore:
                     guessAnswer = ind
                     highestScore = tmpScore
+                s_ind += 1
             ind += 1
         
         return guessAnswer
