@@ -125,14 +125,15 @@ class Mymodel():
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
-
         # test add tf-idf score
         options_tfscores = []
 
         for option in self.options:
-            tmp = 0
+            tmp, flag = 0, 0
             for o in option.split(" "):
                 o = o.lower()
+                if flag == 3:
+                    break
                 if o not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
@@ -225,9 +226,11 @@ class Mymodel():
         options_tfscores = []
 
         for option in self.options:
-            tmp = 0
+            tmp, flag = 0, 0
             for o in option.split(" "):
                 o = o.lower()
+                if flag ==3:
+                    break
                 if o not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
@@ -347,9 +350,11 @@ class Mymodel():
         options_tfscores = []
 
         for option in self.options:
-            tmp = 0
+            tmp, flag = 0, 0
             for o in option.split(" "):
                 o = o.lower()
+                if flag == 3:
+                    break
                 if o not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
@@ -383,9 +388,11 @@ class Mymodel():
         options_tfscores = []
 
         for option in self.options:
-            tmp = 0
+            tmp, flag = 0, 0
             for o in option.split(" "):
                 o = o.lower()
+                if flag == 3:
+                    break
                 if o not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
@@ -421,9 +428,11 @@ class Mymodel():
         options_tfscores = []
 
         for option in self.options:
-            tmp = 0
+            tmp, flag = 0, 0
             for o in option.split(" "):
                 o = o.lower()
+                if flag == 3:
+                    break
                 if o not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
@@ -490,9 +499,11 @@ class Mymodel():
         options_tfscores = []
 
         for option in self.options:
-            tmp = 0
+            tmp, flag = 0, 0
             for o in option.split(" "):
                 o = o.lower()
+                if flag == 3:
+                    break
                 if o not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
@@ -557,9 +568,11 @@ class Mymodel():
         options_tfscores = []
 
         for option in self.options:
-            tmp = 0
+            tmp, flag = 0, 0
             for o in option.split(" "):
                 o = o.lower()
+                if flag == 3:
+                    break
                 if o not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
@@ -624,9 +637,11 @@ class Mymodel():
         options_tfscores = []
 
         for option in self.options:
-            tmp = 0
+            tmp, flag = 0, 0
             for o in option.split(" "):
                 o = o.lower()
+                if flag == 3:
+                    break
                 if o not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
@@ -682,9 +697,11 @@ class Mymodel():
         sentences_tfscores = []
 
         for sentence in sentences:
-            tmp = 0
+            tmp, flag = 0, 0
             for word in sentence.split(" "):
                 word = word.lower()
+                if flag == 3:
+                    break
                 if word not in self.TF_words:
                     continue
                 tmp += self.TF_scores[0][self.TF_words.index(word)]
