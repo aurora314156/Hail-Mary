@@ -632,7 +632,7 @@ class Mymodel():
 
         highestScore = 0
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector) + (options_tfscores[ind] * self.constant)
+            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
