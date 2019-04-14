@@ -817,7 +817,7 @@ class Mymodel():
 
         highestScore = 0
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector)
+            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector) 
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -825,6 +825,50 @@ class Mymodel():
 
         return guessAnswer
 
+    def TwentySecondModel(self,bc):
+        sentences, tmp_string, sentence = [], "", ""
+        for s in self.s_string[:len(self.s_string)-1]:
+            tmp_string += s
+            # reserve sentence structure
+            if s == "." or s == "?" or s == "!":
+                # remove "," "." "?"
+                sentence = ""
+                for t in tmp_string:
+                    if t is "," or t is "." or t is "?":
+                        continue
+                    else:
+                        sentence += t
+                if len(sentence) >1:
+                    if sentence[0] == " ":
+                        sentences.append(sentence[:-1] + + self.q_string)
+                    else:
+                        sentences.append(sentence + + self.q_string)
+                tmp_string = ""
+                continue
+
+        # use whole story structure
+        if tmp_string != "":
+            sentences.append(tmp_string)
+        
+        storySentencesMerQuestion = self.activationFunction(bc.encode(sentences))
+
+        for i in range(len(self.options)):
+            self.options[i] = self.options[i] + self.q_string
+        
+        merQueOpts = self.activationFunction(bc.encode(self.options))
+
+        ind, guessAnswer, highestScore = 0, 0, 0
+
+        for m in merQueOpts:
+            for sMQ in storySentencesMerQuestion:
+                tmpScore = 1 - spatial.distance.cosine(m, sMQ)
+                if tmpScore > highestScore:
+                    guessAnswer = ind
+                    highestScore = tmpScore
+            ind += 1
+        
+        return guessAnswer
+        
 
     def TestModel(self,bc):
 
