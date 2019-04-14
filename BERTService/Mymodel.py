@@ -813,7 +813,11 @@ class Mymodel():
         return np.exp(x) / np.sum(np.exp(x), axis=0)
         
     def relu(self, x):
-        return x * (x > 0)
+        x = np.asarray(x)
+        x = x * (x > 0)
+        return x.tolist()
 
     def drelu(self, x):
-        return 1. * (x > 0)
+        x = np.asarray(x)
+        x = 1. * (x > 0)
+        return x.tolist()
