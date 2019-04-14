@@ -736,7 +736,7 @@ class Mymodel():
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
         merStoryQue = self.activationFunction(bc.encode([self.s_string + self.q_string]))
-
+        
         merStoryQue_QueOpt, ind, guessAnswer, highestScore, o_ind = [], 0, 0, 0, 0
 
         for m in merQueOpts:
@@ -815,9 +815,9 @@ class Mymodel():
     def relu(self, x):
         x = np.asarray(x)
         x = x * (x > 0)
-        return x.tolist()
+        return x
 
     def drelu(self, x):
         x = np.asarray(x)
         x = 1. * (x > 0)
-        return x.tolist()
+        return x
