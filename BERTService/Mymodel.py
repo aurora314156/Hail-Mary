@@ -745,6 +745,8 @@ class Mymodel():
                 tmp = [x + y for x, y in zip(tmpStoryQue, m)]
                 tmpStoryQue = tmp
             merStoryQue_QueOpt.append(tmpStoryQue)
+        
+        merStoryQue_QueOpt = self.activationFunction(merStoryQue_QueOpt)
 
         for mSQ_QO in merStoryQue_QueOpt:
             for m in merQueOpts:
