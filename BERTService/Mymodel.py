@@ -57,6 +57,8 @@ class Mymodel():
             guessAnswer = self.EighteenthModel(self.bc)
         if self.model == 'NineteenthModel':
             guessAnswer = self.NineteenthModel(self.bc)
+        if self.model == 'TwentiethModel':
+            guessAnswer = self.TwentiethModel(self.bc)
         if self.model == 'TestModel2':
             guessAnswer = self.TestModel(self.bc)
         
@@ -703,23 +705,50 @@ class Mymodel():
         merStoryQue = self.activationFunction(bc.encode([self.s_string + self.q_string]))
         options = self.activationFunction(bc.encode(self.options))
 
-        merStoryQueOpt, ind, guessAnswer, highestScore, o_ind = [], 0, 0, 0, 0 
+        merStoryQueOpt, ind, guessAnswer, highestScore, o_ind = [], 0, 0, 0, 0
         
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + self.q_string
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
-        for o in merQueOpts:
+        for m in merQueOpts:
             tmpStoryQueOpt = merStoryQue
             for i in range(50):
-                tmp = [x + y for x, y in zip(tmpStoryQueOpt, o)]
+                tmp = [x + y for x, y in zip(tmpStoryQueOpt, m)]
                 tmpStoryQueOpt = tmp
             merStoryQueOpt.append(tmpStoryQueOpt)
 
         for mSQO in merStoryQueOpt:
-            for o in merQueOpts:
-                tmpScore = 1 - spatial.distance.cosine(o, mSQO)
+            for m in merQueOpts:
+                tmpScore = 1 - spatial.distance.cosine(m, mSQO)
+                if tmpScore > highestScore:
+                    guessAnswer = ind
+                    highestScore = tmpScore
+            ind += 1
+        
+        return guessAnswer
+    
+    def TwentiethModel(self, bc):
+        
+        for i in range(len(self.options)):
+            self.options[i] = self.options[i] + self.q_string
+        
+        merQueOpts = self.activationFunction(bc.encode(self.options))
+        merStoryQue = self.activationFunction(bc.encode([self.s_string + self.q_string]))
+
+        merStoryQue_QueOpt, ind, guessAnswer, highestScore, o_ind = [], 0, 0, 0, 0
+
+        for m in merQueOpts:
+            tmpStoryQue = merStoryQue
+            for i in range(50):
+                tmp = [x + y for x, y in zip(tmpStoryQue, m)]
+                tmpStoryQue = tmp
+            merStoryQue_QueOpt.append(tmpStoryQueOpt)
+
+        for mSQ_QO in merStoryQue_QueOpt:
+            for m in merQueOpts:
+                tmpScore = 1 - spatial.distance.cosine(m, mSQ_QO)
                 if tmpScore > highestScore:
                     guessAnswer = ind
                     highestScore = tmpScore
