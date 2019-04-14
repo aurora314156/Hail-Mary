@@ -672,7 +672,7 @@ class Mymodel():
         storySentences = self.activationFunction(bc.encode(sentences))
         
         for i in range(len(self.options)):
-            self.options[i] = self.options[i] + self.q_string
+            self.options[i] = self.options[i] + self.q_string +self.s_string
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
