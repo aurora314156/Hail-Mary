@@ -842,9 +842,9 @@ class Mymodel():
                         sentence += t
                 if len(sentence) >1:
                     if sentence[0] == " ":
-                        sentences.append(sentence[:-1] + + self.q_string)
+                        sentences.append(sentence[:-1] + self.q_string)
                     else:
-                        sentences.append(sentence + + self.q_string)
+                        sentences.append(sentence + self.q_string)
                 tmp_string = ""
                 continue
 
