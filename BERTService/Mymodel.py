@@ -744,7 +744,7 @@ class Mymodel():
             for i in range(50):
                 tmp = [x + y for x, y in zip(tmpStoryQue, m)]
                 tmpStoryQue = tmp
-            merStoryQue_QueOpt.append(tmpStoryQueOpt)
+            merStoryQue_QueOpt.append(tmpStoryQue)
 
         for mSQ_QO in merStoryQue_QueOpt:
             for m in merQueOpts:
