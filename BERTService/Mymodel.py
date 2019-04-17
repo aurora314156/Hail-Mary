@@ -918,13 +918,13 @@ class Mymodel():
         if tmp_string != "":
             sentences.append(tmp_string)
         
-        storySentencesMerQuestion = self.activationFunction(bc.encode(sentences))
+        storySentencesMerQuestionAndOpts = self.activationFunction(bc.encode(sentences))
         
         Que = self.activationFunction(bc.encode([self.q_string]))
 
         ind, guessAnswer, highestScore = 0, 0, 0
 
-        for s in sentences:
+        for s in storySentencesMerQuestionAndOpts:
             tmpScore = 1 - spatial.distance.cosine(Que, s)
             if tmpScore > highestScore:
                 guessAnswer = ind % 4
