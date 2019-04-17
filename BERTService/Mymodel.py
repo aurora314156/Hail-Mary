@@ -933,6 +933,48 @@ class Mymodel():
         
         return guessAnswer
 
+    def TwentyForthModel(self,bc):
+        sentences, tmp_string, sentence = [], "", ""
+        for s in self.s_string[:len(self.s_string)-1]:
+            tmp_string += s
+            # reserve sentence structure
+            if s == "." or s == "?" or s == "!":
+                # remove "," "." "?"
+                sentence = ""
+                for t in tmp_string:
+                    if t is "," or t is "." or t is "?":
+                        continue
+                    else:
+                        sentence += t
+                if len(sentence) >1:
+                    if sentence[0] == " ":
+                        for o in self.options:
+                            sentences.append(sentence[:-1] + self.q_string + o)
+                    else:
+                        for o in self.options:
+                            sentences.append(sentence + self.q_string + o)
+                tmp_string = ""
+                continue
+
+        # use whole story structure
+        if tmp_string != "":
+            sentences.append(tmp_string)
+        
+        storySentencesMerQuestionAndOpts = self.activationFunction(bc.encode(sentences))
+        
+        Que = self.activationFunction(bc.encode([self.q_string]))
+
+        ind, guessAnswer, highestScore = 0, 0, 0
+
+        for s in storySentencesMerQuestionAndOpts:
+            tmpScore = 1 - spatial.distance.cosine(Que, s)
+            if tmpScore > highestScore:
+                guessAnswer = ind % 4
+                highestScore = tmpScore
+            ind += 1
+        
+        return guessAnswer
+
     def TestModel(self,bc):
 
         merStoryQue = self.s_string + self.q_string
