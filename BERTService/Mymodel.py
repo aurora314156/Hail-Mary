@@ -920,7 +920,7 @@ class Mymodel():
         
         storySentencesMerQuestion = self.activationFunction(bc.encode(sentences))
         
-        Que = self.activationFunction(bc.encode(self.q_string))
+        Que = self.activationFunction(bc.encode([self.q_string]))
 
         ind, guessAnswer, highestScore = 0, 0, 0
 
