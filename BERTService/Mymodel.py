@@ -723,7 +723,8 @@ class Mymodel():
     
     def NineteenthModel(self, bc):
         
-        merStoryQue = self.activationFunction(bc.encode([self.s_string + self.q_string]))
+        #merStoryQue = self.activationFunction(bc.encode([self.s_string + self.q_string]))
+        merStoryQue = self.activationFunction(bc.encode([self.s_string]))
         options = self.activationFunction(bc.encode(self.options))
 
         merStoryQueOpt, ind, guessAnswer, highestScore, o_ind = [], 0, 0, 0, 0
