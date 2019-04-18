@@ -65,6 +65,8 @@ class Mymodel():
             guessAnswer = self.TwentySecondModel(self.bc)
         if self.model == 'TwentyThirdModel':
             guessAnswer = self.TwentyThirdModel(self.bc)
+        if self.model == 'TwentyForthModel':
+            guessAnswer = self.TwentyForthModel(self.bc)
         if self.model == 'TestModel2':
             guessAnswer = self.TestModel(self.bc)
         
