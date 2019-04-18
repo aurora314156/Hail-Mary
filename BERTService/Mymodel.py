@@ -746,12 +746,13 @@ class Mymodel():
             merStoryQueOpt.append(tmpStoryQueOpt)
 
         for mSQO in merStoryQueOpt:
+            ind = 0
             for m in merQueOpts:
                 tmpScore = 1 - spatial.distance.cosine(m, mSQO)
                 if tmpScore > highestScore:
                     guessAnswer = ind
                     highestScore = tmpScore
-            ind += 1
+                ind += 1
         
         return guessAnswer
     
@@ -775,12 +776,13 @@ class Mymodel():
         merStoryQue_QueOpt = self.activationFunction(merStoryQue_QueOpt)
 
         for mSQ_QO in merStoryQue_QueOpt:
+            ind = 0
             for m in merQueOpts:
                 tmpScore = 1 - spatial.distance.cosine(m, mSQ_QO)
                 if tmpScore > highestScore:
                     guessAnswer = ind
                     highestScore = tmpScore
-            ind += 1
+                ind += 1
         
         return guessAnswer
 
