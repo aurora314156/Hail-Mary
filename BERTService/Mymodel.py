@@ -907,10 +907,10 @@ class Mymodel():
                 if len(sentence) >1:
                     if sentence[0] == " ":
                         for o in self.options:
-                            sentences.append(sentence[:-1] + " " + self.q_string + " " + o)
+                            sentences.append(sentence[:-1] + self.q_string + o)
                     else:
                         for o in self.options:
-                            sentences.append(sentence + " " + self.q_string + " " + o)
+                            sentences.append(sentence + self.q_string  + o)
                 tmp_string = ""
                 continue
 
@@ -949,10 +949,10 @@ class Mymodel():
                 if len(sentence) >1:
                     if sentence[0] == " ":
                         for o in self.options:
-                            sentences.append(sentence[:-1] + self.q_string + o)
+                            sentences.append(sentence[:-1] + o)
                     else:
                         for o in self.options:
-                            sentences.append(sentence + self.q_string + o)
+                            sentences.append(sentence + o)
                 tmp_string = ""
                 continue
 
@@ -960,17 +960,21 @@ class Mymodel():
         if tmp_string != "":
             sentences.append(tmp_string)
         
-        storySentencesMerQuestionAndOpts = self.activationFunction(bc.encode(sentences))
+        storySentencesMerOpts = self.activationFunction(bc.encode(sentences))
         
-        Que = self.activationFunction(bc.encode([self.q_string]))
+        for i in range(len(self.options)):
+            self.options[i] = self.options[i] + self.q_string
+        
+        merQueOpts = self.activationFunction(bc.encode(self.options))
 
         ind, guessAnswer, highestScore = 0, 0, 0
 
-        for s in storySentencesMerQuestionAndOpts:
-            tmpScore = 1 - spatial.distance.cosine(Que, s)
-            if tmpScore > highestScore:
-                guessAnswer = ind % 4
-                highestScore = tmpScore
+        for m in merQueOpts:
+            for sMO in storySentencesMerOpts:
+                tmpScore = 1 - spatial.distance.cosine(m, sMO)
+                if tmpScore > highestScore:
+                    guessAnswer = ind
+                    highestScore = tmpScore
             ind += 1
         
         return guessAnswer
