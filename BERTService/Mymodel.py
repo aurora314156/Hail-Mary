@@ -976,9 +976,9 @@ class Mymodel():
         for sMO in storySentencesMerOpts:
             tmpScore = 1 - spatial.distance.cosine(Que, sMO)
             if tmpScore > highestScore:
-                guessAnswer = ind
+                guessAnswer = ind % 4
                 highestScore = tmpScore
-        ind += 1
+            ind += 1
         
         return guessAnswer
 
