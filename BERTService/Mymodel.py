@@ -21,53 +21,53 @@ class Mymodel():
 
         if self.model == 'FirstModel':
             guessAnswer = self.FirstModel(self.bc)
-        if self.model == 'SecondModel':
+        elif self.model == 'SecondModel':
             guessAnswer = self.SecondModel(self.bc)
-        if self.model == 'ThirdModel':
+        elif self.model == 'ThirdModel':
             guessAnswer = self.ThirdModel(self.bc)
-        if self.model == 'ForthModel':
+        elif self.model == 'ForthModel':
             guessAnswer = self.ForthModel(self.bc)
-        if self.model == 'FifthModel':
+        elif self.model == 'FifthModel':
             guessAnswer = self.FifthModel(self.bc)
-        if self.model == 'SixthModel':
+        elif self.model == 'SixthModel':
             guessAnswer = self.SixthModel(self.bc)
-        if self.model == 'SeventhModel':
+        elif self.model == 'SeventhModel':
             guessAnswer = self.SeventhModel(self.bc)
-        if self.model == 'EighthModel':
+        elif self.model == 'EighthModel':
             guessAnswer = self.EighthModel(self.bc)
-        if self.model == 'NinthModel':
+        elif self.model == 'NinthModel':
             guessAnswer = self.NinthModel(self.bc)
-        if self.model == 'TenthModel':
+        elif self.model == 'TenthModel':
             guessAnswer = self.TenthModel(self.bc)
-        if self.model == 'EleventhModel':
+        elif self.model == 'EleventhModel':
             guessAnswer = self.EleventhModel(self.bc)
-        if self.model == 'TwelfthModel':
+        elif self.model == 'TwelfthModel':
             guessAnswer = self.TwelfthModel(self.bc)
-        if self.model == 'ThirteenthModel':
+        elif self.model == 'ThirteenthModel':
             guessAnswer = self.ThirteenthModel(self.bc)
-        if self.model == 'FourteenthModel':
+        elif self.model == 'FourteenthModel':
             guessAnswer = self.FourteenthModel(self.bc)
-        if self.model == 'FifteenthModel':
+        elif self.model == 'FifteenthModel':
             guessAnswer = self.FifteenthModel(self.bc)
-        if self.model == 'SixteenthModel':
+        elif self.model == 'SixteenthModel':
             guessAnswer = self.SixteenthModel(self.bc)
-        if self.model == 'SeventeenthModel':
+        elif self.model == 'SeventeenthModel':
             guessAnswer = self.SeventeenthModel(self.bc)
-        if self.model == 'EighteenthModel':
+        elif self.model == 'EighteenthModel':
             guessAnswer = self.EighteenthModel(self.bc)
-        if self.model == 'NineteenthModel':
+        elif self.model == 'NineteenthModel':
             guessAnswer = self.NineteenthModel(self.bc)
-        if self.model == 'TwentiethModel':
+        elif self.model == 'TwentiethModel':
             guessAnswer = self.TwentiethModel(self.bc)
-        if self.model == 'TwentyFirstModel':
+        elif self.model == 'TwentyFirstModel':
             guessAnswer = self.TwentiethModel(self.bc)
-        if self.model == 'TwentySecondModel':
+        elif self.model == 'TwentySecondModel':
             guessAnswer = self.TwentySecondModel(self.bc)
-        if self.model == 'TwentyThirdModel':
+        elif self.model == 'TwentyThirdModel':
             guessAnswer = self.TwentyThirdModel(self.bc)
-        if self.model == 'TwentyForthModel':
+        elif self.model == 'TwentyForthModel':
             guessAnswer = self.TwentyForthModel(self.bc)
-        if self.model == 'TestModel2':
+        elif self.model == 'TestModel2':
             guessAnswer = self.TestModel(self.bc)
         
         return guessAnswer
@@ -966,20 +966,20 @@ class Mymodel():
         
         storySentencesMerOpts = self.activationFunction(bc.encode(sentences))
         
-        # for i in range(len(self.options)):
-        #     self.options[i] = self.options[i] + self.q_string
+        for i in range(len(self.options)):
+            self.options[i] = self.options[i] + self.q_string
         
-        # merQueOpts = self.activationFunction(bc.encode(self.options))
-        Que = self.activationFunction(bc.encode([self.q_string]))
+        merQueOpts = self.activationFunction(bc.encode(self.options))
+        #Que = self.activationFunction(bc.encode([self.q_string]))
         
         ind, guessAnswer, highestScore = 0, 0, 0
 
-        #for m in merQueOpts:
-        for sMO in storySentencesMerOpts:
-            tmpScore = 1 - spatial.distance.cosine(Que, sMO)
-            if tmpScore > highestScore:
-                guessAnswer = ind % 4
-                highestScore = tmpScore
+        for m in merQueOpts:
+            for sMO in storySentencesMerOpts:
+                tmpScore = 1 - spatial.distance.cosine(m, sMO)
+                if tmpScore > highestScore:
+                    guessAnswer = ind % 4
+                    highestScore = tmpScore
             ind += 1
         
         return guessAnswer
