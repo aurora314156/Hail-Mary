@@ -964,20 +964,21 @@ class Mymodel():
         
         storySentencesMerOpts = self.activationFunction(bc.encode(sentences))
         
-        for i in range(len(self.options)):
-            self.options[i] = self.options[i] + self.q_string
+        # for i in range(len(self.options)):
+        #     self.options[i] = self.options[i] + self.q_string
         
-        merQueOpts = self.activationFunction(bc.encode(self.options))
-
+        # merQueOpts = self.activationFunction(bc.encode(self.options))
+        Que = self.activationFunction(bc.encode([self.q_string]))
+        
         ind, guessAnswer, highestScore = 0, 0, 0
 
-        for m in merQueOpts:
-            for sMO in storySentencesMerOpts:
-                tmpScore = 1 - spatial.distance.cosine(m, sMO)
-                if tmpScore > highestScore:
-                    guessAnswer = ind
-                    highestScore = tmpScore
-            ind += 1
+        #for m in merQueOpts:
+        for sMO in storySentencesMerOpts:
+            tmpScore = 1 - spatial.distance.cosine(Que, sMO)
+            if tmpScore > highestScore:
+                guessAnswer = ind
+                highestScore = tmpScore
+        ind += 1
         
         return guessAnswer
 
