@@ -7,6 +7,7 @@ class Initial():
         self.d_model = 512
         # choose run model
         self.model = ['ThirdModel']
+        self.model = ['ThirdModel', 'SixthModel', 'EleventhModel', 'TwelfthModel', 'ThirteenthModel', 'FourteenthModel', 'FifteenthModel', 'EighteenthModel', 'NineteenthModel', 'TwentiethModel', 'TwentySecondModel', 'TwentyThirdModel', 'TwentyForthModel']
         #self.model = ['FirstModel','SecondModel', 'ThirdModel', 'ForthModel', 'FifthModel', 'SixthModel', 'SeventhModel', 'EighthModel', 'NinthModel', \
         # 'TenthModel', 'EleventhModel', 'TwelfthModel', 'ThirteenthModel', 'FourteenthModel', 'FifteenthModel', 'SixteenthModel']
     def InitialMain(self):
