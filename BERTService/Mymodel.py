@@ -1,5 +1,5 @@
 from scipy import spatial
-from scipy.spatial.distance import euclidean
+from scipy.spatial.distance import euclidean, hamming, cityblock, minkowski
 from TFIDF import TFIDF
 from bert_serving.client import BertClient
 from sklearn.metrics import jaccard_similarity_score
