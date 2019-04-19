@@ -6,7 +6,7 @@ class Initial():
     def __init__(self):
         self.d_model = 512
         # choose run model
-        self.model = ['TwentyFirstModel', 'TwentySecondModel','TwentyThirdModel','TwentyForthModel']
+        self.model = ['ThirdModel']
         #self.model = ['FirstModel','SecondModel', 'ThirdModel', 'ForthModel', 'FifthModel', 'SixthModel', 'SeventhModel', 'EighthModel', 'NinthModel', \
         # 'TenthModel', 'EleventhModel', 'TwelfthModel', 'ThirteenthModel', 'FourteenthModel', 'FifteenthModel', 'SixteenthModel']
     def InitialMain(self):

@@ -1,6 +1,8 @@
 from scipy import spatial
+from scipy.spatial.distance import euclidean
 from TFIDF import TFIDF
 from bert_serving.client import BertClient
+from sklearn.metrics import jaccard_similarity_score
 import numpy as np
 
 
@@ -15,6 +17,7 @@ class Mymodel():
         self.TF_words = TF_words
         self.TF_scores = TF_scores
         self.activationF = "softmax"
+        self.similarity = euclidean
         self.constant = constant
 
     def MymodelMain(self):
@@ -143,9 +146,9 @@ class Mymodel():
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
         
-
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
+            #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
+            tmpScore =  self.similarity(merStoryQue, option) + (options_tfscores[ind] * self.constant)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
