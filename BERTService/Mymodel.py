@@ -70,6 +70,8 @@ class Mymodel():
             guessAnswer = self.TwentyThirdModel(self.bc)
         elif self.model == 'TwentyForthModel':
             guessAnswer = self.TwentyForthModel(self.bc)
+        elif self.model == 'TwentyFifthModel':
+            guessAnswer = self.TwentyFifthModel(self.bc)
         elif self.model == 'TestModel2':
             guessAnswer = self.TestModel(self.bc)
         
@@ -996,6 +998,44 @@ class Mymodel():
             ind += 1
         
         return guessAnswer
+
+    def TwentyFifthModel(self,bc):
+        sentences, tmp_string, sentence = [], "", ""
+        for s in self.s_string[:len(self.s_string)-1]:
+            tmp_string += s
+            # reserve sentence structure
+            if s == "." or s == "?" or s == "!":
+                # remove "," "." "?"
+                sentence = ""
+                for t in tmp_string:
+                    if t is "," or t is "." or t is "?":
+                        continue
+                    else:
+                        sentence += t
+                if len(sentence) >1:
+                    if sentence[0] == " ":
+                        sentences.append(sentence[:-1])
+                    else:
+                        sentences.append(sentence)
+                tmp_string = ""
+                continue
+
+        # use whole story structure
+        if tmp_string != "":
+            sentences.append(tmp_string)
+
+        storySentences = self.activationFunction(bc.encode(sentences))
+        print(type(storySentences))
+        question = self.activationFunction(bc.encode([self.q_string]))
+        
+        storySentencesDict = {}
+        for x in range(len(storySentences)):
+            storySentencesDict[str(x)] = storySentences[x]
+
+        ind, guessAnswer, highestScore = 0, 0, 9999
+
+        return guessAnswer
+
 
     def TestModel(self,bc):
 
