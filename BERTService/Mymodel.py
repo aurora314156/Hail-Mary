@@ -1025,14 +1025,28 @@ class Mymodel():
             sentences.append(tmp_string)
 
         storySentences = self.activationFunction(bc.encode(sentences))
-        print(type(storySentences))
         question = self.activationFunction(bc.encode([self.q_string]))
+        for i in range(len(self.options)):
+            self.options[i] = self.options[i] + self.q_string
         
-        storySentencesDict = {}
-        for x in range(len(storySentences)):
-            storySentencesDict[str(x)] = storySentences[x]
+        merQueOpts = self.activationFunction(bc.encode(self.options))
 
-        ind, guessAnswer, highestScore = 0, 0, 9999
+        storySentencesDict = {}
+        for s in storySentences:
+            storySentencesDict[1 - spatial.distance.cosine(s, question)] = s
+        
+        sortedSentenceDict = [(k,storySentencesDict[k]) for k in sorted(storySentencesDict.keys(), reverse=True)]
+        
+        guessAnswer, highestScore = 0, 0
+
+        for sv in sortedSentenceDict[:10]:
+            ind = 0
+            for o in merQueOpts:
+                tmpScore = 1 - spatial.distance.cosine(sv[1], o)
+                if tmpScore >= highestScore:
+                    guessAnswer = ind
+                    highestScore = tmpScore
+                ind += 1
 
         return guessAnswer
 
