@@ -1058,7 +1058,7 @@ class Mymodel():
 
         guessAnswer, highestScore = 0, 0
 
-        return guessAnswer
+        return guessAnswer, highestScore
 
     def TestModel(self,bc):
 
