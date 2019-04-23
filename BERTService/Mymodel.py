@@ -1125,7 +1125,7 @@ class Mymodel():
 
     def AttOverAtt(self, h):
         
-        matrix = np.matmul(h, h.transpose())
+        matrix = np.matmul(h.transpose(), h)
         print(type(matrix))
         print(matrix.shape)
         return matrix
