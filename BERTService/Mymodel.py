@@ -1132,6 +1132,22 @@ class Mymodel():
     def AttOverAtt(self, h):
         
         matrix = np.matmul(h.transpose(), h)
-        print(matrix[0])
+        print(matrix[0].shape)
         print(matrix[0][0])
-        return matrix
+        rowWiseSoftmax, columnWiseSoftmax = [], []
+        for c in matrix:
+            rowWiseSoftmax.append(self.activationFunction(c))
+        for r in matrix.transpose():
+            columnWiseSoftmax.append(self.activationFunction(r))
+        print(len(columnWiseSoftmax))
+        columnWiseAveMatrix = []
+        for c in range(len(rowWiseSoftmax)):
+            tmp = 0
+            for r in range(len(rowWiseSoftmax)):
+                tmp+=rowWiseSoftmax[c][r]
+            columnWiseAveMatrix.append(np.average(tmp))
+        print(len(columnWiseAveMatrix[0]))
+        attentionOverAttention = [a*b for a,b in zip(columnWiseAveMatrix,columnWiseSoftmax)]
+                
+        print(len(attentionOverAttention))
+        return attentionOverAttention
