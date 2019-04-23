@@ -1053,9 +1053,11 @@ class Mymodel():
         return guessAnswer
     
     def TwentySixthModel(self,bc):
-        story = self.activationFunction(bc.encode([self.s_string])
+        story = self.activationFunction(bc.encode([self.s_string]))
         storyAtt = self.AttOverAtt(story)
+
         guessAnswer, highestScore = 0, 0
+
         return guessAnswer
 
     def TestModel(self,bc):
