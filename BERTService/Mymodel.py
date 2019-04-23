@@ -72,6 +72,8 @@ class Mymodel():
             guessAnswer = self.TwentyForthModel(self.bc)
         elif self.model == 'TwentyFifthModel':
             guessAnswer = self.TwentyFifthModel(self.bc)
+        elif self.model == 'TwentySixthModel':
+            guessAnswer = self.TwentySixthModel(self.bc)
         elif self.model == 'TestModel2':
             guessAnswer = self.TestModel(self.bc)
         
@@ -1049,7 +1051,12 @@ class Mymodel():
                 ind += 1
 
         return guessAnswer
-
+    
+    def TwentySixthModel(self,bc):
+        story = self.activationFunction(bc.encode([self.s_string])
+        storyAtt = self.AttOverAtt(story)
+        guessAnswer, highestScore = 0, 0
+        return guessAnswer
 
     def TestModel(self,bc):
 
@@ -1113,3 +1120,10 @@ class Mymodel():
         x = np.asarray(x)
         x = 1. * (x > 0)
         return x
+
+    def AttOverAtt(self, h):
+        
+        matrix = np.matmul(h, h.transpose())
+        print(type(matrix))
+        print(matrix.shape)
+        return matrix
