@@ -1053,7 +1053,7 @@ class Mymodel():
         return guessAnswer
     
     def TwentySixthModel(self,bc):
-        story = self.activationFunction(bc.encode([self.s_string]))
+        story = bc.encode([self.s_string])
         storyAtt = self.AttOverAtt(story)
 
         guessAnswer, highestScore = 0, 0
@@ -1112,7 +1112,13 @@ class Mymodel():
     def softmax(self, x):
         """Compute softmax values for each sets of scores in x."""
         return np.exp(x) / np.sum(np.exp(x), axis=0)
-        
+    
+    def softmax2(x):
+        e = numpy.exp(x - numpy.max(x))  # prevent overflow
+        if e.ndim == 1:
+            return e / numpy.sum(e, axis=0)
+        else:  
+            return e / numpy.array([numpy.sum(e, axis=1)]).T  # ndim = 2
     def relu(self, x):
         x = np.asarray(x)
         x = x * (x > 0)
@@ -1126,6 +1132,6 @@ class Mymodel():
     def AttOverAtt(self, h):
         
         matrix = np.matmul(h.transpose(), h)
-        print(type(matrix))
-        print(matrix.shape)
+        print(matrix[0])
+        print(matrix[0][0])
         return matrix
