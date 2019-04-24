@@ -2,7 +2,7 @@ from scipy import spatial
 from scipy.spatial.distance import euclidean, hamming, cityblock, minkowski
 from TFIDF import TFIDF
 from bert_serving.client import BertClient
-from sklearn.metrics import jaccard_similarity_score
+from scipy.special import softmax
 import numpy as np
 
 
@@ -16,7 +16,7 @@ class Mymodel():
         self.stop_words = ["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", "its", "itself", "they", "them", "their", "theirs", "themselves", "what", "which", "who", "whom", "this", "that", "these", "those", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does", "did", "doing", "a", "an", "the", "and", "but", "if", "or", "because", "as", "until", "while", "of", "at", "by", "for", "with", "about", "against", "between", "into", "through", "during", "before", "after", "above", "below", "to", "from", "up", "down", "in", "out", "on", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t", "can", "will", "just", "don", "should", "now"]
         self.TF_words = TF_words
         self.TF_scores = TF_scores
-        self.activationF = "softmax"
+        self.activationF = "softmax3"
         self.similarity = euclidean
         self.constant = constant
 
@@ -125,7 +125,7 @@ class Mymodel():
         question = self.activationFunction(bc.encode([self.q_string]))
         options = self.activationFunction(bc.encode(self.options))
         
-        tmp, ind, guessAnswer, highestScore = [], 0, 0, 9999
+        tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
         for i in range(20):
             tmp = [x + y for x, y in zip(story, merStoryQue)]
@@ -151,9 +151,9 @@ class Mymodel():
             options_tfscores.append(tmp)
         
         for option in merQueOpts:
-            #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
-            tmpScore =  self.similarity(merStoryQue, option) + (options_tfscores[ind] * self.constant)
-            if tmpScore < highestScore:
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
+            #tmpScore =  self.similarity(merStoryQue, option) + (options_tfscores[ind] * self.constant)
+            if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
             ind += 1
@@ -248,11 +248,11 @@ class Mymodel():
             options_tfscores.append(tmp)
 
 
-        ind, guessAnswer, highestScore = 0, 0, 9999
+        ind, guessAnswer, highestScore = 0, 0, 0
         for option in merQueOpts:
-            #tmpScore = 1 - spatial.distance.cosine(story, option) + (options_tfscores[ind] * self.constant)
-            tmpScore = self.similarity(story, option) + (options_tfscores[ind] * self.constant)
-            if tmpScore < highestScore:
+            tmpScore = 1 - spatial.distance.cosine(story, option) + (options_tfscores[ind] * self.constant)
+            #tmpScore = self.similarity(story, option) + (options_tfscores[ind] * self.constant)
+            if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
             ind += 1
@@ -331,11 +331,11 @@ class Mymodel():
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
-        ind, guessAnswer, highestScore = 0, 0, 9999
+        ind, guessAnswer, highestScore = 0, 0, 0
         for option in merQueOpts:
-            #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
-            tmpScore = self.similarity(merStoryQue, option)
-            if tmpScore < highestScore:
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
+            #tmpScore = self.similarity(merStoryQue, option)
+            if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
             ind += 1
@@ -500,11 +500,11 @@ class Mymodel():
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
-        ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 9999, []
+        ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
 
         for s in storySentencesMerQuestion:
-            #tmpScore = 1 - spatial.distance.cosine(s, question)
-            tmpScore = self.similarity(s, question)
+            tmpScore = 1 - spatial.distance.cosine(s, question)
+            #tmpScore = self.similarity(s, question)
             if tmpScore > highestScore:
                 highestScore_storyVector = s
                 highestScore = tmpScore
@@ -1101,6 +1101,10 @@ class Mymodel():
     def activationFunction(self, x):
         if self.activationF == 'softmax':
             return self.softmax(x)
+        elif self.activationF == 'softmax2':
+            return self.softmax2(x)
+        elif self.activationF == 'softmax3':
+            return self.softmax3(x)
         elif self.activationF == 'relu':
             return self.relu(x)
         elif self.activationF == 'drelu':
@@ -1113,12 +1117,17 @@ class Mymodel():
         """Compute softmax values for each sets of scores in x."""
         return np.exp(x) / np.sum(np.exp(x), axis=0)
     
-    def softmax2(x):
-        e = numpy.exp(x - numpy.max(x))  # prevent overflow
+    def softmax2(self,x):
+        e = np.exp(x - np.max(x))  # prevent overflow
         if e.ndim == 1:
-            return e / numpy.sum(e, axis=0)
+            return e / np.sum(e, axis=0)
         else:  
-            return e / numpy.array([numpy.sum(e, axis=1)]).T  # ndim = 2
+            return e / np.array([np.sum(e, axis=1)]).T  # ndim = 2
+    def softmax3(self, x):
+        """Compute softmax values for each sets of scores in x."""
+        x=softmax(x)
+        return x
+    
     def relu(self, x):
         x = np.asarray(x)
         x = x * (x > 0)
