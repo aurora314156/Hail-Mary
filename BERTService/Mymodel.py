@@ -1131,23 +1131,28 @@ class Mymodel():
 
     def AttOverAtt(self, h):
         
+        # pair-wise matching matrix
         matrix = np.matmul(h.transpose(), h)
-        print(matrix[0].shape)
-        print(matrix[0][0])
+        
         rowWiseSoftmax, columnWiseSoftmax = [], []
+        # row-wise softmax matrix
         for c in matrix:
             rowWiseSoftmax.append(self.activationFunction(c))
+        # column-wise softmax matrix
         for r in matrix.transpose():
             columnWiseSoftmax.append(self.activationFunction(r))
-        print(len(columnWiseSoftmax))
-        columnWiseAveMatrix = []
+        # column-wise average matrix
+        columnWiseAveMatrix, attentionOverAttention = [], []
         for c in range(len(rowWiseSoftmax)):
             tmp = 0
             for r in range(len(rowWiseSoftmax)):
                 tmp+=rowWiseSoftmax[c][r]
             columnWiseAveMatrix.append(np.average(tmp))
-        print(len(columnWiseAveMatrix[0]))
-        attentionOverAttention = [a*b for a,b in zip(columnWiseAveMatrix,columnWiseSoftmax)]
-                
-        print(len(attentionOverAttention))
+        # dot product
+        for r in range(len(columnWiseSoftmax)):
+            tmp = 0
+            for c in range(len(columnWiseSoftmax)):
+                tmp += columnWiseSoftmax[r][c] *  columnWiseAveMatrix[c]
+            attentionOverAttention.append(tmp)
+        
         return attentionOverAttention
