@@ -348,7 +348,7 @@ class Mymodel():
         question = self.activationFunction(bc.encode([self.q_string]))
         
         merStoryQue = [x + y for x, y in zip(story, question)]
-        tmp, ind, guessAnswer, highestScore = [], 0, 0, 9999
+        tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         for i in range(200):
             tmp = [x + y for x, y in zip(merStoryQue, question)]
             merStoryQue = tmp
@@ -374,9 +374,9 @@ class Mymodel():
         
 
         for option in merQueOpts:
-            #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
-            tmpScore = self.similarity(merStoryQue, option) + (options_tfscores[ind] * self.constant)
-            if tmpScore < highestScore:
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
+            #tmpScore = self.similarity(merStoryQue, option) + (options_tfscores[ind] * self.constant)
+            if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
             ind += 1
@@ -412,8 +412,8 @@ class Mymodel():
         
 
         for option in options:
-            #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
-            tmpScore = self.similarity(merStoryQue, option) + (options_tfscores[ind] * self.constant)
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
+            #tmpScore = self.similarity(merStoryQue, option) + (options_tfscores[ind] * self.constant)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -427,7 +427,7 @@ class Mymodel():
         question = self.activationFunction(bc.encode([self.q_string]))
 
         merStoryQue = [x + y for x, y in zip(merStoryQue, question)]
-        tmp, ind, guessAnswer, highestScore = [], 0, 0, 9999
+        tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
         for i in range(200):
             tmp = [x + y for x, y in zip(merStoryQue, question)]
             merStoryQue = tmp
@@ -453,8 +453,8 @@ class Mymodel():
 
 
         for option in merQueOpts:
-            #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
-            tmpScore = self.similarity(merStoryQue, option) + (options_tfscores[ind] * self.constant)
+            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
+            #tmpScore = self.similarity(merStoryQue, option) + (options_tfscores[ind] * self.constant)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -525,8 +525,8 @@ class Mymodel():
 
         highestScore = 0
         for option in merQueOpts:
-            #tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector) + (options_tfscores[ind] * self.constant)
-            tmpScore = self.similarity(option, highestScore_storyVector) + (options_tfscores[ind] * self.constant)
+            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector) + (options_tfscores[ind] * self.constant)
+            #tmpScore = self.similarity(option, highestScore_storyVector) + (options_tfscores[ind] * self.constant)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -722,13 +722,13 @@ class Mymodel():
                 tmp += self.TF_scores[0][self.TF_words.index(word)]
             sentences_tfscores.append(tmp)
 
-        ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 9999, []
+        ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
 
         for m in merQueOpts:
             s_ind = 0
             for s in storySentences:
-                #tmpScore = 1 - spatial.distance.cosine(s, m) + (sentences_tfscores[s_ind] * self.constant)
-                tmpScore = self.similarity(s, m) + (sentences_tfscores[s_ind] * self.constant)
+                tmpScore = 1 - spatial.distance.cosine(s, m) + (sentences_tfscores[s_ind] * self.constant)
+                #tmpScore = self.similarity(s, m) + (sentences_tfscores[s_ind] * self.constant)
                 if tmpScore > highestScore:
                     guessAnswer = ind
                     highestScore = tmpScore
@@ -743,7 +743,7 @@ class Mymodel():
         merStoryQue = self.activationFunction(bc.encode([self.s_string]))
         options = self.activationFunction(bc.encode(self.options))
 
-        merStoryQueOpt, ind, guessAnswer, highestScore, o_ind = [], 0, 0, 9999, 0
+        merStoryQueOpt, ind, guessAnswer, highestScore, o_ind = [], 0, 0, 0, 0
         
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + self.q_string
@@ -760,8 +760,8 @@ class Mymodel():
         for mSQO in merStoryQueOpt:
             ind = 0
             for m in merQueOpts:
-                #tmpScore = 1 - spatial.distance.cosine(m, mSQO)
-                tmpScore = self.similarity(m, mSQO)
+                tmpScore = 1 - spatial.distance.cosine(m, mSQO)
+                #tmpScore = self.similarity(m, mSQO)
                 if tmpScore > highestScore:
                     guessAnswer = ind
                     highestScore = tmpScore
@@ -777,7 +777,7 @@ class Mymodel():
         merQueOpts = self.activationFunction(bc.encode(self.options))
         merStoryQue = self.activationFunction(bc.encode([self.s_string + self.q_string]))
         
-        merStoryQue_QueOpt, ind, guessAnswer, highestScore, o_ind = [], 0, 0, 0, 9999
+        merStoryQue_QueOpt, ind, guessAnswer, highestScore, o_ind = [], 0, 0, 0, 0
 
         for m in merQueOpts:
             tmpStoryQue = merStoryQue
@@ -791,8 +791,8 @@ class Mymodel():
         for mSQ_QO in merStoryQue_QueOpt:
             ind = 0
             for m in merQueOpts:
-                #tmpScore = 1 - spatial.distance.cosine(m, mSQ_QO)
-                tmpScore = self.similarity(m, mSQ_QO)
+                tmpScore = 1 - spatial.distance.cosine(m, mSQ_QO)
+                #tmpScore = self.similarity(m, mSQ_QO)
                 if tmpScore > highestScore:
                     guessAnswer = ind
                     highestScore = tmpScore
@@ -897,12 +897,12 @@ class Mymodel():
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
-        ind, guessAnswer, highestScore = 0, 0, 9999
+        ind, guessAnswer, highestScore = 0, 0, 0
 
         for m in merQueOpts:
             for sMQ in storySentencesMerQuestion:
-                #tmpScore = 1 - spatial.distance.cosine(m, sMQ)
-                tmpScore = self.similarity(m, sMQ)
+                tmpScore = 1 - spatial.distance.cosine(m, sMQ)
+                #tmpScore = self.similarity(m, sMQ)
                 if tmpScore > highestScore:
                     guessAnswer = ind
                     highestScore = tmpScore
@@ -941,11 +941,11 @@ class Mymodel():
         
         Que = self.activationFunction(bc.encode([self.q_string]))
 
-        ind, guessAnswer, highestScore = 0, 0, 9999
+        ind, guessAnswer, highestScore = 0, 0, 0
 
         for s in storySentencesMerQuestionAndOpts:
-            #tmpScore = 1 - spatial.distance.cosine(Que, s)
-            tmpScore = self.similarity(Que, s)
+            tmpScore = 1 - spatial.distance.cosine(Que, s)
+            #tmpScore = self.similarity(Que, s)
             if tmpScore > highestScore:
                 guessAnswer = ind % 4
                 highestScore = tmpScore
@@ -988,12 +988,12 @@ class Mymodel():
         merQueOpts = self.activationFunction(bc.encode(self.options))
         #Que = self.activationFunction(bc.encode([self.q_string]))
         
-        ind, guessAnswer, highestScore = 0, 0, 9999
+        ind, guessAnswer, highestScore = 0, 0, 0
 
         for m in merQueOpts:
             for sMO in storySentencesMerOpts:
-                #tmpScore = 1 - spatial.distance.cosine(m, sMO)
-                tmpScore = self.similarity(m, sMO)
+                tmpScore = 1 - spatial.distance.cosine(m, sMO)
+                #tmpScore = self.similarity(m, sMO)
                 if tmpScore > highestScore:
                     guessAnswer = ind % 4
                     highestScore = tmpScore
@@ -1123,9 +1123,10 @@ class Mymodel():
             return e / np.sum(e, axis=0)
         else:  
             return e / np.array([np.sum(e, axis=1)]).T  # ndim = 2
+    
     def softmax3(self, x):
         """Compute softmax values for each sets of scores in x."""
-        x=softmax(x)
+        x = softmax(x)
         return x
     
     def relu(self, x):
