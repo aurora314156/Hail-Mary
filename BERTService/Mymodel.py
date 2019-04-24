@@ -63,7 +63,7 @@ class Mymodel():
         elif self.model == 'TwentiethModel':
             guessAnswer = self.TwentiethModel(self.bc)
         elif self.model == 'TwentyFirstModel':
-            guessAnswer = self.TwentiethModel(self.bc)
+            guessAnswer = self.TwentyFirstModel(self.bc)
         elif self.model == 'TwentySecondModel':
             guessAnswer = self.TwentySecondModel(self.bc)
         elif self.model == 'TwentyThirdModel':
