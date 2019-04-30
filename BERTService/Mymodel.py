@@ -74,6 +74,8 @@ class Mymodel():
             guessAnswer = self.TwentyFifthModel(self.bc)
         elif self.model == 'TwentySixthModel':
             guessAnswer = self.TwentySixthModel(self.bc)
+        elif self.model == 'TwentySeventhModel':
+            guessAnswer = self.TwentySeventhModel(self.bc)
         elif self.model == 'TestModel2':
             guessAnswer = self.TestModel(self.bc)
         
@@ -1053,13 +1055,57 @@ class Mymodel():
         return guessAnswer
     
     def TwentySixthModel(self,bc):
+        sentences, tmp_string, sentence = [], "", ""
+        for s in self.s_string[:len(self.s_string)-1]:
+            tmp_string += s
+            # reserve sentence structure
+            if s == "." or s == "?" or s == "!":
+                # remove "," "." "?"
+                sentence = ""
+                for t in tmp_string:
+                    if t is "," or t is "." or t is "?":
+                        continue
+                    else:
+                        sentence += t
+                if len(sentence) >1:
+                    if sentence[0] == " ":
+                        sentences.append(sentence[:-1])
+                    else:
+                        sentences.append(sentence)
+                tmp_string = ""
+                continue
+
+        # use whole story structure
+        if tmp_string != "":
+            sentences.append(tmp_string)
+        
+        storySentences = self.activationFunction(bc.encode(sentences))
+        question = self.activationFunction(bc.encode([self.q_string]))
+        for i in range(len(self.options)):
+            self.options[i] = self.options[i] + self.q_string
+        
+        merQueOpts = self.activationFunction(bc.encode(self.options))
+
+        ind, guessAnswer, highestScore = 0, 0, 0
+
+        for m in merQueOpts:
+            tmpScore = 0
+            for s in storySentences:
+                tmpScore += 1 - spatial.distance.cosine(m, s)
+            if tmpScore > highestScore:
+                tmpScore = highestScore
+                guessAnswer = ind
+            ind += 1
+
+        return guessAnswer
+
+    def TwentySeventhModel(self,bc)
         story = bc.encode([self.s_string])
         storyAtt = self.AttOverAtt(story)
 
         guessAnswer, highestScore = 0, 0
 
         return guessAnswer, highestScore
-
     def TestModel(self,bc):
 
         merStoryQue = self.s_string + self.q_string
@@ -1115,14 +1161,21 @@ class Mymodel():
 
     def softmax(self, x):
         """Compute softmax values for each sets of scores in x."""
-        return np.exp(x) / np.sum(np.exp(x), axis=0)
+        return (np.exp(x) / np.sum(np.exp(x)))
     
     def softmax2(self,x):
-        e = np.exp(x - np.max(x))  # prevent overflow
-        if e.ndim == 1:
-            return e / np.sum(e, axis=0)
-        else:  
-            return e / np.array([np.sum(e, axis=1)]).T  # ndim = 2
+        """improvement version"""
+        if len(x) == 1:
+            exps = np.exp(x - np.max(x))
+            res = (exps / np.sum(exps))
+            return res
+        else:
+            tmp = []
+            for xx in x:
+                exps = np.exp(xx - np.max(xx))
+                res = (exps / np.sum(exps))
+                tmp.append(res)
+        return tmp
     
     def softmax3(self, x):
         """Compute softmax values for each sets of scores in x."""
