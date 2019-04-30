@@ -1093,7 +1093,7 @@ class Mymodel():
             for s in storySentences:
                 tmpScore += 1 - spatial.distance.cosine(m, s)
             if tmpScore > highestScore:
-                tmpScore = highestScore
+                highestScore = tmpScore
                 guessAnswer = ind
             ind += 1
 
