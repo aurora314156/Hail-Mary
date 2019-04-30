@@ -17,7 +17,7 @@ def main():
     AccuracyList = []
     constant = 0
     for m in model:
-        for i in range(1):
+        for i in range(10):
             print("***********************************\nStart getting datatype: ")
             print(dataType)
             print("***********************************\n")
@@ -48,7 +48,7 @@ def main():
                 else:
                     dataTypeLog = "Data type: " + dataType[1] + "\n"
                 SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime).saveLogTxt()
-            constant += 0
+            constant += 0.1
     SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime, AccuracyList).saveLogExcel()
             
 

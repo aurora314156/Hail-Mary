@@ -1086,12 +1086,26 @@ class Mymodel():
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
+        # test add tf-idf score
+        options_tfscores = []
+
+        for option in self.options:
+            tmp, flag = 0, 0
+            for o in option.split(" "):
+                o = o.lower()
+                if flag == 3:
+                    break
+                if o not in self.TF_words:
+                    continue
+                tmp += self.TF_scores[0][self.TF_words.index(o)]
+            options_tfscores.append(tmp)
+
         ind, guessAnswer, highestScore = 0, 0, 0
 
         for m in merQueOpts:
             tmpScore = 0
             for s in storySentences:
-                tmpScore += 1 - spatial.distance.cosine(m, s)
+                tmpScore += 1 - spatial.distance.cosine(m, s) + (options_tfscores[ind] * self.constant)
             if tmpScore > highestScore:
                 highestScore = tmpScore
                 guessAnswer = ind
