@@ -1104,8 +1104,12 @@ class Mymodel():
 
         for m in merQueOpts:
             tmpScore = 0
+            tmpScorelist = []
             for s in storySentences:
-                tmpScore += 1 - spatial.distance.cosine(m, s) + (options_tfscores[ind] * self.constant)
+                tmpScorelist.append(1 - spatial.distance.cosine(m, s))
+                tmpScorelist.sort(reverse=True)
+                for t in tmpScorelist[:5]:
+                    tmpScore += t
             if tmpScore > highestScore:
                 highestScore = tmpScore
                 guessAnswer = ind
