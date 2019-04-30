@@ -1099,13 +1099,14 @@ class Mymodel():
 
         return guessAnswer
 
-    def TwentySeventhModel(self,bc)
+    def TwentySeventhModel(self,bc):
         story = bc.encode([self.s_string])
         storyAtt = self.AttOverAtt(story)
 
         guessAnswer, highestScore = 0, 0
 
         return guessAnswer, highestScore
+
     def TestModel(self,bc):
 
         merStoryQue = self.s_string + self.q_string
