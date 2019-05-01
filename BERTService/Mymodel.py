@@ -1115,11 +1115,20 @@ class Mymodel():
 
     def TwentySeventhModel(self,bc):
         story = bc.encode([self.s_string])
-        storyAtt = self.AttOverAtt(story)
+        question = bc.encode([self.q_string])
+        storyAttQue = self.AttOverAtt(story, question)
+        opts = bc.encode(self.options)
 
-        guessAnswer, highestScore = 0, 0
+        ind, guessAnswer, highestScore = 0, 0, 0
 
-        return guessAnswer, highestScore
+        for o in opts:
+            tmpScore = 1 - spatial.distance.cosine(storyAttQue, o)
+            if tmpScore > highestScore:
+                highestScore = tmpScore
+                guessAnswer = ind
+            ind += 1
+            
+        return guessAnswer
 
     def TestModel(self,bc):
 
@@ -1207,13 +1216,12 @@ class Mymodel():
         x = 1. * (x > 0)
         return x
 
-    def AttOverAtt(self, h):
-        
-        # pair-wise matching matrix
-        matrix = np.matmul(h.transpose(), h)
-        
-        rowWiseSoftmax, columnWiseSoftmax = [], []
+    def AttOverAtt(self, doc, query):
+
+        # Individual ATT layer
+        matrix = np.matmul(doc.transpose(), query)
         # row-wise softmax matrix
+        rowWiseSoftmax, columnWiseSoftmax = [], []
         for c in matrix:
             rowWiseSoftmax.append(self.activationFunction(c))
         # column-wise softmax matrix
@@ -1226,7 +1234,7 @@ class Mymodel():
             for r in range(len(rowWiseSoftmax)):
                 tmp+=rowWiseSoftmax[c][r]
             columnWiseAveMatrix.append(np.average(tmp))
-        # dot product
+        # final dot product
         for r in range(len(columnWiseSoftmax)):
             tmp = 0
             for c in range(len(columnWiseSoftmax)):

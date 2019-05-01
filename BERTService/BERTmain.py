@@ -17,7 +17,7 @@ def main():
     AccuracyList = []
     constant = 0
     for m in model:
-        for i in range(10):
+        for i in range(1):
             print("***********************************\nStart getting datatype: ")
             print(dataType)
             print("***********************************\n")
@@ -32,10 +32,10 @@ def main():
                     print(Process_dataset)
                     continue
                 for single_data in single_dataset:
-                    print(single_data['storyName'])
                     s_string, q_string, options, answer = ContentParser(single_data).getContent()
                     guessAnswer = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
                     if guessAnswer == answer:
+                        print(single_data['storyName'])
                         correct += 1
                 accuracy = round(correct/len(single_dataset),3)
                 Accuracy = "Accuracy: " + str(accuracy) + "\n"
@@ -48,7 +48,7 @@ def main():
                 else:
                     dataTypeLog = "Data type: " + dataType[1] + "\n"
                 SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime).saveLogTxt()
-            constant += 0.1
+            constant += 0
     SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime, AccuracyList).saveLogExcel()
             
 
