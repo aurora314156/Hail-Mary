@@ -1233,16 +1233,20 @@ class Mymodel():
             columnWiseSoftmax.append(self.activationFunction(r))
         # column-wise average matrix
         columnWiseAveMatrix, attentionOverAttention = [], []
-        for c in range(len(rowWiseSoftmax)):
-            tmp = 0
-            for r in range(len(rowWiseSoftmax)):
-                tmp+=rowWiseSoftmax[c][r]
-            columnWiseAveMatrix.append(np.average(tmp))
+        # for c in range(len(rowWiseSoftmax)):
+        #     tmp = 0
+        #     for r in range(len(rowWiseSoftmax)):
+        #         tmp+=rowWiseSoftmax[c][r]
+        #     columnWiseAveMatrix.append(np.average(tmp))
+        for r in rowWiseSoftmax.T:
+            columnWiseAveMatrix.append(np.average(r))
         # final dot product
-        for r in range(len(columnWiseSoftmax)):
-            tmp = 0
-            for c in range(len(columnWiseSoftmax)):
-                tmp += columnWiseSoftmax[r][c] *  columnWiseAveMatrix[c]
-            attentionOverAttention.append(tmp)
+        # for r in range(len(columnWiseSoftmax)):
+        #     tmp = 0
+        #     for c in range(len(columnWiseSoftmax)):
+        #         tmp += columnWiseSoftmax[r][c] * columnWiseAveMatrix[c]
+        #     attentionOverAttention.append(tmp)
+        for c in columnWiseSoftmax:
+            attentionOverAttention.append(np.dot(c, columnWiseAveMatrix))
         
         return attentionOverAttention
