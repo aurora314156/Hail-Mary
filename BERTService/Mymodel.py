@@ -1238,7 +1238,7 @@ class Mymodel():
         #     for r in range(len(rowWiseSoftmax)):
         #         tmp+=rowWiseSoftmax[c][r]
         #     columnWiseAveMatrix.append(np.average(tmp))
-        rowWiseSoftmax_transpose = list(map(list, zip(*rowWiseSoftmax_transpose)))
+        rowWiseSoftmax_transpose = list(map(list, zip(*rowWiseSoftmax)))
         for r in rowWiseSoftmax_transpose:
             columnWiseAveMatrix.append(np.average(r))
         # final dot product
