@@ -1299,8 +1299,12 @@ class Mymodel():
 
         # Individual ATT layer
         if isinstance(doc, list):
-            doc = np.asarray(doc)
-        matrix = np.matmul(doc.transpose(), query)
+            doc = np.asarray([doc])
+        if isinstance(query, list):
+            query = np.asarray(query)
+        doc = np.reshape(doc, (1,len(doc)))
+        
+        matrix = np.matmul(doc.T, query)
         # row-wise softmax matrix
         rowWiseSoftmax, columnWiseSoftmax = [], []
         for c in matrix:
