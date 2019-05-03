@@ -1298,6 +1298,8 @@ class Mymodel():
     def AttOverAtt(self, doc, query):
 
         # Individual ATT layer
+        if isinstance(doc, list):
+            doc = np.asarray(doc)
         matrix = np.matmul(doc.transpose(), query)
         # row-wise softmax matrix
         rowWiseSoftmax, columnWiseSoftmax = [], []
