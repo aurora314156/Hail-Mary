@@ -76,6 +76,8 @@ class Mymodel():
             guessAnswer = self.TwentySixthModel(self.bc)
         elif self.model == 'TwentySeventhModel':
             guessAnswer = self.TwentySeventhModel(self.bc)
+        elif self.model == 'TwentyEighthModel':
+            guessAnswer = self.TwentyEighthModel(self.bc)
         elif self.model == 'TestModel2':
             guessAnswer = self.TestModel(self.bc)
         
@@ -1133,6 +1135,77 @@ class Mymodel():
             ind += 1
             
         return guessAnswer
+    def TwentyEighthModel(self,bc):
+        """
+        encode eacht story sentences with question sentence, then calculate similarity with wholte story and question
+        choose highest vector to calculate similarity with question and options
+        """
+
+        sentences, tmp_string, sentence = [], "", ""
+        for s in self.s_string[:len(self.s_string)-1]:
+            tmp_string += s
+            # reserve sentence structure
+            if s == "." or s == "?" or s == "!":
+                # remove "," "." "?"
+                sentence = ""
+                for t in tmp_string:
+                    if t is "," or t is "." or t is "?":
+                        continue
+                    else:
+                        sentence += t
+                if len(sentence) >1:
+                    if sentence[0] == " ":
+                        sentences.append(sentence[:-1] + self.q_string)
+                    else:
+                        sentences.append(sentence + self.q_string)
+                tmp_string = ""
+                continue
+
+        # use whole story structure
+        if tmp_string != "":
+            sentences.append(tmp_string)
+
+        storySentencesMerQuestion = self.activationFunction(bc.encode(sentences))
+        question = self.activationFunction(bc.encode([self.q_string]))
+
+        for i in range(len(self.options)):
+            self.options[i] = self.options[i] + self.q_string
+        
+        merQueOpts = self.activationFunction(bc.encode(self.options))
+
+        storyAndQueAtt = []
+        for s in storySentencesMerQuestion:
+            storyAndQueAtt.append(self.AttOverAtt(s, question))
+
+        ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
+
+        # test add tf-idf score
+        options_tfscores = []
+
+        for option in self.options:
+            tmp, flag = 0, 0
+            for o in option.split(" "):
+                o = o.lower()
+                if flag == 3:
+                    break
+                if o not in self.TF_words:
+                    continue
+                tmp += self.TF_scores[0][self.TF_words.index(o)]
+            options_tfscores.append(tmp)
+
+        highestScore = 0
+
+        for option in merQueOpts:
+            for att in storyAndQueAtt:
+                tmpScore = 1 - spatial.distance.cosine(option, att) + (options_tfscores[ind] * self.constant)
+                #tmpScore = self.similarity(option, highestScore_storyVector) + (options_tfscores[ind] * self.constant)
+                if tmpScore > highestScore:
+                    guessAnswer = ind
+                    highestScore = tmpScore
+            ind += 1
+
+        return guessAnswer
+
 
     def TestModel(self,bc):
 
@@ -1211,9 +1284,11 @@ class Mymodel():
         return x
     
     def relu(self, x):
-        x = np.asarray(x)
-        x = x * (x > 0)
-        return x
+        tmp = []
+        for xx in x:
+            xx = xx * (xx > 0)
+            tmp.append(xx)
+        return tmp
 
     def drelu(self, x):
         x = np.asarray(x)
