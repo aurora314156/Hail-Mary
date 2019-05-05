@@ -1302,7 +1302,8 @@ class Mymodel():
             doc = np.asarray([doc])
         if isinstance(query, list):
             query = np.asarray(query)
-        doc = np.reshape(doc, (1,len(doc)))
+        if len(doc) != 1:
+            doc = np.reshape(doc, (1,len(doc)))
         
         matrix = np.matmul(doc.T, query)
         # row-wise softmax matrix
