@@ -1264,7 +1264,13 @@ class Mymodel():
 
     def softmax(self, x):
         """Compute softmax values for each sets of scores in x."""
-        return (np.exp(x) / np.sum(np.exp(x)))
+        def soft(self,x):
+            return (np.exp(x) / np.sum(np.exp(x)))
+        tmp = []
+        for xx in x:
+            tmp.append(soft(xx))
+
+        return tmp
     
     def softmax2(self,x):
         """improvement version"""
@@ -1275,13 +1281,13 @@ class Mymodel():
         else:
             tmp = []
             print(len(x))
+            tTime = time.time()
             for xx in x:
-                tTime = time.time()
                 exps = np.exp(xx - np.max(xx))
                 res = (exps / np.sum(exps))
                 tmp.append(res)
-                CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n\n"
-                print(CostTime)
+            CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n\n"
+            print(CostTime)
         return tmp
     
     def softmax3(self, x):
