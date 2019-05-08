@@ -2,6 +2,7 @@ from scipy import spatial
 from scipy.spatial.distance import euclidean, hamming, cityblock, minkowski
 from TFIDF import TFIDF
 from bert_serving.client import BertClient
+import time
 from scipy.special import softmax
 import numpy as np
 
@@ -1135,6 +1136,7 @@ class Mymodel():
             ind += 1
             
         return guessAnswer
+
     def TwentyEighthModel(self,bc):
         """
         encode eacht story sentences with question sentence, then calculate similarity with wholte story and question
@@ -1272,10 +1274,14 @@ class Mymodel():
             return res
         else:
             tmp = []
+            print(len(x))
             for xx in x:
+                tTime = time.time()
                 exps = np.exp(xx - np.max(xx))
                 res = (exps / np.sum(exps))
                 tmp.append(res)
+                CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n\n"
+                print(CostTime)
         return tmp
     
     def softmax3(self, x):
