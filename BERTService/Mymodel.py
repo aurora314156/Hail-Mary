@@ -5,6 +5,7 @@ from bert_serving.client import BertClient
 import time
 from scipy.special import softmax
 import numpy as np
+import math
 
 
 class Mymodel():
