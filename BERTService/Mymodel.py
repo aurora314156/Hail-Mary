@@ -96,7 +96,7 @@ class Mymodel():
         for option in options:
             merStoryOpt = [x + y for x, y in zip(story, option)]
             #tmpScore = 1 - spatial.distance.cosine(merStoryQue, merStoryOpt)
-            tmpScore = angle_between(merStoryQue, merStoryOpt)
+            tmpScore = angle_sim(merStoryQue, merStoryOpt)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -1358,20 +1358,22 @@ class Mymodel():
 
 
     # angle similarity
-    def unit_vector(self, vector):
-    """ Returns the unit vector of the vector.  """
-        return vector / np.linalg.norm(vector)
-
-    def angle_between(self, v1, v2):
-        """ Returns the angle in radians between vectors 'v1' and 'v2'::
-
-                >>> angle_between((1, 0, 0), (0, 1, 0))
-                1.5707963267948966
-                >>> angle_between((1, 0, 0), (1, 0, 0))
-                0.0
-                >>> angle_between((1, 0, 0), (-1, 0, 0))
-                3.141592653589793
+    def angle_sim(self, v1, v2):
+        """ 
+        Returns the angle in radians between vectors 'v1' and 'v2'::
         """
-        v1_u = unit_vector(v1)
-        v2_u = unit_vector(v2)
-        return np.arccos(np.clip(np.dot(v1_u, v2_u), -1.0, 1.0))
+        def cosine_similarity_f(vv1,vv2):
+            "compute cosine similarity of v1 to v2: (v1 dot v2)/{||v1||*||v2||)"
+            sumxx, sumxy, sumyy = 0, 0, 0
+            for i in range(len(vv1)):
+                x = vv1[i]; y = vv2[i]
+                sumxx += x*x
+                sumyy += y*y
+                sumxy += x*y
+            return sumxy/math.sqrt(sumxx*sumyy)
+        
+        v1 = np.clip(v1, 0.0, 1.0)
+        v2 = np.clip(v2, 0.0, 1.0)
+        cosine_similarity = cosine_similarity_f(v1, v2)
+        
+        return 1.0 - (np.arccos(cosine_similarity) / 3.14)
