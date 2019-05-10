@@ -6,10 +6,10 @@ class Initial():
     def __init__(self):
         self.d_model = 512
         # choose run model
-        self.model = ['TwentyEighthModel']
-        #self.model = ['FirstModel','SecondModel', 'ThirdModel', 'ForthModel', 'FifthModel', 'SixthModel', 'SeventhModel', 'EighthModel', 'NinthModel', \
-        #'TenthModel', 'EleventhModel', 'TwelfthModel', 'ThirteenthModel', 'FourteenthModel', 'FifteenthModel', 'SixteenthModel', 'SeventeenthModel', 'EighteenthModel', \
-        #'NineteenthModel', 'TwentiethModel', 'TwentyFirstModel', 'TwentySecondModel', 'TwentyThirdModel', 'TwentyForthModel', 'TwentyFifthModel']
+        #self.model = ['TwentyEighthModel']
+        self.model = ['FirstModel','SecondModel', 'ThirdModel', 'ForthModel', 'FifthModel', 'SixthModel', 'SeventhModel', 'EighthModel', 'NinthModel', \
+        'TenthModel', 'EleventhModel', 'TwelfthModel', 'ThirteenthModel', 'FourteenthModel', 'FifteenthModel', 'SixteenthModel', 'SeventeenthModel', 'EighteenthModel', \
+        'NineteenthModel', 'TwentiethModel', 'TwentyFirstModel', 'TwentySecondModel', 'TwentyThirdModel', 'TwentyForthModel', 'TwentyFifthModel','TwentySixthModel']
     def InitialMain(self):
         self.createLogFile()
         dataset, dataType = self.GetDataset(self.ArgParse())

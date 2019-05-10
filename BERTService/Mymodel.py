@@ -95,7 +95,8 @@ class Mymodel():
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
             merStoryOpt = [x + y for x, y in zip(story, option)]
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, merStoryOpt)
+            #tmpScore = 1 - spatial.distance.cosine(merStoryQue, merStoryOpt)
+            tmpScore = angle_between(merStoryQue, merStoryOpt)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -114,7 +115,8 @@ class Mymodel():
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
             merStoryOpt = [x * y for x, y in zip(story, option)]
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, merStoryOpt)
+            #tmpScore = 1 - spatial.distance.cosine(merStoryQue, merStoryOpt)
+            tmpScore = angle_between(merStoryQue, merStoryOpt)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -156,7 +158,8 @@ class Mymodel():
             options_tfscores.append(tmp)
         
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
+            #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
+            tmpScore = angle_between(merStoryQue, option)
             #tmpScore =  self.similarity(merStoryQue, option) + (options_tfscores[ind] * self.constant)
             if tmpScore > highestScore:
                 guessAnswer = ind
@@ -208,7 +211,8 @@ class Mymodel():
 
         highestScore = 0
         for option in options:
-            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector)
+            #tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector)
+            tmpScore = angle_between(highestScore_storyVector, option)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -255,7 +259,8 @@ class Mymodel():
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(story, option) + (options_tfscores[ind] * self.constant)
+            tmpScore = angle_between(story, option)
+            #tmpScore = 1 - spatial.distance.cosine(story, option) + (options_tfscores[ind] * self.constant)
             #tmpScore = self.similarity(story, option) + (options_tfscores[ind] * self.constant)
             if tmpScore > highestScore:
                 guessAnswer = ind
@@ -273,7 +278,8 @@ class Mymodel():
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in merStoryOpt:
-            tmpScore = 1 - spatial.distance.cosine(option, question)
+            #tmpScore = 1 - spatial.distance.cosine(option, question)
+            tmpScore = angle_between(question, option)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -290,7 +296,8 @@ class Mymodel():
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
+            #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
+            tmpScore = angle_between(merStoryQue, option)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -307,7 +314,8 @@ class Mymodel():
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in merStoryOpt:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
+            #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
+            tmpScore = angle_between(merStoryQue, option)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -321,7 +329,8 @@ class Mymodel():
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in options:
-            tmpScore = 1 - spatial.distance.cosine(story, option)
+            #tmpScore = 1 - spatial.distance.cosine(story, option)
+            tmpScore = angle_between(story, option)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -338,7 +347,8 @@ class Mymodel():
 
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
+            tmpScore = angle_between(merStoryQue, option)
+            #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
             #tmpScore = self.similarity(merStoryQue, option)
             if tmpScore > highestScore:
                 guessAnswer = ind
@@ -377,9 +387,9 @@ class Mymodel():
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
         
-
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
+            #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
+            tmpScore = angle_between(merStoryQue, option)
             #tmpScore = self.similarity(merStoryQue, option) + (options_tfscores[ind] * self.constant)
             if tmpScore > highestScore:
                 guessAnswer = ind
@@ -415,9 +425,9 @@ class Mymodel():
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
         
-
         for option in options:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
+            tmpScore = angle_between(merStoryQue, option)
+            #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
             #tmpScore = self.similarity(merStoryQue, option) + (options_tfscores[ind] * self.constant)
             if tmpScore > highestScore:
                 guessAnswer = ind
@@ -456,9 +466,9 @@ class Mymodel():
                 tmp += self.TF_scores[0][self.TF_words.index(o)]
             options_tfscores.append(tmp)
 
-
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
+            tmpScore = angle_between(merStoryQue, option)
+            #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
             #tmpScore = self.similarity(merStoryQue, option) + (options_tfscores[ind] * self.constant)
             if tmpScore > highestScore:
                 guessAnswer = ind
@@ -508,7 +518,8 @@ class Mymodel():
         ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
 
         for s in storySentencesMerQuestion:
-            tmpScore = 1 - spatial.distance.cosine(s, question)
+            #tmpScore = 1 - spatial.distance.cosine(s, question)
+            tmpScore = angle_between(s, question)
             #tmpScore = self.similarity(s, question)
             if tmpScore > highestScore:
                 highestScore_storyVector = s
@@ -530,7 +541,8 @@ class Mymodel():
 
         highestScore = 0
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector) + (options_tfscores[ind] * self.constant)
+            tmpScore = angle_between(highestScore_storyVector, option)
+            #tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector) + (options_tfscores[ind] * self.constant)
             #tmpScore = self.similarity(option, highestScore_storyVector) + (options_tfscores[ind] * self.constant)
             if tmpScore > highestScore:
                 guessAnswer = ind
@@ -579,7 +591,8 @@ class Mymodel():
         ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
 
         for s in storySentencesMerQuestion:
-            tmpScore = 1 - spatial.distance.cosine(s, storyMerQue)
+            #tmpScore = 1 - spatial.distance.cosine(s, storyMerQue)
+            tmpScore = angle_between(storyMerQue, s)
             if tmpScore > highestScore:
                 highestScore_storyVector = s
                 highestScore = tmpScore
@@ -600,7 +613,8 @@ class Mymodel():
 
         highestScore = 0
         for option in merQueOpts:
-            tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector) + (options_tfscores[ind] * self.constant)
+            #tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector) + (options_tfscores[ind] * self.constant)
+            tmpScore = angle_between(highestScore_storyVector, option)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
@@ -1280,15 +1294,11 @@ class Mymodel():
             return res
         else:
             tmp = []
-            print(len(x))
-            tTime = time.time()
             for xx in x:
                 exps = np.exp(xx - np.max(xx))
                 res = (exps / np.sum(exps))
                 tmp.append(res)
-            CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n\n"
-            print(CostTime)
-        return tmp
+            return tmp
     
     def softmax3(self, x):
         """Compute softmax values for each sets of scores in x."""
@@ -1345,3 +1355,23 @@ class Mymodel():
             attentionOverAttention.append(np.dot(c, columnWiseAveMatrix))
         
         return attentionOverAttention
+
+
+    # angle similarity
+    def unit_vector(self, vector):
+    """ Returns the unit vector of the vector.  """
+        return vector / np.linalg.norm(vector)
+
+    def angle_between(self, v1, v2):
+        """ Returns the angle in radians between vectors 'v1' and 'v2'::
+
+                >>> angle_between((1, 0, 0), (0, 1, 0))
+                1.5707963267948966
+                >>> angle_between((1, 0, 0), (1, 0, 0))
+                0.0
+                >>> angle_between((1, 0, 0), (-1, 0, 0))
+                3.141592653589793
+        """
+        v1_u = unit_vector(v1)
+        v2_u = unit_vector(v2)
+        return np.arccos(np.clip(np.dot(v1_u, v2_u), -1.0, 1.0))
