@@ -96,7 +96,7 @@ class Mymodel():
         for option in options:
             merStoryOpt = [x + y for x, y in zip(story, option)]
             #tmpScore = 1 - spatial.distance.cosine(merStoryQue, merStoryOpt)
-            tmpScore = angle_sim(merStoryQue, merStoryOpt)
+            tmpScore = self.angle_sim(merStoryQue, merStoryOpt)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
