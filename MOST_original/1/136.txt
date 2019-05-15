@@ -1,0 +1,9 @@
+C
+汽車電子協會（Automotive Electronics Council， AEC）旗下多晶片模組（Multichip Modules，MCM）委員會成員，包含萊迪思 （Lattice）、英特爾（Intel）、英飛凌（Infineon）、超捷科技（Microchip）、恩智浦（NXP）、安森美（On Semiconductor）、德州儀器（TI）等企業，近期宣告 AEC-Q104 MCM 規範，一解 MCM、系統構裝（System In Package，SIP）、堆疊式封裝（Stacked Chip）等複雜多晶片型態應該依循 IC，還是模組規範的難題；此外，AEC-Q104 更是車用行業規範中，首次定義車用板階可靠度測試項目（Board Level Reliability，BLR）的規範。
+Q
+哪一個是汽車電子協會成員?
+A
+鴻海
+百度
+英特爾
+騰訊

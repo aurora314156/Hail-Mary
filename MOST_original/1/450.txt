@@ -1,0 +1,9 @@
+C
+據估計，Google在全世界的資料中心內營運著上百萬台的伺服器，每天處理數以億計的搜尋請求和約二十四PB用戶生成的資料。 Google自創立起開始的快速成長同時也帶動了一系列的產品研發、併購事項與合作關係，而不僅僅是公司核心的網路搜尋業務。Google公司提供豐富的線上軟體服務，如雲端硬碟、Gmail電子郵件，包括Orkut、Google Buzz以及Google+在內的社群網路服務。Google的產品同時也以應用軟體的形式進入用戶桌面，例如Google Chrome網頁瀏覽器、Picasa圖片整理與編輯軟體、Google Talk即時通訊工具等。另外，Google還進行了行動裝置的Android作業系統以及Google Chrome OS作業系統的開發。
+Q
+Google每天需要處理多少筆搜尋?
+A
+上百萬
+二十四
+數以億計
+一

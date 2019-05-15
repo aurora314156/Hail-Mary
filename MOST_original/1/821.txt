@@ -1,0 +1,9 @@
+C
+Semantic Machines研發的技術為conversational AI（對話式人工智能）。其官方網站指出，市面上的人工智能助理：包括Apple Siri，微軟Cortana及Google Now，只能理解指示而非對話，而Semantic Machines的技術，就稱有能力理解對話，從而提高溝通效率。收購後，微軟會設立對話式AI研發中心。
+Q
+Semantic Machines研發的技術為何?
+A
+Apple Siri
+Cortana
+conversational AI（對話式人工智能）
+Google Now
