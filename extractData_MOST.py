@@ -34,7 +34,7 @@ with open(fileName, 'w') as CQA:
                                 else:
                                     tmp_words += word
                             if tmp_words is not "":
-                                tmp_list.append(tmp_words)
+                                tmp_list.append(tmp_words.replace("\n", ""))
                             content['story'] = tmp_list
                             tmp_list = []
                         # Q
