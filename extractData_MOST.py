@@ -28,8 +28,8 @@ with open(fileName, 'w') as CQA:
                         if flag == 1:
                             for word in each_line:
                                 if word in cut_punctuation and tmp_words is not "":
-                                    #tmp_list.append(removePunctuation(tmp_words))
-                                    tmp_list.append(tmp_words.replace("\n", ""))
+                                    tmp_list.append(removePunctuation(tmp_words.replace("\n", "")))
+                                    #tmp_list.append(tmp_words.replace("\n", ""))
                                     tmp_words = ""
                                 else:
                                     tmp_words += word
