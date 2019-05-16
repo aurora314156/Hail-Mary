@@ -147,16 +147,16 @@ class Mymodel():
         # test add tf-idf score
         options_tfscores = []
 
-        for option in self.options:
-            tmp, flag = 0, 0
-            for o in option.split(" "):
-                o = o.lower()
-                if flag == 3:
-                    break
-                if o not in self.TF_words:
-                    continue
-                tmp += self.TF_scores[0][self.TF_words.index(o)]
-            options_tfscores.append(tmp)
+        # for option in self.options:
+        #     tmp, flag = 0, 0
+        #     for o in option.split(" "):
+        #         o = o.lower()
+        #         if flag == 3:
+        #             break
+        #         if o not in self.TF_words:
+        #             continue
+        #         tmp += self.TF_scores[0][self.TF_words.index(o)]
+        #     options_tfscores.append(tmp)
         
         for option in merQueOpts:
             #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
@@ -247,16 +247,16 @@ class Mymodel():
         # test add tf-idf score
         options_tfscores = []
 
-        for option in self.options:
-            tmp, flag = 0, 0
-            for o in option.split(" "):
-                o = o.lower()
-                if flag ==3:
-                    break
-                if o not in self.TF_words:
-                    continue
-                tmp += self.TF_scores[0][self.TF_words.index(o)]
-            options_tfscores.append(tmp)
+        # for option in self.options:
+        #     tmp, flag = 0, 0
+        #     for o in option.split(" "):
+        #         o = o.lower()
+        #         if flag ==3:
+        #             break
+        #         if o not in self.TF_words:
+        #             continue
+        #         tmp += self.TF_scores[0][self.TF_words.index(o)]
+        #     options_tfscores.append(tmp)
 
 
         ind, guessAnswer, highestScore = 0, 0, 0
@@ -378,16 +378,16 @@ class Mymodel():
         # test add tf-idf score
         options_tfscores = []
 
-        for option in self.options:
-            tmp, flag = 0, 0
-            for o in option.split(" "):
-                o = o.lower()
-                if flag == 3:
-                    break
-                if o not in self.TF_words:
-                    continue
-                tmp += self.TF_scores[0][self.TF_words.index(o)]
-            options_tfscores.append(tmp)
+        # for option in self.options:
+        #     tmp, flag = 0, 0
+        #     for o in option.split(" "):
+        #         o = o.lower()
+        #         if flag == 3:
+        #             break
+        #         if o not in self.TF_words:
+        #             continue
+        #         tmp += self.TF_scores[0][self.TF_words.index(o)]
+        #     options_tfscores.append(tmp)
         
         for option in merQueOpts:
             #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
@@ -416,16 +416,16 @@ class Mymodel():
         # test add tf-idf score
         options_tfscores = []
 
-        for option in self.options:
-            tmp, flag = 0, 0
-            for o in option.split(" "):
-                o = o.lower()
-                if flag == 3:
-                    break
-                if o not in self.TF_words:
-                    continue
-                tmp += self.TF_scores[0][self.TF_words.index(o)]
-            options_tfscores.append(tmp)
+        # for option in self.options:
+        #     tmp, flag = 0, 0
+        #     for o in option.split(" "):
+        #         o = o.lower()
+        #         if flag == 3:
+        #             break
+        #         if o not in self.TF_words:
+        #             continue
+        #         tmp += self.TF_scores[0][self.TF_words.index(o)]
+        #     options_tfscores.append(tmp)
         
         for option in options:
             tmpScore = self.angle_sim(merStoryQue, option)
@@ -457,16 +457,16 @@ class Mymodel():
         # test add tf-idf score
         options_tfscores = []
 
-        for option in self.options:
-            tmp, flag = 0, 0
-            for o in option.split(" "):
-                o = o.lower()
-                if flag == 3:
-                    break
-                if o not in self.TF_words:
-                    continue
-                tmp += self.TF_scores[0][self.TF_words.index(o)]
-            options_tfscores.append(tmp)
+        # for option in self.options:
+        #     tmp, flag = 0, 0
+        #     for o in option.split(" "):
+        #         o = o.lower()
+        #         if flag == 3:
+        #             break
+        #         if o not in self.TF_words:
+        #             continue
+        #         tmp += self.TF_scores[0][self.TF_words.index(o)]
+        #     options_tfscores.append(tmp)
 
         for option in merQueOpts:
             tmpScore = self.angle_sim(merStoryQue, option)
@@ -530,16 +530,16 @@ class Mymodel():
         # test add tf-idf score
         options_tfscores = []
 
-        for option in self.options:
-            tmp, flag = 0, 0
-            for o in option.split(" "):
-                o = o.lower()
-                if flag == 3:
-                    break
-                if o not in self.TF_words:
-                    continue
-                tmp += self.TF_scores[0][self.TF_words.index(o)]
-            options_tfscores.append(tmp)
+        # for option in self.options:
+        #     tmp, flag = 0, 0
+        #     for o in option.split(" "):
+        #         o = o.lower()
+        #         if flag == 3:
+        #             break
+        #         if o not in self.TF_words:
+        #             continue
+        #         tmp += self.TF_scores[0][self.TF_words.index(o)]
+        #     options_tfscores.append(tmp)
 
         highestScore = 0
         for option in merQueOpts:
@@ -602,16 +602,16 @@ class Mymodel():
         # test add tf-idf score
         options_tfscores = []
 
-        for option in self.options:
-            tmp, flag = 0, 0
-            for o in option.split(" "):
-                o = o.lower()
-                if flag == 3:
-                    break
-                if o not in self.TF_words:
-                    continue
-                tmp += self.TF_scores[0][self.TF_words.index(o)]
-            options_tfscores.append(tmp)
+        # for option in self.options:
+        #     tmp, flag = 0, 0
+        #     for o in option.split(" "):
+        #         o = o.lower()
+        #         if flag == 3:
+        #             break
+        #         if o not in self.TF_words:
+        #             continue
+        #         tmp += self.TF_scores[0][self.TF_words.index(o)]
+        #     options_tfscores.append(tmp)
 
         highestScore = 0
         for option in merQueOpts:
@@ -673,16 +673,16 @@ class Mymodel():
         # test add tf-idf score
         options_tfscores = []
 
-        for option in self.options:
-            tmp, flag = 0, 0
-            for o in option.split(" "):
-                o = o.lower()
-                if flag == 3:
-                    break
-                if o not in self.TF_words:
-                    continue
-                tmp += self.TF_scores[0][self.TF_words.index(o)]
-            options_tfscores.append(tmp)
+        # for option in self.options:
+        #     tmp, flag = 0, 0
+        #     for o in option.split(" "):
+        #         o = o.lower()
+        #         if flag == 3:
+        #             break
+        #         if o not in self.TF_words:
+        #             continue
+        #         tmp += self.TF_scores[0][self.TF_words.index(o)]
+        #     options_tfscores.append(tmp)
 
         highestScore = 0
         for option in merQueOpts:
@@ -735,16 +735,16 @@ class Mymodel():
          # test add tf-idf score
         sentences_tfscores = []
 
-        for sentence in sentences:
-            tmp, flag = 0, 0
-            for word in sentence.split(" "):
-                word = word.lower()
-                if flag == 3:
-                    break
-                if word not in self.TF_words:
-                    continue
-                tmp += self.TF_scores[0][self.TF_words.index(word)]
-            sentences_tfscores.append(tmp)
+        # for sentence in sentences:
+        #     tmp, flag = 0, 0
+        #     for word in sentence.split(" "):
+        #         word = word.lower()
+        #         if flag == 3:
+        #             break
+        #         if word not in self.TF_words:
+        #             continue
+        #         tmp += self.TF_scores[0][self.TF_words.index(word)]
+        #     sentences_tfscores.append(tmp)
 
         ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
 
@@ -1119,16 +1119,16 @@ class Mymodel():
         # test add tf-idf score
         options_tfscores = []
 
-        for option in self.options:
-            tmp, flag = 0, 0
-            for o in option.split(" "):
-                o = o.lower()
-                if flag == 3:
-                    break
-                if o not in self.TF_words:
-                    continue
-                tmp += self.TF_scores[0][self.TF_words.index(o)]
-            options_tfscores.append(tmp)
+        # for option in self.options:
+        #     tmp, flag = 0, 0
+        #     for o in option.split(" "):
+        #         o = o.lower()
+        #         if flag == 3:
+        #             break
+        #         if o not in self.TF_words:
+        #             continue
+        #         tmp += self.TF_scores[0][self.TF_words.index(o)]
+        #     options_tfscores.append(tmp)
 
         ind, guessAnswer, highestScore = 0, 0, 0
 
@@ -1212,16 +1212,16 @@ class Mymodel():
         # test add tf-idf score
         options_tfscores = []
 
-        for option in self.options:
-            tmp, flag = 0, 0
-            for o in option.split(" "):
-                o = o.lower()
-                if flag == 3:
-                    break
-                if o not in self.TF_words:
-                    continue
-                tmp += self.TF_scores[0][self.TF_words.index(o)]
-            options_tfscores.append(tmp)
+        # for option in self.options:
+        #     tmp, flag = 0, 0
+        #     for o in option.split(" "):
+        #         o = o.lower()
+        #         if flag == 3:
+        #             break
+        #         if o not in self.TF_words:
+        #             continue
+        #         tmp += self.TF_scores[0][self.TF_words.index(o)]
+        #     options_tfscores.append(tmp)
 
         highestScore = 0
 

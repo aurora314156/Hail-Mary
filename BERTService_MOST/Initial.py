@@ -5,10 +5,12 @@ from LoadData import LoadData
 class Initial():
     def __init__(self):
         # choose run model
-        #self.model = ['FirstModel']
-        self.model = ['FirstModel','SecondModel', 'ThirdModel', 'ForthModel', 'FifthModel', 'SixthModel', 'SeventhModel', 'EighthModel', 'NinthModel', \
+        self.model = ['ThirdModel', 'ForthModel', 'FifthModel', 'SixthModel', 'SeventhModel', 'EighthModel', 'NinthModel', \
         'TenthModel', 'EleventhModel', 'TwelfthModel', 'ThirteenthModel', 'FourteenthModel', 'FifteenthModel', 'SixteenthModel', 'SeventeenthModel', 'EighteenthModel', \
         'NineteenthModel', 'TwentiethModel', 'TwentyFirstModel', 'TwentySecondModel', 'TwentyThirdModel', 'TwentyForthModel', 'TwentyFifthModel','TwentySixthModel']
+        #self.model = ['FirstModel','SecondModel', 'ThirdModel', 'ForthModel', 'FifthModel', 'SixthModel', 'SeventhModel', 'EighthModel', 'NinthModel', \
+        #'TenthModel', 'EleventhModel', 'TwelfthModel', 'ThirteenthModel', 'FourteenthModel', 'FifteenthModel', 'SixteenthModel', 'SeventeenthModel', 'EighteenthModel', \
+        #'NineteenthModel', 'TwentiethModel', 'TwentyFirstModel', 'TwentySecondModel', 'TwentyThirdModel', 'TwentyForthModel', 'TwentyFifthModel','TwentySixthModel']
     def InitialMain(self):
         self.createLogFile()
         dataset, dataType = self.GetDataset(self.ArgParse())
