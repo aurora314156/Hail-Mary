@@ -175,31 +175,32 @@ class Mymodel():
         encode story sentences, then use each story sentences vector to calculate similarity with question
         choose highest score story vector to calculate similarity with options
         """
-        sentences, tmp_string, sentence = [], "", ""
-        for s in self.s_string[:len(self.s_string)-1]:
-            tmp_string += s
-            # reserve sentence structure
-            if s == "." or s == "?" or s == "!":
-                # remove "," "." "?"
-                sentence = ""
-                for t in tmp_string:
-                    if t is "," or t is "." or t is "?":
-                        continue
-                    else:
-                        sentence += t
-                if len(sentence) >1:
-                    if sentence[0] == " ":
-                        sentences.append(sentence[:-1])
-                    else:
-                        sentences.append(sentence)
-                tmp_string = ""
-                continue
+        # sentences, tmp_string, sentence = [], "", ""
+        # for s in self.s_string[:len(self.s_string)-1]:
+        #     tmp_string += s
+        #     # reserve sentence structure
+        #     if s == "." or s == "?" or s == "!":
+        #         # remove "," "." "?"
+        #         sentence = ""
+        #         for t in tmp_string:
+        #             if t is "," or t is "." or t is "?":
+        #                 continue
+        #             else:
+        #                 sentence += t
+        #         if len(sentence) >1:
+        #             if sentence[0] == " ":
+        #                 sentences.append(sentence[:-1])
+        #             else:
+        #                 sentences.append(sentence)
+        #         tmp_string = ""
+        #         continue
 
-        # use whole story structure
-        if tmp_string != "":
-            sentences.append(tmp_string)
-
+        # # use whole story structure
+        # if tmp_string != "":
+        #     sentences.append(tmp_string)
+        print(len(sentences))
         story_sentences = self.activationFunction(bc.encode(sentences))
+        print(len(story_sentences))
         question = self.activationFunction(bc.encode([self.q_string]))
         options = self.activationFunction(bc.encode(self.options))
         ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
