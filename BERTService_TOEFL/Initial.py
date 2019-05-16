@@ -4,7 +4,6 @@ from LoadData import LoadData
 
 class Initial():
     def __init__(self):
-        self.d_model = 512
         # choose run model
         #self.model = ['FirstModel']
         self.model = ['FirstModel','SecondModel', 'ThirdModel', 'ForthModel', 'FifthModel', 'SixthModel', 'SeventhModel', 'EighthModel', 'NinthModel', \
@@ -14,7 +13,7 @@ class Initial():
         self.createLogFile()
         dataset, dataType = self.GetDataset(self.ArgParse())
         #word2vec = self.LoadWord2vec()
-        return dataset, dataType, self.model, self.d_model
+        return dataset, dataType, self.model
 
     def ArgParse(self):
         print("***********************************")

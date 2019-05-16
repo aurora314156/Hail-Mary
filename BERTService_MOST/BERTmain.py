@@ -10,8 +10,9 @@ from bert_serving.client import BertClient
 
 def main():
     # initial dataset
-    dataset, dataType, model, d_model = Initial().InitialMain()
-    TF_words, TF_scores = TFIDF(dataset).getTFIDFWeigths()
+    dataset, dataType, model = Initial().InitialMain()
+    #TF_words, TF_scores = TFIDF(dataset).getTFIDFWeigths()
+    TF_words, TF_scores = "", ""
     # initial BERT model
     bc = BertClient()
     AccuracyList = []

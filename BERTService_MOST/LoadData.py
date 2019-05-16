@@ -8,7 +8,7 @@ class LoadData():
         self.dataType = dataType
         self.dataSetList = dataSetList
         #self.dataSetPath = os.path.join(os.path.dirname("/home/ethan/Desktop/Hail-Mary/Setting.txt"),"")
-        self.dataSetPath = os.path.join(os.path.dirname("/project/Divh/Hail-Mary/data_wtih_punctuation"),"")
+        self.dataSetPath = os.path.join(os.path.dirname("/project/Divh/Hail-Mary/most_data_wtih_punctuation"),"")
 
     def getDataSetMain(self):
         # check data path setting correct
@@ -33,9 +33,9 @@ class LoadData():
 
     def joinDataSetPath(self, dataSetPath, dataType, dataName):
         if dataType == "with":
-            dataSetPath = os.path.join(dataSetPath,'data_with_punctuation', dataName + ".json")
+            dataSetPath = os.path.join(dataSetPath,'most_data_with_punctuation', dataName + ".json")
         elif dataType == "without":
-            dataSetPath = os.path.join(dataSetPath, "data_without_punctuation", dataName + ".json")
+            dataSetPath = os.path.join(dataSetPath, "most_data_without_punctuation", dataName + ".json")
         return dataSetPath
 
     def checkArgs(self):
