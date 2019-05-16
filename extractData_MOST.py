@@ -24,12 +24,17 @@ with open(fileName, 'w') as CQA:
                     content['storyName'] = str(r) + '_' + each_file
                     tmp_words, tmp_list, flag = "", [], 0
                     for each_line in f:
+                        each_line = each_line.strip()
                         # C
                         if flag == 1:
                             for word in each_line:
                                 if word in cut_punctuation and tmp_words is not "":
-                                    #tmp_list.append(removePunctuation(tmp_words.replace("\n", "")))
+                                    #tmp_words = removePunctuation(tmp_words.replace("\n", ""))
                                     tmp_list.append(tmp_words.replace("\n", ""))
+                                    if tmp_words is "":
+                                        continue
+                                    else:
+                                        tmp_list.append(tmp_words)
                                     tmp_words = ""
                                 else:
                                     tmp_words += word
