@@ -23,7 +23,7 @@ class Mymodel():
         self.constant = constant
 
     def MymodelMain(self):
-
+        
         if self.model == 'FirstModel':
             guessAnswer = self.FirstModel(self.bc)
         elif self.model == 'SecondModel':
@@ -449,7 +449,7 @@ class Mymodel():
             tmpScore = self.angle_sim(merStoryQue, option)
             #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option) + (options_tfscores[ind] * self.constant)
             #tmpScore = self.similarity(merStoryQue, option) + (options_tfscores[ind] * self.constant)
-            if tmpScore > highestScore:
+            if tmpScore >= highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
             ind += 1
@@ -466,6 +466,8 @@ class Mymodel():
             self.s_list[l] += self.q_string
 
         storySentencesMerQuestion = self.activationFunction(bc.encode(self.s_list))
+        print(len(storySentencesMerQuestion))
+        print(len(storySentencesMerQuestion[0]))
         question = self.activationFunction(bc.encode([self.q_string]))
 
         for i in range(len(self.options)):
@@ -479,7 +481,7 @@ class Mymodel():
             #tmpScore = 1 - spatial.distance.cosine(s, question)
             tmpScore = self.angle_sim(s, question)
             #tmpScore = self.similarity(s, question)
-            if tmpScore > highestScore:
+            if tmpScore >= highestScore:
                 highestScore_storyVector = s
                 highestScore = tmpScore
 
@@ -502,7 +504,7 @@ class Mymodel():
             tmpScore = self.angle_sim(highestScore_storyVector, option)
             #tmpScore = 1 - spatial.distance.cosine(option, highestScore_storyVector) + (options_tfscores[ind] * self.constant)
             #tmpScore = self.similarity(option, highestScore_storyVector) + (options_tfscores[ind] * self.constant)
-            if tmpScore > highestScore:
+            if tmpScore >= highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
             ind += 1
@@ -1113,8 +1115,15 @@ class Mymodel():
         """ 
         Returns the angle in radians between vectors 'v1' and 'v2'::
         """
-        v1 = np.clip(v1, 0.0, 1.0)
-        v2 = np.clip(v2, 0.0, 1.0)
-        cosine_similarity = 1 - spatial.distance.cosine(v1, v2)
+#         v1 = np.clip(v1, 0.0, 1.0)
+#         v2 = np.clip(v2, 0.0, 1.0)
+#         try:
+#             cosine_similarity = 1 - spatial.distance.cosine(v1, v2)
+#         except ValueError:
+#             print(len(v1))
+#             print(len(v2))
+#             print(v1)
+#             print(v2)
         
-        return 1.0 - (np.arccos(cosine_similarity) / 3.14)
+#         return 1.0 - (np.arccos(cosine_similarity) / 3.14)
+        return 1 - spatial.distance.cosine(v1, v2)
