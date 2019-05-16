@@ -9,13 +9,13 @@ import math
 
 
 class Mymodel():
-    def __init__(self, bc, s_string, q_string, options, m, TF_words, TF_scores, constant):
+    def __init__(self, bc, s_list, q_string, options, m, TF_words, TF_scores, constant):
         self.bc = bc
         self.model = m
-        self.s_string = s_string
+        self.s_list = s_list
+        self.s_string = " ".join(self.s_list)
         self.q_string = q_string
         self.options = options
-        self.stop_words = ["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", "its", "itself", "they", "them", "their", "theirs", "themselves", "what", "which", "who", "whom", "this", "that", "these", "those", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does", "did", "doing", "a", "an", "the", "and", "but", "if", "or", "because", "as", "until", "while", "of", "at", "by", "for", "with", "about", "against", "between", "into", "through", "during", "before", "after", "above", "below", "to", "from", "up", "down", "in", "out", "on", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t", "can", "will", "just", "don", "should", "now"]
         self.TF_words = TF_words
         self.TF_scores = TF_scores
         self.activationF = "softmax"
@@ -175,32 +175,8 @@ class Mymodel():
         encode story sentences, then use each story sentences vector to calculate similarity with question
         choose highest score story vector to calculate similarity with options
         """
-        # sentences, tmp_string, sentence = [], "", ""
-        # for s in self.s_string[:len(self.s_string)-1]:
-        #     tmp_string += s
-        #     # reserve sentence structure
-        #     if s == "." or s == "?" or s == "!":
-        #         # remove "," "." "?"
-        #         sentence = ""
-        #         for t in tmp_string:
-        #             if t is "," or t is "." or t is "?":
-        #                 continue
-        #             else:
-        #                 sentence += t
-        #         if len(sentence) >1:
-        #             if sentence[0] == " ":
-        #                 sentences.append(sentence[:-1])
-        #             else:
-        #                 sentences.append(sentence)
-        #         tmp_string = ""
-        #         continue
-
-        # # use whole story structure
-        # if tmp_string != "":
-        #     sentences.append(tmp_string)
-        print(len(sentences))
-        story_sentences = self.activationFunction(bc.encode(sentences))
-        print(len(story_sentences))
+        
+        story_sentences = self.activationFunction(bc.encode(self.s_list))
         question = self.activationFunction(bc.encode([self.q_string]))
         options = self.activationFunction(bc.encode(self.options))
         ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
@@ -486,31 +462,10 @@ class Mymodel():
         choose highest vector to calculate similarity with question and options
         """
 
-        sentences, tmp_string, sentence = [], "", ""
-        for s in self.s_string[:len(self.s_string)-1]:
-            tmp_string += s
-            # reserve sentence structure
-            if s == "." or s == "?" or s == "!":
-                # remove "," "." "?"
-                sentence = ""
-                for t in tmp_string:
-                    if t is "," or t is "." or t is "?":
-                        continue
-                    else:
-                        sentence += t
-                if len(sentence) >1:
-                    if sentence[0] == " ":
-                        sentences.append(sentence[:-1] + self.q_string)
-                    else:
-                        sentences.append(sentence + self.q_string)
-                tmp_string = ""
-                continue
+        for l in range(len(self.s_list)):
+            self.s_list[l] += self.q_string
 
-        # use whole story structure
-        if tmp_string != "":
-            sentences.append(tmp_string)
-
-        storySentencesMerQuestion = self.activationFunction(bc.encode(sentences))
+        storySentencesMerQuestion = self.activationFunction(bc.encode(self.s_list))
         question = self.activationFunction(bc.encode([self.q_string]))
 
         for i in range(len(self.options)):
@@ -559,31 +514,10 @@ class Mymodel():
         encode eacht story sentences with question sentence, then calculate similarity with wholte story and question
         choose highest vector to calculate similarity with question and options
         """
-        sentences, tmp_string, sentence = [], "", ""
-        for s in self.s_string[:len(self.s_string)-1]:
-            tmp_string += s
-            # reserve sentence structure
-            if s == "." or s == "?" or s == "!":
-                # remove "," "." "?"
-                sentence = ""
-                for t in tmp_string:
-                    if t is "," or t is "." or t is "?":
-                        continue
-                    else:
-                        sentence += t
-                if len(sentence) >1:
-                    if sentence[0] == " ":
-                        sentences.append(sentence[:-1] + self.q_string)
-                    else:
-                        sentences.append(sentence + self.q_string)
-                tmp_string = ""
-                continue
+        for l in range(len(self.s_list)):
+            self.s_list[l] += self.q_string
 
-        # use whole story structure
-        if tmp_string != "":
-            sentences.append(tmp_string)
-
-        storySentencesMerQuestion = self.activationFunction(bc.encode(sentences))
+        storySentencesMerQuestion = self.activationFunction(bc.encode(self.s_list))
         storyMerQue = self.activationFunction(bc.encode([self.s_string + self.q_string]))
 
         for i in range(len(self.options)):
@@ -630,31 +564,8 @@ class Mymodel():
         encode eacht story sentences with question sentence, then calculate similarity with wholte story and question
         choose highest vector to calculate similarity with question and options
         """
-        sentences, tmp_string, sentence = [], "", ""
-        for s in self.s_string[:len(self.s_string)-1]:
-            tmp_string += s
-            # reserve sentence structure
-            if s == "." or s == "?" or s == "!":
-                # remove "," "." "?"
-                sentence = ""
-                for t in tmp_string:
-                    if t is "," or t is "." or t is "?":
-                        continue
-                    else:
-                        sentence += t
-                if len(sentence) >1:
-                    if sentence[0] == " ":
-                        sentences.append(sentence[:-1])
-                    else:
-                        sentences.append(sentence)
-                tmp_string = ""
-                continue
 
-        # use whole story structure
-        if tmp_string != "":
-            sentences.append(tmp_string)
-
-        storySentences = self.activationFunction(bc.encode(sentences))
+        storySentences = self.activationFunction(bc.encode(self.s_list))
         question = self.activationFunction(bc.encode([self.q_string]))
 
         for i in range(len(self.options)):
@@ -702,31 +613,8 @@ class Mymodel():
         encode eacht story sentences, then calculate similarity with question and options
         choose highest scores options as final answer
         """
-        sentences, tmp_string, sentence = [], "", ""
-        for s in self.s_string[:len(self.s_string)-1]:
-            tmp_string += s
-            # reserve sentence structure
-            if s == "." or s == "?" or s == "!":
-                # remove "," "." "?"
-                sentence = ""
-                for t in tmp_string:
-                    if t is "," or t is "." or t is "?":
-                        continue
-                    else:
-                        sentence += t
-                if len(sentence) >1:
-                    if sentence[0] == " ":
-                        sentences.append(sentence[:-1])
-                    else:
-                        sentences.append(sentence)
-                tmp_string = ""
-                continue
-
-        # use whole story structure
-        if tmp_string != "":
-            sentences.append(tmp_string)
         
-        storySentences = self.activationFunction(bc.encode(sentences))
+        storySentences = self.activationFunction(bc.encode(self.s_list))
         
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + self.q_string +self.s_string
@@ -829,32 +717,8 @@ class Mymodel():
         return guessAnswer
 
     def TwentyFirstModel(self,bc):
-
-        sentences, tmp_string, sentence = [], "", ""
-        for s in self.s_string[:len(self.s_string)-1]:
-            tmp_string += s
-            # reserve sentence structure
-            if s == "." or s == "?" or s == "!":
-                # remove "," "." "?"
-                sentence = ""
-                for t in tmp_string:
-                    if t is "," or t is "." or t is "?":
-                        continue
-                    else:
-                        sentence += t
-                if len(sentence) >1:
-                    if sentence[0] == " ":
-                        sentences.append(sentence[:-1])
-                    else:
-                        sentences.append(sentence)
-                tmp_string = ""
-                continue
-
-        # use whole story structure
-        if tmp_string != "":
-            sentences.append(tmp_string)
         
-        storySentences = self.activationFunction(bc.encode(sentences))
+        storySentences = self.activationFunction(bc.encode(self.s_list))
 
         merStoryQue = self.activationFunction(bc.encode([self.s_string + self.q_string]))
 
@@ -895,31 +759,11 @@ class Mymodel():
         return guessAnswer
 
     def TwentySecondModel(self,bc):
-        sentences, tmp_string, sentence = [], "", ""
-        for s in self.s_string[:len(self.s_string)-1]:
-            tmp_string += s
-            # reserve sentence structure
-            if s == "." or s == "?" or s == "!":
-                # remove "," "." "?"
-                sentence = ""
-                for t in tmp_string:
-                    if t is "," or t is "." or t is "?":
-                        continue
-                    else:
-                        sentence += t
-                if len(sentence) >1:
-                    if sentence[0] == " ":
-                        sentences.append(sentence[:-1] + self.q_string)
-                    else:
-                        sentences.append(sentence + self.q_string)
-                tmp_string = ""
-                continue
-
-        # use whole story structure
-        if tmp_string != "":
-            sentences.append(tmp_string)
         
-        storySentencesMerQuestion = self.activationFunction(bc.encode(sentences))
+        for l in range(len(self.s_list)):
+            self.s_list[l] += self.q_string
+        
+        storySentencesMerQuestion = self.activationFunction(bc.encode(self.s_list))
 
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + self.q_string
@@ -941,31 +785,11 @@ class Mymodel():
         return guessAnswer
         
     def TwentyThirdModel(self,bc):
-        sentences, tmp_string, sentence = [], "", ""
-        for s in self.s_string[:len(self.s_string)-1]:
-            tmp_string += s
-            # reserve sentence structure
-            if s == "." or s == "?" or s == "!":
-                # remove "," "." "?"
-                sentence = ""
-                for t in tmp_string:
-                    if t is "," or t is "." or t is "?":
-                        continue
-                    else:
-                        sentence += t
-                if len(sentence) >1:
-                    if sentence[0] == " ":
-                        for o in self.options:
-                            sentences.append(sentence[:-1] + self.q_string + o)
-                    else:
-                        for o in self.options:
-                            sentences.append(sentence + self.q_string  + o)
-                tmp_string = ""
-                continue
-
-        # use whole story structure
-        if tmp_string != "":
-            sentences.append(tmp_string)
+        
+        sentences = []
+        for l in range(len(self.s_list)):
+            for o in self.options:
+                sentences.append( self.s_list[l] + self.q_string + o )
         
         storySentencesMerQuestionAndOpts = self.activationFunction(bc.encode(sentences))
         
@@ -985,31 +809,10 @@ class Mymodel():
         return guessAnswer
 
     def TwentyForthModel(self,bc):
-        sentences, tmp_string, sentence = [], "", ""
-        for s in self.s_string[:len(self.s_string)-1]:
-            tmp_string += s
-            # reserve sentence structure
-            if s == "." or s == "?" or s == "!":
-                # remove "," "." "?"
-                sentence = ""
-                for t in tmp_string:
-                    if t is "," or t is "." or t is "?":
-                        continue
-                    else:
-                        sentence += t
-                if len(sentence) >1:
-                    if sentence[0] == " ":
-                        for o in self.options:
-                            sentences.append(sentence[:-1] + o)
-                    else:
-                        for o in self.options:
-                            sentences.append(sentence + o)
-                tmp_string = ""
-                continue
-
-        # use whole story structure
-        if tmp_string != "":
-            sentences.append(tmp_string)
+        sentences = []
+        for l in range(len(self.s_list)):
+            for o in self.options:
+                sentences.append( self.s_list[l] + o )
         
         storySentencesMerOpts = self.activationFunction(bc.encode(sentences))
         
@@ -1034,31 +837,8 @@ class Mymodel():
         return guessAnswer
 
     def TwentyFifthModel(self,bc):
-        sentences, tmp_string, sentence = [], "", ""
-        for s in self.s_string[:len(self.s_string)-1]:
-            tmp_string += s
-            # reserve sentence structure
-            if s == "." or s == "?" or s == "!":
-                # remove "," "." "?"
-                sentence = ""
-                for t in tmp_string:
-                    if t is "," or t is "." or t is "?":
-                        continue
-                    else:
-                        sentence += t
-                if len(sentence) >1:
-                    if sentence[0] == " ":
-                        sentences.append(sentence[:-1])
-                    else:
-                        sentences.append(sentence)
-                tmp_string = ""
-                continue
 
-        # use whole story structure
-        if tmp_string != "":
-            sentences.append(tmp_string)
-
-        storySentences = self.activationFunction(bc.encode(sentences))
+        storySentences = self.activationFunction(bc.encode(self.s_list))
         question = self.activationFunction(bc.encode([self.q_string]))
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + self.q_string
@@ -1067,7 +847,7 @@ class Mymodel():
 
         storySentencesDict = {}
         for s in storySentences:
-            storySentencesDict[1 - spatial.distance.cosine(s, question)] = s
+            storySentencesDict[self.angle_sim(s, question)] = s
         
         sortedSentenceDict = [(k,storySentencesDict[k]) for k in sorted(storySentencesDict.keys(), reverse=True)]
         
@@ -1086,31 +866,8 @@ class Mymodel():
         return guessAnswer
     
     def TwentySixthModel(self,bc):
-        sentences, tmp_string, sentence = [], "", ""
-        for s in self.s_string[:len(self.s_string)-1]:
-            tmp_string += s
-            # reserve sentence structure
-            if s == "." or s == "?" or s == "!":
-                # remove "," "." "?"
-                sentence = ""
-                for t in tmp_string:
-                    if t is "," or t is "." or t is "?":
-                        continue
-                    else:
-                        sentence += t
-                if len(sentence) >1:
-                    if sentence[0] == " ":
-                        sentences.append(sentence[:-1])
-                    else:
-                        sentences.append(sentence)
-                tmp_string = ""
-                continue
-
-        # use whole story structure
-        if tmp_string != "":
-            sentences.append(tmp_string)
         
-        storySentences = self.activationFunction(bc.encode(sentences))
+        storySentences = self.activationFunction(bc.encode(self.s_list))
         question = self.activationFunction(bc.encode([self.q_string]))
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + self.q_string
@@ -1148,7 +905,8 @@ class Mymodel():
 
         return guessAnswer
 
-    def TwentySeventhModel(self,bc):
+    def TwentySeventhModel(self, bc):
+
         story = bc.encode([self.s_string])
         question = bc.encode([self.q_string])
         storyAttQue = self.AttOverAtt(story, question)
@@ -1171,32 +929,10 @@ class Mymodel():
         encode eacht story sentences with question sentence, then calculate similarity with wholte story and question
         choose highest vector to calculate similarity with question and options
         """
+        for l in range(len(self.s_list)):
+            self.s_list[l] += self.q_string
 
-        sentences, tmp_string, sentence = [], "", ""
-        for s in self.s_string[:len(self.s_string)-1]:
-            tmp_string += s
-            # reserve sentence structure
-            if s == "." or s == "?" or s == "!":
-                # remove "," "." "?"
-                sentence = ""
-                for t in tmp_string:
-                    if t is "," or t is "." or t is "?":
-                        continue
-                    else:
-                        sentence += t
-                if len(sentence) >1:
-                    if sentence[0] == " ":
-                        sentences.append(sentence[:-1] + self.q_string)
-                    else:
-                        sentences.append(sentence + self.q_string)
-                tmp_string = ""
-                continue
-
-        # use whole story structure
-        if tmp_string != "":
-            sentences.append(tmp_string)
-
-        storySentencesMerQuestion = self.activationFunction(bc.encode(sentences))
+        storySentencesMerQuestion = self.activationFunction(bc.encode(self.s_list))
         question = self.activationFunction(bc.encode([self.q_string]))
 
         for i in range(len(self.options)):

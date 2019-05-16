@@ -34,9 +34,9 @@ def main():
                     continue
                 for single_data in single_dataset:
                     s_string, q_string, options, answer = ContentParser(single_data).getContent()
+                    print(single_data['storyName'])
                     guessAnswer = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
                     if guessAnswer == answer:
-                        print(single_data['storyName'])
                         correct += 1
                 accuracy = round(correct/len(single_dataset),3)
                 Accuracy = "Accuracy: " + str(accuracy) + "\n"
