@@ -28,19 +28,19 @@ with open(fileName, 'w') as CQA:
                         if flag == 1:
                             for word in each_line:
                                 if word in cut_punctuation and tmp_words is not "":
-                                    tmp_list.append(removePunctuation(tmp_words.replace("\n", "")))
-                                    #tmp_list.append(tmp_words.replace("\n", ""))
+                                    #tmp_list.append(removePunctuation(tmp_words.replace("\n", "")))
+                                    tmp_list.append(tmp_words.replace("\n", ""))
                                     tmp_words = ""
                                 else:
                                     tmp_words += word
-                            if tmp_words is not "":
+                            if tmp_words is not "" and tmp_words is not "\n":
                                 tmp_list.append(tmp_words.replace("\n", ""))
                             content['story'] = tmp_list
                             tmp_list = []
                         # Q
                         elif flag == 3:
-                            line_content = removePunctuation(each_line)
-                            tmp_list.append(line_content.replace("\n", ""))
+                            #line_content = removePunctuation(each_line)
+                            tmp_list.append(each_line.replace("\n", ""))
                             content['question'] = tmp_list
                             tmp_list = []
                         # A
