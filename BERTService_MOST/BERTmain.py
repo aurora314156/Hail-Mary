@@ -7,7 +7,7 @@ from SaveLog import SaveLog
 from ContentParser import ContentParser
 from bert_serving.client import BertClient
 
-
+corpus_amount = [1296, 1254, 1500, 1500, 1500, 1500]
 def main():
     # initial dataset
     dataset, dataType, model = Initial().InitialMain()
@@ -26,7 +26,7 @@ def main():
             print(model)
             typeChange=0
             for single_dataset in dataset:
-                correct, tTime = 0, time.time()
+                correct, count, ind, tTime, correct_list = 0, 0, 0, time.time(), []
                 if isinstance(single_dataset, str):
                     typeChange+=1
                     Process_dataset = "Start processing dataset: " + single_dataset + "\n"
@@ -34,14 +34,22 @@ def main():
                     continue
                 for single_data in single_dataset:
                     s_string, q_string, options, answer = ContentParser(single_data).getContent()
-                    print(single_data['storyName'])
+                    #print(single_data['storyName'])
                     guessAnswer = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
                     if guessAnswer == answer:
                         correct += 1
-                accuracy = round(correct/len(single_dataset),3)
-                Accuracy = "Accuracy: " + str(accuracy) + "\n"
-                CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n\n"
-                AccuracyList.append(accuracy)
+                    count += 1
+                    if count == corpus_amount[ind]:
+                        print(count)
+                        ind += 1
+                        correct_list.append(correct)
+                        correct, count = 0, 0
+                Accuracy = "Accuracy: "
+                for c in range(len(correct_list)):
+                    accuracy = round(correct_list[c] / corpus_amount[c],3)
+                    Accuracy += str(accuracy) + ", "
+                    AccuracyList.append(accuracy)
+                CostTime = "\nTotal cost time: "+ str(time.time()-tTime) + "\n\n"
                 print(Accuracy)
                 print(CostTime)
                 if typeChange <4:
