@@ -11,8 +11,8 @@ from random import randint
 def randomNum(corpus_amount, flag):
     while(len(flag) < corpus_amount):
         randomNumber = randint(1, corpus_amount)
-        if randomNumer not in flag:
-            flag.append(randomNumer)
+        if randomNumber not in flag:
+            flag.append(randomNumber)
     return flag
 
 
@@ -41,9 +41,9 @@ def main():
                     Process_dataset = "Start processing dataset: " + single_dataset + "\n"
                     print(Process_dataset)
                     continue
+                flag = randomNum(int(corpus_amount[ind] * 0.2), flag)
                 for single_data in single_dataset:
-                    flag = randomNum(corpus_amount[ind] * 0.2, flag)
-                    if str(single_data['storyName'][2:]) not in flag:
+                    if int(single_data['storyName'][2:-5]) not in flag:
                         continue
                     s_string, q_string, options, answer = ContentParser(single_data).getContent()
                     #print(single_data['storyName'])
@@ -51,10 +51,11 @@ def main():
                     if guessAnswer == answer:
                         correct += 1
                     count += 1
-                    if count == corpus_amount[ind] * 0.2:
+                    if count == int(corpus_amount[ind] * 0.2):
                         print(count)
                         ind += 1
                         correct_list.append(correct)
+                        flag = randomNum(int(corpus_amount[ind] * 0.2), flag)
                         correct, count, flag = 0, 0, []
                 Accuracy = "Accuracy: "
                 for c in range(len(correct_list)):
