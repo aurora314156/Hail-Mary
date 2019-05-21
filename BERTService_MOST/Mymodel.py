@@ -1031,13 +1031,14 @@ class Mymodel():
 
     def softmax(self, x):
         """Compute softmax values for each sets of scores in x."""
-        def soft(xxx):
-            return (np.exp(xxx) / np.sum(np.exp(xxx)))
-        tmp = []
-        for xx in x:
-            tmp.append(soft(xx))
+        # def soft(xxx):
+        #     return (np.exp(xxx) / np.sum(np.exp(xxx)))
+        # tmp = []
+        # for xx in x:
+        #     tmp.append(soft(xx))
 
-        return tmp
+        # return tmp
+        return np.exp(x) / np.sum(np.exp(x), axis=0)
     
     def softmax2(self,x):
         """improvement version"""
