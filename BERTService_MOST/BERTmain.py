@@ -9,6 +9,7 @@ from bert_serving.client import BertClient
 from random import randint
 
 def randomNum(corpus_amount, flag):
+    flag = []
     while(len(flag) < corpus_amount):
         randomNumber = randint(1, corpus_amount)
         if randomNumber not in flag:
@@ -43,23 +44,23 @@ def main():
                     continue
                 flag = randomNum(int(corpus_amount[ind] * 0.2), flag)
                 for single_data in single_dataset:
-                    if int(single_data['storyName'][2:-5]) not in flag:
-                        continue
-                    s_string, q_string, options, answer = ContentParser(single_data).getContent()
-                    #print(single_data['storyName'])
-                    guessAnswer = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
-                    if guessAnswer == answer:
-                        correct += 1
+                    storyName = int(single_data['storyName'].split(".")[0][2:])
+                    if storyName in flag:
+                        s_string, q_string, options, answer = ContentParser(single_data).getContent()
+                        #print(single_data['storyName'])
+                        guessAnswer = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
+                        if guessAnswer == answer:
+                            correct += 1
                     count += 1
-                    if count == int(corpus_amount[ind] * 0.2):
-                        print(count)
+                    if count == corpus_amount[ind]:
+                        print(correct)
+                        flag = randomNum(int(corpus_amount[ind] * 0.2), flag)
                         ind += 1
                         correct_list.append(correct)
-                        flag = randomNum(int(corpus_amount[ind] * 0.2), flag)
-                        correct, count, flag = 0, 0, []
+                        correct, count = 0, 0
                 Accuracy = "Accuracy: "
                 for c in range(len(correct_list)):
-                    accuracy = round(correct_list[c] / corpus_amount[c] * 0.2, 3)
+                    accuracy = round(correct_list[c] / (corpus_amount[c] * 0.2), 3)
                     Accuracy += str(accuracy) + ", "
                     AccuracyList.append(accuracy)
                 CostTime = "\nTotal cost time: "+ str(time.time()-tTime) + "\n\n"
