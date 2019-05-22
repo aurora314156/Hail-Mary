@@ -16,7 +16,7 @@ def randomNum(corpus_amount, flag):
             flag.append(randomNumber)
     return flag
 
-
+fraction = 0.2
 corpus_amount = [1296, 1254, 1500, 1500, 1500, 1500]
 def main():
     # initial dataset
@@ -42,7 +42,7 @@ def main():
                     Process_dataset = "Start processing dataset: " + single_dataset + "\n"
                     print(Process_dataset)
                     continue
-                flag = randomNum(int(corpus_amount[ind] * 0.2), flag)
+                flag = randomNum(int(corpus_amount[ind] * fraction), flag)
                 for single_data in single_dataset:
                     storyName = int(single_data['storyName'].split(".")[0][2:])
                     if storyName in flag:
@@ -57,13 +57,13 @@ def main():
                     count += 1
                     if count == corpus_amount[ind]:
                         print(correct)
-                        flag = randomNum(int(corpus_amount[ind] * 0.2), flag)
+                        flag = randomNum(int(corpus_amount[ind] * fraction), flag)
                         ind += 1
                         correct_list.append(correct)
                         correct, count = 0, 0
                 Accuracy = "Accuracy: "
                 for c in range(len(correct_list)):
-                    accuracy = round(correct_list[c] / (corpus_amount[c] * 0.2), 3)
+                    accuracy = round(correct_list[c] / (corpus_amount[c] * fraction), 3)
                     Accuracy += str(accuracy) + ", "
                     AccuracyList.append(accuracy)
                 CostTime = "\nTotal cost time: "+ str(time.time()-tTime) + "\n\n"
