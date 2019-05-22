@@ -466,8 +466,6 @@ class Mymodel():
             self.s_list[l] += self.q_string
 
         storySentencesMerQuestion = self.activationFunction(bc.encode(self.s_list))
-        print(len(storySentencesMerQuestion))
-        print(len(storySentencesMerQuestion[0]))
         question = self.activationFunction(bc.encode([self.q_string]))
 
         for i in range(len(self.options)):
