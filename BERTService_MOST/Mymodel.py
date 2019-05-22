@@ -93,7 +93,7 @@ class Mymodel():
         question = self.activationFunction(bc.encode([self.q_string]))
         options = self.activationFunction(bc.encode(self.options))
         merStoryQue = [x + y for x, y in zip(story, question)]
-        ind, guessAnswer, highestScore = 0, 0, 0
+        ind, guessAnswer, highestScore = 1, 1, 0
         for option in options:
             merStoryOpt = [x + y for x, y in zip(story, option)]
             #tmpScore = 1 - spatial.distance.cosine(merStoryQue, merStoryOpt)
@@ -113,7 +113,7 @@ class Mymodel():
         question = self.activationFunction(bc.encode([self.q_string]))
         options = self.activationFunction(bc.encode(self.options))
         merStoryQue = [x * y for x, y in zip(story, question)]
-        ind, guessAnswer, highestScore = 0, 0, 0
+        ind, guessAnswer, highestScore = 1, 1, 0
         for option in options:
             merStoryOpt = [x * y for x, y in zip(story, option)]
             #tmpScore = 1 - spatial.distance.cosine(merStoryQue, merStoryOpt)
@@ -133,7 +133,7 @@ class Mymodel():
         question = self.activationFunction(bc.encode([self.q_string]))
         options = self.activationFunction(bc.encode(self.options))
         
-        tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
+        tmp, ind, guessAnswer, highestScore = [], 1, 1, 0
         merStoryQue = [x + y for x, y in zip(story, question)]
         for i in range(20):
             tmp = [x + y for x, y in zip(story, merStoryQue)]
@@ -179,7 +179,7 @@ class Mymodel():
         story_sentences = self.activationFunction(bc.encode(self.s_list))
         question = self.activationFunction(bc.encode([self.q_string]))
         options = self.activationFunction(bc.encode(self.options))
-        ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
+        ind, guessAnswer, highestScore, highestScore_storyVector = 1, 1, 0, []
 
         for s in story_sentences:
             tmpScore = 1 - spatial.distance.cosine(s, question)
@@ -203,7 +203,7 @@ class Mymodel():
         merStoryQue = self.activationFunction(bc.encode([self.q_string + self.s_string]))
         options = self.activationFunction(bc.encode(self.options))
 
-        ind, guessAnswer, highestScore = 0, 0, 0
+        ind, guessAnswer, highestScore = 1, 1, 0
         for option in options:
             #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
             tmpScore = self.angle_sim(merStoryQue, option)
@@ -236,7 +236,7 @@ class Mymodel():
         #     options_tfscores.append(tmp)
 
 
-        ind, guessAnswer, highestScore = 0, 0, 0
+        ind, guessAnswer, highestScore = 1, 1, 0
         for option in merQueOpts:
             tmpScore = self.angle_sim(story, option)
             #tmpScore = 1 - spatial.distance.cosine(story, option) + (options_tfscores[ind] * self.constant)
@@ -255,7 +255,7 @@ class Mymodel():
             self.options[o] = self.options[o] + self.s_string
         merStoryOpt = self.activationFunction(bc.encode(self.options))
 
-        ind, guessAnswer, highestScore = 0, 0, 0
+        ind, guessAnswer, highestScore = 1, 1, 0
         for option in merStoryOpt:
             #tmpScore = 1 - spatial.distance.cosine(option, question)
             tmpScore = self.angle_sim(question, option)
@@ -273,7 +273,7 @@ class Mymodel():
         merStoryQue = [x + y for x, y in zip(story, question)]
         options = self.activationFunction(bc.encode(self.options))
 
-        ind, guessAnswer, highestScore = 0, 0, 0
+        ind, guessAnswer, highestScore = 1, 1, 0
         for option in options:
             #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
             tmpScore = self.angle_sim(merStoryQue, option)
@@ -291,7 +291,7 @@ class Mymodel():
             self.options[o] = self.options[o] + self.s_string
         merStoryOpt = self.activationFunction(bc.encode(self.options))
 
-        ind, guessAnswer, highestScore = 0, 0, 0
+        ind, guessAnswer, highestScore = 1, 1, 0
         for option in merStoryOpt:
             #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
             tmpScore = self.angle_sim(merStoryQue, option)
@@ -306,7 +306,7 @@ class Mymodel():
         story = self.activationFunction(bc.encode([self.s_string])) 
         options = self.activationFunction(bc.encode(self.options))
 
-        ind, guessAnswer, highestScore = 0, 0, 0
+        ind, guessAnswer, highestScore = 1, 1, 0
         for option in options:
             #tmpScore = 1 - spatial.distance.cosine(story, option)
             tmpScore = self.angle_sim(story, option)
@@ -324,7 +324,7 @@ class Mymodel():
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
-        ind, guessAnswer, highestScore = 0, 0, 0
+        ind, guessAnswer, highestScore = 1, 1, 0
         for option in merQueOpts:
             tmpScore = self.angle_sim(merStoryQue, option)
             #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
@@ -342,7 +342,7 @@ class Mymodel():
         question = self.activationFunction(bc.encode([self.q_string]))
         
         merStoryQue = [x + y for x, y in zip(story, question)]
-        tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
+        tmp, ind, guessAnswer, highestScore = [], 1, 1, 0
         for i in range(200):
             tmp = [x + y for x, y in zip(merStoryQue, question)]
             merStoryQue = tmp
@@ -383,7 +383,7 @@ class Mymodel():
         question = self.activationFunction(bc.encode([self.q_string]))
         
         merStoryQue = [x + y for x, y in zip(story, question)]
-        tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
+        tmp, ind, guessAnswer, highestScore = [], 1, 1, 0
         for i in range(200):
             tmp = [x + y for x, y in zip(merStoryQue, question)]
             merStoryQue = tmp
@@ -421,7 +421,7 @@ class Mymodel():
         question = self.activationFunction(bc.encode([self.q_string]))
 
         merStoryQue = [x + y for x, y in zip(merStoryQue, question)]
-        tmp, ind, guessAnswer, highestScore = [], 0, 0, 0
+        tmp, ind, guessAnswer, highestScore = [], 1, 1, 0
         for i in range(200):
             tmp = [x + y for x, y in zip(merStoryQue, question)]
             merStoryQue = tmp
@@ -475,7 +475,7 @@ class Mymodel():
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
-        ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
+        ind, guessAnswer, highestScore, highestScore_storyVector = 1, 1, 0, []
 
         for s in storySentencesMerQuestion:
             #tmpScore = 1 - spatial.distance.cosine(s, question)
@@ -527,7 +527,7 @@ class Mymodel():
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
-        ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
+        ind, guessAnswer, highestScore, highestScore_storyVector = 1, 1, 0, []
 
         for s in storySentencesMerQuestion:
             #tmpScore = 1 - spatial.distance.cosine(s, storyMerQue)
@@ -575,7 +575,7 @@ class Mymodel():
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
-        ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
+        ind, guessAnswer, highestScore, highestScore_storyVector = 1, 1, 0, []
 
         for s in storySentences:
             #tmpScore = 1 - spatial.distance.cosine(s, question)
@@ -637,7 +637,7 @@ class Mymodel():
         #         tmp += self.TF_scores[0][self.TF_words.index(word)]
         #     sentences_tfscores.append(tmp)
 
-        ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
+        ind, guessAnswer, highestScore, highestScore_storyVector = 1, 1, 0, []
 
         for m in merQueOpts:
             s_ind = 0
@@ -659,7 +659,7 @@ class Mymodel():
         merStoryQue = self.activationFunction(bc.encode([self.s_string]))
         options = self.activationFunction(bc.encode(self.options))
 
-        merStoryQueOpt, ind, guessAnswer, highestScore, o_ind = [], 0, 0, 0, 0
+        merStoryQueOpt, ind, guessAnswer, highestScore, o_ind = [], 1, 1, 0, 0
         
         for i in range(len(self.options)):
             self.options[i] = self.options[i] + self.q_string
@@ -674,7 +674,7 @@ class Mymodel():
             merStoryQueOpt.append(tmpStoryQueOpt)
 
         for mSQO in merStoryQueOpt:
-            ind = 0
+            ind = 1
             for m in merQueOpts:
                 #tmpScore = 1 - spatial.distance.cosine(m, mSQO)
                 tmpScore = self.angle_sim(m, mSQO)
@@ -694,7 +694,7 @@ class Mymodel():
         merQueOpts = self.activationFunction(bc.encode(self.options))
         merStoryQue = self.activationFunction(bc.encode([self.s_string + self.q_string]))
         
-        merStoryQue_QueOpt, ind, guessAnswer, highestScore, o_ind = [], 0, 0, 0, 0
+        merStoryQue_QueOpt, ind, guessAnswer, highestScore, o_ind = [], 1, 1, 0, 0
 
         for m in merQueOpts:
             tmpStoryQue = merStoryQue
@@ -706,7 +706,7 @@ class Mymodel():
         merStoryQue_QueOpt = self.activationFunction(merStoryQue_QueOpt)
 
         for mSQ_QO in merStoryQue_QueOpt:
-            ind = 0
+            ind = 1
             for m in merQueOpts:
                 tmpScore = self.angle_sim(m, mSQ_QO)
                 #tmpScore = 1 - spatial.distance.cosine(m, mSQ_QO)
@@ -729,7 +729,7 @@ class Mymodel():
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
-        ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
+        ind, guessAnswer, highestScore, highestScore_storyVector = 1, 1, 0, []
 
         for s in storySentences:
             #tmpScore = 1 - spatial.distance.cosine(s, merStoryQue)
@@ -772,7 +772,7 @@ class Mymodel():
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
-        ind, guessAnswer, highestScore = 0, 0, 0
+        ind, guessAnswer, highestScore = 1, 1, 0
 
         for m in merQueOpts:
             for sMQ in storySentencesMerQuestion:
@@ -797,14 +797,17 @@ class Mymodel():
         
         Que = self.activationFunction(bc.encode([self.q_string]))
 
-        ind, guessAnswer, highestScore = 0, 0, 0
+        ind, guessAnswer, highestScore = 1, 1, 0
 
         for s in storySentencesMerQuestionAndOpts:
             tmpScore = self.angle_sim(Que, s)
             #tmpScore = 1 - spatial.distance.cosine(Que, s)
             #tmpScore = self.similarity(Que, s)
             if tmpScore > highestScore:
-                guessAnswer = ind % 4
+                if ind % 4 == 0:
+                    guessAnswer = 4
+                else:
+                    guessAnswer
                 highestScore = tmpScore
             ind += 1
         
@@ -824,7 +827,7 @@ class Mymodel():
         merQueOpts = self.activationFunction(bc.encode(self.options))
         #Que = self.activationFunction(bc.encode([self.q_string]))
         
-        ind, guessAnswer, highestScore = 0, 0, 0
+        ind, guessAnswer, highestScore = 1, 1, 0
 
         for m in merQueOpts:
             for sMO in storySentencesMerOpts:
@@ -832,7 +835,10 @@ class Mymodel():
                 #tmpScore = 1 - spatial.distance.cosine(m, sMO)
                 #tmpScore = self.similarity(m, sMO)
                 if tmpScore > highestScore:
-                    guessAnswer = ind % 4
+                    if ind % 4 == 0:
+                        guessAnswer = 4
+                    else:
+                        guessAnswer = ind % 4
                     highestScore = tmpScore
             ind += 1
         
@@ -853,10 +859,10 @@ class Mymodel():
         
         sortedSentenceDict = [(k,storySentencesDict[k]) for k in sorted(storySentencesDict.keys(), reverse=True)]
         
-        guessAnswer, highestScore = 0, 0
+        guessAnswer, highestScore = 1, 0
 
         for sv in sortedSentenceDict[:10]:
-            ind = 0
+            ind = 1
             for o in merQueOpts:
                 tmpScore = self.angle_sim(sv[1], o)
                 #tmpScore = 1 - spatial.distance.cosine(sv[1], o)
@@ -890,7 +896,7 @@ class Mymodel():
         #         tmp += self.TF_scores[0][self.TF_words.index(o)]
         #     options_tfscores.append(tmp)
 
-        ind, guessAnswer, highestScore = 0, 0, 0
+        ind, guessAnswer, highestScore = 1, 1, 0
 
         for m in merQueOpts:
             tmpScore = 0
@@ -914,7 +920,7 @@ class Mymodel():
         storyAttQue = self.AttOverAtt(story, question)
         opts = bc.encode(self.options)
 
-        ind, guessAnswer, highestScore = 0, 0, 0
+        ind, guessAnswer, highestScore = 1, 1, 0
 
         for o in opts:
             tmpScore = self.angle_sim(storyAttQue, o)
@@ -946,7 +952,7 @@ class Mymodel():
         for s in storySentencesMerQuestion:
             storyAndQueAtt.append(self.AttOverAtt(s, question))
 
-        ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
+        ind, guessAnswer, highestScore, highestScore_storyVector = 1, 1, 0, []
 
         # test add tf-idf score
         options_tfscores = []
@@ -1025,6 +1031,8 @@ class Mymodel():
             return self.relu(x)
         elif self.activationF == 'drelu':
             return self.drelu(x)
+        elif self.activationF == 'none':
+            return x
         else:
             print("Activation function setting error.")
             return 0

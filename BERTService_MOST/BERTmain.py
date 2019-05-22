@@ -49,6 +49,9 @@ def main():
                         s_string, q_string, options, answer = ContentParser(single_data).getContent()
                         #print(single_data['storyName'])
                         guessAnswer = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
+                        if guessAnswer > 4:
+                            print("WTF")
+                            AccuracyList.append("WTF")
                         if guessAnswer == answer:
                             correct += 1
                     count += 1
