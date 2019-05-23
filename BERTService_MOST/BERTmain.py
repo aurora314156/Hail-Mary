@@ -16,8 +16,8 @@ def randomNum(corpus_amount, flag):
             flag.append(randomNumber)
     return flag
 
-fraction = 0.2
-corpus_amount = [1296, 1254, 1500, 1500, 1500, 1500]
+fraction = 1
+
 def main():
     # initial dataset
     dataset, dataType, model = Initial().InitialMain()
@@ -36,36 +36,23 @@ def main():
             print(model)
             typeChange=0
             for single_dataset in dataset:
-                correct, count, ind, tTime, correct_list, flag = 0, 0, 0, time.time(), [], []
+                correct, count, ind, tTime, flag = 0, 0, 0, time.time(), []
                 if isinstance(single_dataset, str):
                     typeChange+=1
                     Process_dataset = "Start processing dataset: " + single_dataset + "\n"
                     print(Process_dataset)
                     continue
-                flag = randomNum(int(corpus_amount[ind] * fraction), flag)
                 for single_data in single_dataset:
                     storyName = int(single_data['storyName'].split(".")[0][2:])
-                    if storyName in flag:
-                        s_string, q_string, options, answer = ContentParser(single_data).getContent()
-                        #print(single_data['storyName'])
-                        guessAnswer = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
-                        if guessAnswer > 4:
-                            print("WTF")
-                            AccuracyList.append("WTF")
-                        if guessAnswer == answer:
-                            correct += 1
+                    s_string, q_string, options, answer = ContentParser(single_data).getContent()
+                    #print(single_data['storyName'])
+                    guessAnswer = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
+                    if guessAnswer == answer:
+                        correct += 1
                     count += 1
-                    if count == corpus_amount[ind]:
-                        print(correct)
-                        flag = randomNum(int(corpus_amount[ind] * fraction), flag)
-                        ind += 1
-                        correct_list.append(correct)
-                        correct, count = 0, 0
                 Accuracy = "Accuracy: "
-                for c in range(len(correct_list)):
-                    accuracy = round(correct_list[c] / (corpus_amount[c] * fraction), 3)
-                    Accuracy += str(accuracy) + ", "
-                    AccuracyList.append(accuracy)
+                accuracy = round(correct / 8550, 3)
+                Accuracy += str(accuracy) + ", "
                 CostTime = "\nTotal cost time: "+ str(time.time()-tTime) + "\n\n"
                 print(Accuracy)
                 print(CostTime)
