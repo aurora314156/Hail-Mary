@@ -57,10 +57,10 @@ def main():
                             tmpC +=1
                         count += 1
                     print(tmpC)
-                    correct_list[l] = round( correct / 1710, 3)
+                    correct_list[l].append(str(round( correct / 1710, 3)))
                 Accuracy = "Accuracy: "
                 for c in correct_list:
-                    Accuracy += str(c) + ", "
+                    Accuracy += + ", "
                 CostTime = "\nTotal cost time: "+ str(time.time()-tTime) + "\n\n"
                 print(Accuracy)
                 print(CostTime)
