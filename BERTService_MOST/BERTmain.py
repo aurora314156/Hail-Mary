@@ -37,40 +37,40 @@ def main():
             print(model)
             typeChange=0
             for single_dataset in dataset:
-                    tmpC, count, correct, ind, tTime, flag, correct_list = 0, 0, 0, 0, time.time(), [], []
-                    if isinstance(single_dataset, str):
-                        typeChange+=1
-                        Process_dataset = "Start processing dataset: " + single_dataset + "\n"
-                        print(Process_dataset)
-                        continue
-                    for l in range(5):
-                        for single_data in single_dataset:
-                            # storyName = int(single_data['storyName'].split(".")[0][2:])
-                            # print(storyName)
-                            if count >= lim_start[l] and count <= lim_end[l]:
-                                #storyName = int(single_data['storyName'].split(".")[0][2:])
-                                s_string, q_string, options, answer = ContentParser(single_data).getContent()
-                                #print(single_data['storyName'])
-                                guessAnswer = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
-                                if guessAnswer == answer:
-                                    correct += 1
-                                tmpC +=1
-                            count += 1
-                        print(tmpC)
-                        correct_list[l] = round( correct / 1710, 3)
-                    Accuracy = "Accuracy: "
-                    for c in correct_list:
-                        Accuracy += str(c) + ", "
-                    CostTime = "\nTotal cost time: "+ str(time.time()-tTime) + "\n\n"
-                    print(Accuracy)
-                    print(CostTime)
-                    if typeChange <4:
-                        dataTypeLog = "Data type: " + dataType[0] + "\n"
-                    else:
-                        dataTypeLog = "Data type: " + dataType[1] + "\n"
-                    SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime).saveLogTxt()
-                constant += 0
-        SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime, AccuracyList).saveLogExcel()
+                tmpC, count, correct, ind, tTime, flag, correct_list = 0, 0, 0, 0, time.time(), [], []
+                if isinstance(single_dataset, str):
+                    typeChange+=1
+                    Process_dataset = "Start processing dataset: " + single_dataset + "\n"
+                    print(Process_dataset)
+                    continue
+                for l in range(5):
+                    for single_data in single_dataset:
+                        # storyName = int(single_data['storyName'].split(".")[0][2:])
+                        # print(storyName)
+                        if count >= lim_start[l] and count <= lim_end[l]:
+                            #storyName = int(single_data['storyName'].split(".")[0][2:])
+                            s_string, q_string, options, answer = ContentParser(single_data).getContent()
+                            #print(single_data['storyName'])
+                            guessAnswer = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
+                            if guessAnswer == answer:
+                                correct += 1
+                            tmpC +=1
+                        count += 1
+                    print(tmpC)
+                    correct_list[l] = round( correct / 1710, 3)
+                Accuracy = "Accuracy: "
+                for c in correct_list:
+                    Accuracy += str(c) + ", "
+                CostTime = "\nTotal cost time: "+ str(time.time()-tTime) + "\n\n"
+                print(Accuracy)
+                print(CostTime)
+                if typeChange <4:
+                    dataTypeLog = "Data type: " + dataType[0] + "\n"
+                else:
+                    dataTypeLog = "Data type: " + dataType[1] + "\n"
+                SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime).saveLogTxt()
+            constant += 0
+    SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime, AccuracyList).saveLogExcel()
             
 if __name__ == "__main__":
     main()
