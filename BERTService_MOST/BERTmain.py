@@ -44,6 +44,7 @@ def main():
                     print(Process_dataset)
                     continue
                 for l in range(5):
+                    correct = 0
                     for single_data in single_dataset:
                         # storyName = int(single_data['storyName'].split(".")[0][2:])
                         # print(storyName)
@@ -56,11 +57,11 @@ def main():
                                 correct += 1
                             tmpC +=1
                         count += 1
-                    print(tmpC)
+                    print(str(round( correct / 1710, 3)))
                     correct_list.append(str(round( correct / 1710, 3)))
                 Accuracy = "Accuracy: "
                 for c in correct_list:
-                    Accuracy += + ", "
+                    Accuracy += c + ", "
                 CostTime = "\nTotal cost time: "+ str(time.time()-tTime) + "\n\n"
                 print(Accuracy)
                 print(CostTime)
