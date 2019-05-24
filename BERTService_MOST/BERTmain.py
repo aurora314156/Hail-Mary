@@ -57,7 +57,7 @@ def main():
                             tmpC +=1
                         count += 1
                     print(tmpC)
-                    correct_list[l].append(str(round( correct / 1710, 3)))
+                    correct_list.append(str(round( correct / 1710, 3)))
                 Accuracy = "Accuracy: "
                 for c in correct_list:
                     Accuracy += + ", "
