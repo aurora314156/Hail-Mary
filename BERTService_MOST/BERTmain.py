@@ -44,7 +44,7 @@ def main():
                     print(Process_dataset)
                     continue
                 for l in range(5):
-                    correct = 0, count = 0
+                    correct, count = 0, 0
                     for single_data in single_dataset:
                         # storyName = int(single_data['storyName'].split(".")[0][2:])
                         # print(storyName)
