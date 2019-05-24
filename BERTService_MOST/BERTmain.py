@@ -17,7 +17,8 @@ def randomNum(corpus_amount, flag):
     return flag
 
 fraction = 1
-
+lim_start = [6840, 0, 1710, 3420, 5130]
+lim_end = [8549, 1709, 3419, 5129, 6839]
 def main():
     # initial dataset
     dataset, dataType, model = Initial().InitialMain()
@@ -36,20 +37,25 @@ def main():
             print(model)
             typeChange=0
             for single_dataset in dataset:
-                correct, count, ind, tTime, flag = 0, 0, 0, time.time(), []
-                if isinstance(single_dataset, str):
-                    typeChange+=1
-                    Process_dataset = "Start processing dataset: " + single_dataset + "\n"
-                    print(Process_dataset)
-                    continue
-                for single_data in single_dataset:
-                    storyName = int(single_data['storyName'].split(".")[0][2:])
-                    s_string, q_string, options, answer = ContentParser(single_data).getContent()
-                    #print(single_data['storyName'])
-                    guessAnswer = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
-                    if guessAnswer == answer:
-                        correct += 1
-                    count += 1
+                correct = 0
+                for l in range(5):
+                    count, ind, tTime, flag = 0, 0, 0, time.time(), []
+                    if isinstance(single_dataset, str):
+                        typeChange+=1
+                        Process_dataset = "Start processing dataset: " + single_dataset + "\n"
+                        print(Process_dataset)
+                        continue
+                    for single_data in single_dataset:
+                        storyName = int(single_data['storyName'].split(".")[0][2:])
+                        print(storyName)
+                        if count >= lim_start[l] and count <= lim_end[l]:
+                            #storyName = int(single_data['storyName'].split(".")[0][2:])
+                            s_string, q_string, options, answer = ContentParser(single_data).getContent()
+                            #print(single_data['storyName'])
+                            guessAnswer = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
+                            if guessAnswer == answer:
+                                correct += 1
+                        count += 1
                 Accuracy = "Accuracy: "
                 accuracy = round(correct / 8550, 3)
                 Accuracy += str(accuracy) + ", "

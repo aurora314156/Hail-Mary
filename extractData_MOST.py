@@ -12,16 +12,15 @@ cut_punctuation = {"，", "。", "；", "？", "！", "："}
 fileName = 'most.json'
 with open(fileName, 'w') as CQA:
     data = []
+    flag, count = 0, 0
     for r in range(1,7):
         type_path = os.path.join(os.getcwd(),'MOST_original/') + str(r)
         with open(str(r)+'.json', 'r') as a:
             aa = json.loads(a.read())
-            count = 0
             for each_file in os.listdir(type_path):
-                count += 1
                 with open(os.path.join(type_path, each_file), 'r') as f:
                     content = {}
-                    content['storyName'] = str(r) + '_' + each_file
+                    content['storyName'] = str(count)
                     tmp_words, tmp_list, flag = "", [], 0
                     for each_line in f:
                         each_line = each_line.strip()
@@ -57,6 +56,7 @@ with open(fileName, 'w') as CQA:
                     content['options'] = tmp_list
                     data.append(content)
                     f.close()
+                    count += 1
             a.close()
         print(count)
     CQA.write(json.dumps(data, ensure_ascii=False))
