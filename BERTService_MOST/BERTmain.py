@@ -37,17 +37,16 @@ def main():
             print(model)
             typeChange=0
             for single_dataset in dataset:
-                correct = 0
                 for l in range(5):
-                    count, ind, tTime, flag = 0, 0, 0, time.time(), []
+                    count, correct, ind, tTime, flag, correct_list = 0, 0, 0, time.time(), [], []
                     if isinstance(single_dataset, str):
                         typeChange+=1
                         Process_dataset = "Start processing dataset: " + single_dataset + "\n"
                         print(Process_dataset)
                         continue
                     for single_data in single_dataset:
-                        storyName = int(single_data['storyName'].split(".")[0][2:])
-                        print(storyName)
+                        # storyName = int(single_data['storyName'].split(".")[0][2:])
+                        # print(storyName)
                         if count >= lim_start[l] and count <= lim_end[l]:
                             #storyName = int(single_data['storyName'].split(".")[0][2:])
                             s_string, q_string, options, answer = ContentParser(single_data).getContent()
@@ -55,10 +54,12 @@ def main():
                             guessAnswer = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
                             if guessAnswer == answer:
                                 correct += 1
-                        count += 1
+                            count += 1
+                    print(count)
+                    correct_list[l] = round( correct / 1710, 3)
                 Accuracy = "Accuracy: "
-                accuracy = round(correct / 8550, 3)
-                Accuracy += str(accuracy) + ", "
+                for c in correct_list:
+                    Accuracy += str(c) + ", "
                 CostTime = "\nTotal cost time: "+ str(time.time()-tTime) + "\n\n"
                 print(Accuracy)
                 print(CostTime)
@@ -70,6 +71,5 @@ def main():
             constant += 0
     SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime, AccuracyList).saveLogExcel()
             
-
 if __name__ == "__main__":
     main()
