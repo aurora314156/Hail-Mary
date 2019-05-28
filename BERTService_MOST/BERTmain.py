@@ -63,6 +63,7 @@ def main():
                                 wrongNum[count] = guessAnswer
                             tmpC +=1
                         count += 1
+                    print(wrongNum)
                     wrongNumList.append(wrongNum)
                     print(str(round( correct / 855, 3)))
                     correct_list.append(str(round( correct / 855, 3)))
