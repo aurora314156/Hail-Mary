@@ -37,16 +37,16 @@ def main():
             print("***********************************\n")
             model = "Start run model: " + m + "\n"
             print(model)
-            typeChange=0
+            typeChange, wrongNumJson, dataTypeJson = 0, {}, 0
             for single_dataset in dataset:
-                tmpC, count, correct, ind, tTime, flag, correct_list = 0, 0, 0, 0, time.time(), [], []
+                tmpC, count, correct, ind, tTime, flag, correct_list, wrongNumList = 0, 0, 0, 0, time.time(), [], [], []
                 if isinstance(single_dataset, str):
                     typeChange+=1
                     Process_dataset = "Start processing dataset: " + single_dataset + "\n"
                     print(Process_dataset)
                     continue
                 for l in range(10):
-                    correct, count = 0, 0
+                    correct, count, wrongNum = 0, 0, []
                     for single_data in single_dataset:
                         # storyName = int(single_data['storyName'].split(".")[0][2:])
                         # print(storyName)
@@ -57,10 +57,14 @@ def main():
                             guessAnswer = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
                             if guessAnswer == answer:
                                 correct += 1
+                            else:
+                                wrongNum.append(guessAnswer)
                             tmpC +=1
                         count += 1
+                    wrongNumList.append(wrongNum)
                     print(str(round( correct / 855, 3)))
                     correct_list.append(str(round( correct / 855, 3)))
+                wrongNumJson[str(dataTypeJson)] = wrongNumList
                 Accuracy = "Accuracy: "
                 for c in correct_list:
                     Accuracy += c + ", "
@@ -72,6 +76,9 @@ def main():
                 else:
                     dataTypeLog = "Data type: " + dataType[1] + "\n"
                 SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime).saveLogTxt()
+                dataTypeJson += 1
+            with open(m +'.json', 'w') as json_file:
+                json.dump(wrongNumJson, json_file)
             constant += 0
     SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime, AccuracyList).saveLogExcel()
             
