@@ -48,7 +48,7 @@ def main():
                     print(Process_dataset)
                     continue
                 for l in range(len(lim_start)):
-                    correct, count, wrongNum = 0, 0, []
+                    correct, count, wrongNum = 0, 0, {}
                     for single_data in single_dataset:
                         # storyName = int(single_data['storyName'].split(".")[0][2:])
                         # print(storyName)
@@ -60,7 +60,7 @@ def main():
                             if guessAnswer == answer:
                                 correct += 1
                             else:
-                                wrongNum.append(guessAnswer)
+                                wrongNum[count] = guessAnswer
                             tmpC +=1
                         count += 1
                     wrongNumList.append(wrongNum)
