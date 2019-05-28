@@ -19,8 +19,10 @@ def randomNum(corpus_amount, flag):
 fraction = 1
 # lim_start = [6840, 0, 1710, 3420, 5130]
 # lim_end = [8549, 1709, 3419, 5129, 6839]
-lim_start = [7694, 0, 855, 1710, 2565, 3420, 4275, 5130, 5985, 6840]
-lim_end = [8549, 854, 1709, 2564, 3419, 4274, 5129, 5984, 6839, 7693]
+# lim_start = [7694, 0, 855, 1710, 2565, 3420, 4275, 5130, 5985, 6840]
+# lim_end = [8549, 854, 1709, 2564, 3419, 4274, 5129, 5984, 6839, 7693]
+lim_start = [10]
+lim_end = [20]
 def main():
     # initial dataset
     dataset, dataType, model = Initial().InitialMain()
@@ -45,7 +47,7 @@ def main():
                     Process_dataset = "Start processing dataset: " + single_dataset + "\n"
                     print(Process_dataset)
                     continue
-                for l in range(10):
+                for l in range(len(lim_start)):
                     correct, count, wrongNum = 0, 0, []
                     for single_data in single_dataset:
                         # storyName = int(single_data['storyName'].split(".")[0][2:])
