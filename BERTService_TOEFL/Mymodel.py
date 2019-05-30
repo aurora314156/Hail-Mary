@@ -18,7 +18,7 @@ class Mymodel():
         self.stop_words = ["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", "its", "itself", "they", "them", "their", "theirs", "themselves", "what", "which", "who", "whom", "this", "that", "these", "those", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does", "did", "doing", "a", "an", "the", "and", "but", "if", "or", "because", "as", "until", "while", "of", "at", "by", "for", "with", "about", "against", "between", "into", "through", "during", "before", "after", "above", "below", "to", "from", "up", "down", "in", "out", "on", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t", "can", "will", "just", "don", "should", "now"]
         self.TF_words = TF_words
         self.TF_scores = TF_scores
-        self.activationF = "softmax"
+        self.activationF = "none"
         self.similarity = euclidean
         self.constant = constant
 
@@ -1286,6 +1286,8 @@ class Mymodel():
             return self.relu(x)
         elif self.activationF == 'drelu':
             return self.drelu(x)
+        elif self.activationF == 'none':
+            return x
         else:
             print("Activation function setting error.")
             return 0
@@ -1377,8 +1379,8 @@ class Mymodel():
         """ 
         Returns the angle in radians between vectors 'v1' and 'v2'::
         """
-        v1 = np.clip(v1, 0.0, 1.0)
-        v2 = np.clip(v2, 0.0, 1.0)
-        cosine_similarity = 1 - spatial.distance.cosine(v1, v2)
+        # v1 = np.clip(v1, 0.0, 1.0)
+        # v2 = np.clip(v2, 0.0, 1.0)
+        # cosine_similarity = 1 - spatial.distance.cosine(v1, v2)
         
-        return 1.0 - (np.arccos(cosine_similarity) / 3.14)
+        return 1 - spatial.distance.cosine(v1, v2)

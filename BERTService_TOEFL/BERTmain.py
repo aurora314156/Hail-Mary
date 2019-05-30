@@ -7,7 +7,6 @@ from SaveLog import SaveLog
 from ContentParser import ContentParser
 from bert_serving.client import BertClient
 
-
 def main():
     # initial dataset
     dataset, dataType, model = Initial().InitialMain()
