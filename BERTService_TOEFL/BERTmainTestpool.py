@@ -10,39 +10,54 @@ from bert_serving.server import BertServer
 from bert_serving.server.helper import get_args_parser
 
 
-args = get_args_parser().parse_args(['-model_dir', '/project/Divh/cased_L-24_H-1024_A-16/',
+args_setting_max = ['-model_dir', '/project/Divh/cased_L-24_H-1024_A-16/',
+                    '-graph_tmp_dir', '/project/Divh/tmp/',
                                      '-num_worker', '1',
                                      '-gpu_memory_fraction', '0.9',
                                      '-pooling_layer', '-12',
                                      '-pooling_strategy', 'REDUCE_MAX',
                                      '-port', '6006',
                                      '-port_out', '6007',
-                                     '-max_seq_len', 'NONE',])
-
+                                     '-max_seq_len', 'NONE',]
+args_setting_mean = ['-model_dir', '/project/Divh/cased_L-24_H-1024_A-16/',
+                     '-graph_tmp_dir', '/project/Divh/tmp/',
+                                     '-num_worker', '1',
+                                     '-gpu_memory_fraction', '0.9',
+                                     '-pooling_layer', '-12',
+                                     '-pooling_strategy', 'REDUCE_MAX',
+                                     '-port', '6006',
+                                     '-port_out', '6007',
+                                     '-max_seq_len', 'NONE',]
+tmpargs = []
+tmpargs.append(args_setting_max)
+tmpargs.append(args_setting_mean)
 pooling_strategy = ['REDUCE_MAX', 'REDUCE_MEAN']
+port, port_out = 6006, 6007
+
 def main():
     # initial dataset
     dataset, dataType, model = Initial().InitialMain()
     TF_words, TF_scores = TFIDF(dataset).getTFIDFWeigths()
     AccuracyList = []
     constant, bestAccuracy, bestStrategy, bestPool = 0, 0, "", ""
-    for ps in range(2):
-        for pool_layer in range(1,13):
-            setattr(args, 'pooling_layer', [-pool_layer])
-            setattr(args, 'pooling_strategy', [pooling_strategy[ps]])
-            server = BertServer(args)
-            server.start()
-            print('wait until server is ready...')
-            time.sleep(50)
-            print('encoding...')
-            # initial BERT model
-            bc = BertClient()
-            for m in model:
-                print("***********************************\nStart getting datatype: ")
-                print(dataType)
-                print("***********************************\n")
-                model = "Start run model: " + m + "\n"
-                print(model)
+    for m in model:
+        print("***********************************\nStart getting datatype: ")
+        print(dataType)
+        print("***********************************\n")
+        model = "Start run model: " + m + "\n"
+        print(model)
+        for ps in tmpargs:
+            for pool_layer in range(1,13):
+                args = get_args_parser().parse_args(ps)
+                print(args.pooling_strategy)
+                setattr(args, 'pooling_layer', [-pool_layer])
+                server = BertServer(args)
+                server.start()
+                print('wait until server is ready...')
+                time.sleep(20)
+                print('encoding...')
+                # initial BERT model
+                bc = BertClient(port=port, port_out=port_out, show_server_config=True)
                 typeChange=0
                 for single_dataset in dataset:
                     correct, tTime = 0, time.time()
@@ -61,7 +76,7 @@ def main():
                     if accuracy > bestAccuracy:
                         bestAccuracy = accuracy
                         bestPool = pool_layer
-                        bestStrategy = pooling_strategy[ps]
+                        bestStrategy = args.pooling_strategy
                     Accuracy = "Accuracy: " + str(accuracy) + "\n"
                     CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n"
                     AccuracyList.append(accuracy)
@@ -71,14 +86,15 @@ def main():
                         dataTypeLog = "Data type: " + dataType[0] + "\n"
                     else:
                         dataTypeLog = "Data type: " + dataType[1] + "\n"
-                    SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime).saveLogTxt()
-            SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime, AccuracyList).saveLogExcel()
-            print("Best Accuracy: ", bestAccuracy)
-            print("Best bestPool: ", bestPool)
-            print("Best bestStrategy: ", bestStrategy)
-            bc.close()
-            server.close()
-            
+                    #SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime).saveLogTxt()
+                #SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime, AccuracyList).saveLogExcel()
+                    print("Current pool: ", pool_layer)
+                    print("Best Accuracy: ", bestAccuracy)
+                    print("Best bestPool: ", bestPool)
+                    print("Best bestStrategy: ", bestStrategy)
+                    bc.close()
+                    server.close()
+        print(AccuracyList)
 
 if __name__ == "__main__":
     main()
