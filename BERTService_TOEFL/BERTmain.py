@@ -6,6 +6,8 @@ from Mymodel import Mymodel
 from SaveLog import SaveLog
 from ContentParser import ContentParser
 from bert_serving.client import BertClient
+from bert_serving.server import BertServer
+from bert_serving.server.helper import get_args_parser
 
 def main():
     # initial dataset
