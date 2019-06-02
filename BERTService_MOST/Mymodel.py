@@ -18,7 +18,7 @@ class Mymodel():
         self.options = options
         self.TF_words = TF_words
         self.TF_scores = TF_scores
-        self.activationF = "softmax"
+        self.activationF = "none"
         self.similarity = euclidean
         self.constant = constant
 
