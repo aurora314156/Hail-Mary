@@ -1,4 +1,4 @@
-import os, time, json
+import os, time, json, shutil
 from numpy import array
 from TFIDF import TFIDF
 from Initial import Initial
@@ -13,41 +13,46 @@ from bert_serving.server.helper import get_args_parser
 args_setting_max = ['-model_dir', '/project/Divh/cased_L-24_H-1024_A-16/',
                     '-graph_tmp_dir', '/project/Divh/tmp/',
                                      '-num_worker', '1',
-                                     '-gpu_memory_fraction', '0.9',
+                                     '-gpu_memory_fraction', '0.3',
                                      '-pooling_layer', '-12',
                                      '-pooling_strategy', 'REDUCE_MAX',
-                                     '-port', '6006',
-                                     '-port_out', '6007',
+                                     '-port', '5557',
+                                     '-port_out', '5558',
                                      '-max_seq_len', 'NONE',]
 args_setting_mean = ['-model_dir', '/project/Divh/cased_L-24_H-1024_A-16/',
                      '-graph_tmp_dir', '/project/Divh/tmp/',
                                      '-num_worker', '1',
-                                     '-gpu_memory_fraction', '0.9',
+                                     '-gpu_memory_fraction', '0.3',
                                      '-pooling_layer', '-12',
-                                     '-pooling_strategy', 'REDUCE_MAX',
-                                     '-port', '6006',
-                                     '-port_out', '6007',
+                                     '-pooling_strategy', 'REDUCE_MEAN',
+                                     '-port', '5557',
+                                     '-port_out', '5558',
                                      '-max_seq_len', 'NONE',]
+
 tmpargs = []
-tmpargs.append(args_setting_max)
+#tmpargs.append(args_setting_max)
 tmpargs.append(args_setting_mean)
-pooling_strategy = ['REDUCE_MAX', 'REDUCE_MEAN']
-port, port_out = 6006, 6007
+
+port, port_out = 5557, 5558
 
 def main():
     # initial dataset
     dataset, dataType, model = Initial().InitialMain()
     TF_words, TF_scores = TFIDF(dataset).getTFIDFWeigths()
-    AccuracyList = []
     constant, bestAccuracy, bestStrategy, bestPool = 0, 0, "", ""
+    with open('accuracyList.txt', 'w') as log:
+        log.close()
     for m in model:
         print("***********************************\nStart getting datatype: ")
         print(dataType)
         print("***********************************\n")
         model = "Start run model: " + m + "\n"
         print(model)
+        shutil.rmtree("/project/Divh/tmp")
+        os.mkdir("/project/Divh/tmp")
         for ps in tmpargs:
-            for pool_layer in range(1,13):
+            AccuracyList = []
+            for pool_layer in range(1, 25):
                 args = get_args_parser().parse_args(ps)
                 print(args.pooling_strategy)
                 setattr(args, 'pooling_layer', [-pool_layer])
@@ -94,7 +99,15 @@ def main():
                     print("Best bestStrategy: ", bestStrategy)
                     bc.close()
                     server.close()
+                # save accuracy list
+            with open('accuracyList.txt', 'a') as log:
+                tmpAc = ""
+                for a in AccuracyList:
+                    tmpAc += str(a) + " "
+                tmpAc += "\n"
+                log.write(tmpAc)
         print(AccuracyList)
+        
 
 if __name__ == "__main__":
     main()
