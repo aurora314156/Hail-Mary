@@ -9,17 +9,18 @@ import re
 #     return string
 
 def removePunctuation(char):
-    char = re.sub("[\s+\.\!\/_,$%^*()+\"\']+|[+「」『』….:——！，。？、~@#￥%……&*（）*()?=-]+", "", char)
+    char = re.sub("[\s+\.\!\/_,$%^*()+\"\']+|[+「」『』《》….:——！，。？、~@#￥%……&*（）*()?=-]+", "", char)
     appendWord = ""
     # reserve zh
     #if '\u4e00' <= char <= '\u9fff' or '\u2e80'<= char <= '\u2fdf' or '\u3400'<= char <= '\u4dbf':
-    if char >= u'\u4E00' and char <= u'\u9FA5':
-       appendWord = char
-    # reserve number
-    elif char >= u'\u0030' and char <= u'\u0039':
-       appendWord = char
-    elif ( char >= u'\u0041' and char <= u'\u005A' ) or ( char >= u'\u0061' and char <= u'\u007A'):
-        appendWord = char
+    for cc in char:
+        if cc >= u'\u4E00' and cc <= u'\u9FA5':
+            appendWord += cc
+        # reserve number
+        elif cc >= u'\u0030' and cc <= u'\u0039':
+            appendWord += cc
+        elif ( cc >= u'\u0041' and cc <= u'\u005A' ) or ( cc >= u'\u0061' and cc <= u'\u007A'):
+            appendWord += cc
     
     return appendWord
 
@@ -34,8 +35,8 @@ with open(fileName, 'w') as CQA:
         with open(str(r)+'.json', 'r') as a:
             correct_ans = json.loads(a.read())
             for fileLenInd in range(fileLen[r]):
-            #for fileLenInd in range(603,604):
-                fileName = str(fileLenInd+1) +".txt"
+            #for fileLenInd in range(10,11):
+                fileName = str(fileLenInd+1) + ".txt"
                 with open(os.path.join(type_path, fileName), 'r') as f:
                     content = {}
                     content['storyName'] = str(count)
@@ -63,9 +64,13 @@ with open(fileName, 'w') as CQA:
                             tmp_list = []
                         # Q
                         elif flag == 3:
+                            #print(each_line)
                             line_content = removePunctuation(each_line)
+                            #print(line_content)
                             tmp_list.append(line_content.replace("\n", ""))
+                            #print(tmp_list)
                             content['question'] = tmp_list
+                            #print(content['question'])                            
                             tmp_list = []
                         # A
                         elif flag > 4:
