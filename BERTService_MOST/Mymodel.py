@@ -902,7 +902,7 @@ class Mymodel():
             for s in storySentences:
                 tmpScorelist.append(self.angle_sim(m, s))
                 tmpScorelist.sort(reverse=True)
-            for t in tmpScorelist[:5]:
+            for t in tmpScorelist[:2]:
                 tmpScore += t
             if tmpScore > highestScore:
                 highestScore = tmpScore
