@@ -9,6 +9,16 @@ from bert_serving.client import BertClient
 from bert_serving.server import BertServer
 from bert_serving.server.helper import get_args_parser
 
+def eraseBertTmpFiles():
+    shutil.rmtree("/project/Divh/tmp")
+    os.mkdir("/project/Divh/tmp")
+    allFiles = os.listdir(os.getcwd())
+    currentPath = os.getcwd()
+    for a in allFiles:
+        filePath = os.path.join(currentPath, a)
+        print(filePath)
+        if a[:3] == "tmp":
+            shutil.rmtree(filePath)
 
 args_setting_max = ['-model_dir', '/project/Divh/cased_L-24_H-1024_A-16/',
                     '-graph_tmp_dir', '/project/Divh/tmp/',
@@ -30,7 +40,7 @@ args_setting_mean = ['-model_dir', '/project/Divh/cased_L-24_H-1024_A-16/',
                                      '-max_seq_len', 'NONE',]
 
 tmpargs = []
-#tmpargs.append(args_setting_max)
+tmpargs.append(args_setting_max)
 tmpargs.append(args_setting_mean)
 
 port, port_out = 5557, 5558
@@ -48,9 +58,8 @@ def main():
         print("***********************************\n")
         model = "Start run model: " + m + "\n"
         print(model)
-        shutil.rmtree("/project/Divh/tmp")
-        os.mkdir("/project/Divh/tmp")
         for ps in tmpargs:
+            eraseBertTmpFiles()
             AccuracyList = []
             for pool_layer in range(1, 25):
                 args = get_args_parser().parse_args(ps)
