@@ -10,31 +10,11 @@ from bert_serving.server import BertServer
 from bert_serving.server.helper import get_args_parser
 from random import randint
 
-def randomNum(corpus_amount, flag):
-    flag = []
-    while(len(flag) < corpus_amount):
-        randomNumber = randint(1, corpus_amount)
-        if randomNumber not in flag:
-            flag.append(randomNumber)
-    return flag
 
-fraction = 1
-# lim_start = [6840, 0, 1710, 3420, 5130]
-# lim_end = [8549, 1709, 3419, 5129, 6839]
+# setting
+
 lim_start = [7694, 0, 855, 1710, 2565, 3420, 4275, 5130, 5985, 6840]
 lim_end = [8549, 854, 1709, 2564, 3419, 4274, 5129, 5984, 6839, 7693]
-
-
-def eraseBertTmpFiles():
-    print(" ****** Erase bert tmp files ******")
-    shutil.rmtree("/project/Divh/tmp")
-    os.mkdir("/project/Divh/tmp")
-    allFiles = os.listdir(os.getcwd())
-    currentPath = os.getcwd()
-    for a in allFiles:
-        filePath = os.path.join(currentPath, a)
-        if a[:3] == "tmp":
-            shutil.rmtree(filePath)
 
 args_setting_max = ['-model_dir', '/project/Divh/chinese_L-12_H-768_A-12/',
                     '-graph_tmp_dir', '/project/Divh/tmp/',
@@ -55,12 +35,50 @@ args_setting_mean = ['-model_dir', '/project/Divh/chinese_L-12_H-768_A-12/',
                                      '-port_out', '5558',
                                      '-max_seq_len', 'NONE',]
 
-
 tmpargs = []
 tmpargs.append(args_setting_max)
-tmpargs.append(args_setting_mean)
+#tmpargs.append(args_setting_mean)
 
 port, port_out = 5557, 5558
+showing_result_story_name = "5"
+
+
+def eraseBertTmpFiles():
+    print(" ****** Erase bert tmp files ******")
+    shutil.rmtree("/project/Divh/tmp")
+    os.mkdir("/project/Divh/tmp")
+    allFiles = os.listdir(os.getcwd())
+    currentPath = os.getcwd()
+    for a in allFiles:
+        filePath = os.path.join(currentPath, a)
+        if a[:3] == "tmp":
+            shutil.rmtree(filePath)
+            
+def showInferenceVector(storyName, inferenceVector, guessAnswer, answer):
+    if showing_result_story_name == storyName:
+        print("InferenceVector length: ", len(inferenceVector))
+        print("guessAns: ", guessAnswer)
+        print("correctAns: ", answer)
+        # save inferenceVector
+        if len(inferenceVector) == 1:
+            with open('inferenceVector.txt', 'w') as log:
+                tmpV = ""
+                for i in inferenceVector:
+                    tmpV += str(i) + " "
+                tmpV += "\n"
+                log.write(tmpV)
+            return 0
+        else:
+            with open('inferenceVector.txt', 'w') as log:
+                tmpV = ""
+                for i in inferenceVector:
+                    for element in i:
+                        tmpV += str(element) + " "
+                    tmpV += "\n"
+                log.write(tmpV)
+            return 0
+    return 1
+    
 
 def main():
     # initial dataset
@@ -79,7 +97,7 @@ def main():
         print(model)
         for ps in tmpargs:
             AccuracyList = []
-            for pool_layer in range(1,13):
+            for pool_layer in range(12,13):
                 eraseBertTmpFiles()
                 args = get_args_parser().parse_args(ps)
                 print(args.pooling_strategy)
@@ -87,7 +105,7 @@ def main():
                 server = BertServer(args)
                 server.start()
                 print('wait until server is ready...')
-                time.sleep(20)
+                time.sleep(10)
                 print('encoding...')
                 # initial BERT model
                 bc = BertClient(port=port, port_out=port_out)
@@ -99,7 +117,8 @@ def main():
                         Process_dataset = "Start processing dataset: " + single_dataset + "\n"
                         print(Process_dataset)
                         continue
-                    for l in range(len(lim_start)):
+                    #for l in range(len(lim_start)):
+                    for l in range(1,2):
                         correct, count, wrongNum = 0, 0, {}
                         for single_data in single_dataset:
                             # storyName = int(single_data['storyName'].split(".")[0][2:])
@@ -107,12 +126,16 @@ def main():
                             if count >= lim_start[l] and count <= lim_end[l]:
                                 #storyName = int(single_data['storyName'].split(".")[0][2:])
                                 s_string, q_string, options, answer = ContentParser(single_data).getContent()
-                                #print(single_data['storyName'])
-                                guessAnswer = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
+                                print(type(single_data['storyName']))
+                                guessAnswer, inferenceVector = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
+                                # show inference vector
+                                status = showInferenceVector(single_data['storyName'], inferenceVector, guessAnswer, answer)
+                                if status == 0:
+                                    break
                                 if guessAnswer == answer:
                                     correct += 1
                                 else:
-                                    wrongNum[count] = guessAnswer
+                                    wrongNum[count] = single_data['storyName']
                                 tmpC +=1
                             count += 1
                         wrongNumList.append(wrongNum)

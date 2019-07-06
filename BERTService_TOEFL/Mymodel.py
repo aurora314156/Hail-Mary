@@ -920,8 +920,8 @@ class Mymodel():
         
         storySentencesMerQuestion = self.activationFunction(bc.encode(sentences))
 
-        for i in range(len(self.options)):
-            self.options[i] = self.options[i] + self.q_string
+        #for i in range(len(self.options)):
+        #    self.options[i] = self.options[i] + self.q_string
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
@@ -1064,25 +1064,38 @@ class Mymodel():
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
+        # inferenceVector for showing option final choose result, recordVector for save story top 10 inferenceVector result
+        inferenceVector, recordVector, tmpRecord = [], [], []
+        
         storySentencesDict = {}
         for s in storySentences:
-            storySentencesDict[1 - spatial.distance.cosine(s, question)] = s
+            storySentencesDict[self.angle_sim(s, question)] = s
+            tmpRecord.append(self.angle_sim(s, question))
         
         sortedSentenceDict = [(k,storySentencesDict[k]) for k in sorted(storySentencesDict.keys(), reverse=True)]
         
-        guessAnswer, highestScore = 0, 0
-
         for sv in sortedSentenceDict[:10]:
-            ind = 0
-            for o in merQueOpts:
+            tmpV = self.angle_sim(sv[1], question)
+            recordVector.append(tmpV)
+        
+        ind, guessAnswer, highestScore, tmpInferenceVector = 0, 0, 0, [0,0,0,0]
+        for o in merQueOpts:
+            tmpOptScore, tmpInd = 0, 1
+            for sv in sortedSentenceDict[:10]:
                 tmpScore = self.angle_sim(sv[1], o)
-                #tmpScore = 1 - spatial.distance.cosine(sv[1], o)
                 if tmpScore >= highestScore:
                     guessAnswer = ind
                     highestScore = tmpScore
-                ind += 1
-
-        return guessAnswer
+                if tmpScore >= tmpOptScore:
+                    tmpInferenceVector[ind-1] = tmpInd
+                    tmpOptScore = tmpScore
+            ind += 1
+        
+        inferenceVector.append(tmpRecord)
+        inferenceVector.append(recordVector)
+        inferenceVector.append(tmpInferenceVector)
+        
+        return guessAnswer, inferenceVector
     
     def TwentySixthModel(self,bc):
         sentences, tmp_string, sentence = [], "", ""
@@ -1137,15 +1150,17 @@ class Mymodel():
             tmpScorelist = []
             for s in storySentences:
                 tmpScorelist.append(self.angle_sim(m, s))
-                tmpScorelist.sort(reverse=True)
-            for t in tmpScorelist[:5]:
+            # copy inferenceVector for showing result
+            inferenceVector = list(tmpScorelist)
+            tmpScorelist.sort(reverse=True)
+            for t in tmpScorelist[:2]:
                 tmpScore += t
             if tmpScore > highestScore:
                 highestScore = tmpScore
                 guessAnswer = ind
             ind += 1
 
-        return guessAnswer
+        return guessAnswer, inferenceVector
 
     def TwentySeventhModel(self,bc):
         story = bc.encode([self.s_string])

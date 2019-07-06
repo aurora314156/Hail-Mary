@@ -9,18 +9,8 @@ from bert_serving.client import BertClient
 from bert_serving.server import BertServer
 from bert_serving.server.helper import get_args_parser
 
-def eraseBertTmpFiles():
-    shutil.rmtree("/project/Divh/tmp")
-    os.mkdir("/project/Divh/tmp")
-    allFiles = os.listdir(os.getcwd())
-    currentPath = os.getcwd()
-    for a in allFiles:
-        filePath = os.path.join(currentPath, a)
-        print(filePath)
-        if a[:3] == "tmp":
-            shutil.rmtree(filePath)
-
-args_setting_max = ['-model_dir', '/project/Divh/cased_L-24_H-1024_A-16/',
+# setting
+args_setting_max = ['-model_dir', '/project/Divh/uncased_L-24_H-1024_A-16/uncased_L-24_H-1024_A-16/',
                     '-graph_tmp_dir', '/project/Divh/tmp/',
                                      '-num_worker', '1',
                                      '-gpu_memory_fraction', '0.3',
@@ -29,7 +19,7 @@ args_setting_max = ['-model_dir', '/project/Divh/cased_L-24_H-1024_A-16/',
                                      '-port', '5557',
                                      '-port_out', '5558',
                                      '-max_seq_len', 'NONE',]
-args_setting_mean = ['-model_dir', '/project/Divh/cased_L-24_H-1024_A-16/',
+args_setting_mean = ['-model_dir', '/project/Divh/uncased_L-24_H-1024_A-16/uncased_L-24_H-1024_A-16/',
                      '-graph_tmp_dir', '/project/Divh/tmp/',
                                      '-num_worker', '1',
                                      '-gpu_memory_fraction', '0.3',
@@ -40,10 +30,47 @@ args_setting_mean = ['-model_dir', '/project/Divh/cased_L-24_H-1024_A-16/',
                                      '-max_seq_len', 'NONE',]
 
 tmpargs = []
-tmpargs.append(args_setting_max)
+#tmpargs.append(args_setting_max)
 tmpargs.append(args_setting_mean)
 
 port, port_out = 5557, 5558
+showing_result_story_name = "tpo_22-conversation_1_1"
+
+def eraseBertTmpFiles():
+    shutil.rmtree("/project/Divh/tmp")
+    os.mkdir("/project/Divh/tmp")
+    allFiles = os.listdir(os.getcwd())
+    currentPath = os.getcwd()
+    for a in allFiles:
+        filePath = os.path.join(currentPath, a)
+        if a[:3] == "tmp":
+            shutil.rmtree(filePath)
+
+def showInferenceVector(storyName, inferenceVector, guessAnswer, answer):
+    if showing_result_story_name == storyName:
+        print("InferenceVector length: ", len(inferenceVector))
+        print("guessAns: ", guessAnswer)
+        print("correctAns: ", answer)
+        # save inferenceVector
+        if len(inferenceVector) == 1:
+            with open('inferenceVector.txt', 'w') as log:
+                tmpV = ""
+                for i in inferenceVector:
+                    tmpV += str(i) + " "
+                tmpV += "\n"
+                log.write(tmpV)
+            return 0
+        else:
+            with open('inferenceVector.txt', 'w') as log:
+                tmpV = ""
+                for i in inferenceVector:
+                    for element in i:
+                        tmpV += str(element) + " "
+                    tmpV += "\n"
+                log.write(tmpV)
+            return 0
+    return 1
+
 
 def main():
     # initial dataset
@@ -59,19 +86,19 @@ def main():
         model = "Start run model: " + m + "\n"
         print(model)
         for ps in tmpargs:
-            eraseBertTmpFiles()
             AccuracyList = []
-            for pool_layer in range(1, 25):
+            for pool_layer in range(17,18):
+                eraseBertTmpFiles()
                 args = get_args_parser().parse_args(ps)
                 print(args.pooling_strategy)
                 setattr(args, 'pooling_layer', [-pool_layer])
                 server = BertServer(args)
                 server.start()
                 print('wait until server is ready...')
-                time.sleep(20)
+                time.sleep(10)
                 print('encoding...')
                 # initial BERT model
-                bc = BertClient(port=port, port_out=port_out, show_server_config=True)
+                bc = BertClient(port=port, port_out=port_out, show_server_config=False)
                 typeChange=0
                 for single_dataset in dataset:
                     correct, tTime = 0, time.time()
@@ -82,7 +109,12 @@ def main():
                         continue
                     for single_data in single_dataset:
                         s_string, q_string, options, answer = ContentParser(single_data).getContent()
-                        guessAnswer = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
+                        guessAnswer, inferenceVector = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
+                        print(single_data['storyName'])
+                        # show inference vector
+                        status = showInferenceVector(single_data['storyName'], inferenceVector, guessAnswer, answer)
+                        if status == 0:
+                            break
                         if guessAnswer == answer:
                             #print(single_data['storyName'])
                             correct += 1
