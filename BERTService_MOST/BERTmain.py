@@ -40,7 +40,7 @@ tmpargs.append(args_setting_max)
 #tmpargs.append(args_setting_mean)
 
 port, port_out = 5557, 5558
-showing_result_story_name = "5"
+showing_result_story_name = "23"
 
 
 def eraseBertTmpFiles():
@@ -60,16 +60,16 @@ def showInferenceVector(storyName, inferenceVector, guessAnswer, answer):
         print("guessAns: ", guessAnswer)
         print("correctAns: ", answer)
         # save inferenceVector
-        if len(inferenceVector) == 1:
-            with open('inferenceVector.txt', 'w') as log:
+        if len(inferenceVector) != 3:
+            with open('inferenceVector.txt', 'a') as log:
                 tmpV = ""
                 for i in inferenceVector:
                     tmpV += str(i) + " "
-                tmpV += "\n"
+                tmpV += "\n\n"
                 log.write(tmpV)
             return 0
         else:
-            with open('inferenceVector.txt', 'w') as log:
+            with open('inferenceVector.txt', 'a') as log:
                 tmpV = ""
                 for i in inferenceVector:
                     for element in i:
@@ -78,17 +78,21 @@ def showInferenceVector(storyName, inferenceVector, guessAnswer, answer):
                 log.write(tmpV)
             return 0
     return 1
-    
 
+def initialLogFile():
+    with open('accuracyList.txt', 'w') as log:
+        log.close()
+    with open('inferenceVector.txt', 'w') as log:
+        log.close()
+    
 def main():
-    # initial dataset
+    # initial dataset and log file
     dataset, dataType, model = Initial().InitialMain()
+    initialLogFile()
     #TF_words, TF_scores = TFIDF(dataset).getTFIDFWeigths()
     TF_words, TF_scores = "", ""
     constant, bestAccuracy, bestStrategy, bestPool = 0, 0, "", ""
-    with open('accuracyList.txt', 'w') as log:
-        log.close()
-    constant = 0
+    
     for m in model:
         print("***********************************\nStart getting datatype: ")
         print(dataType)
@@ -105,7 +109,7 @@ def main():
                 server = BertServer(args)
                 server.start()
                 print('wait until server is ready...')
-                time.sleep(10)
+                time.sleep(25)
                 print('encoding...')
                 # initial BERT model
                 bc = BertClient(port=port, port_out=port_out)
@@ -164,6 +168,8 @@ def main():
                     tmpAc += "\n"
                     log.write(tmpAc)
                 print(Accuracy)
+                bc.close()
+                server.close()
     #SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime, AccuracyList).saveLogExcel()
             
 if __name__ == "__main__":

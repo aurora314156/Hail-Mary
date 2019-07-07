@@ -52,16 +52,16 @@ def showInferenceVector(storyName, inferenceVector, guessAnswer, answer):
         print("guessAns: ", guessAnswer)
         print("correctAns: ", answer)
         # save inferenceVector
-        if len(inferenceVector) == 1:
-            with open('inferenceVector.txt', 'w') as log:
+        if len(inferenceVector) != 3:
+            with open('inferenceVector.txt', 'a') as log:
                 tmpV = ""
                 for i in inferenceVector:
                     tmpV += str(i) + " "
-                tmpV += "\n"
+                tmpV += "\n\n"
                 log.write(tmpV)
             return 0
         else:
-            with open('inferenceVector.txt', 'w') as log:
+            with open('inferenceVector.txt', 'a') as log:
                 tmpV = ""
                 for i in inferenceVector:
                     for element in i:
@@ -71,14 +71,19 @@ def showInferenceVector(storyName, inferenceVector, guessAnswer, answer):
             return 0
     return 1
 
-
-def main():
-    # initial dataset
-    dataset, dataType, model = Initial().InitialMain()
-    TF_words, TF_scores = TFIDF(dataset).getTFIDFWeigths()
-    constant, bestAccuracy, bestStrategy, bestPool = 0, 0, "", ""
+def initialLogFile():
     with open('accuracyList.txt', 'w') as log:
         log.close()
+    with open('inferenceVector.txt', 'w') as log:
+        log.close()
+
+def main():
+    # initial dataset and log file
+    dataset, dataType, model = Initial().InitialMain()
+    initialLogFile()
+    TF_words, TF_scores = TFIDF(dataset).getTFIDFWeigths()
+    constant, bestAccuracy, bestStrategy, bestPool = 0, 0, "", ""
+    
     for m in model:
         print("***********************************\nStart getting datatype: ")
         print(dataType)
