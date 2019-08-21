@@ -8,27 +8,21 @@ from ContentParser import ContentParser
 from bert_serving.client import BertClient
 from bert_serving.server import BertServer
 from bert_serving.server.helper import get_args_parser
-from random import randint
-
 
 # setting
-
-lim_start = [7694, 0, 855, 1710, 2565, 3420, 4275, 5130, 5985, 6840]
-lim_end = [8549, 854, 1709, 2564, 3419, 4274, 5129, 5984, 6839, 7693]
-
-args_setting_max = ['-model_dir', '/project/Divh/chinese_L-12_H-768_A-12/',
+args_setting_max = ['-model_dir', '/project/Divh/uncased_L-24_H-1024_A-16/uncased_L-24_H-1024_A-16/',
                     '-graph_tmp_dir', '/project/Divh/tmp/',
                                      '-num_worker', '1',
-                                     '-gpu_memory_fraction', '0.8',
+                                     '-gpu_memory_fraction', '0.3',
                                      '-pooling_layer', '-12',
                                      '-pooling_strategy', 'REDUCE_MAX',
                                      '-port', '5557',
                                      '-port_out', '5558',
                                      '-max_seq_len', 'NONE',]
-args_setting_mean = ['-model_dir', '/project/Divh/chinese_L-12_H-768_A-12/',
+args_setting_mean = ['-model_dir', '/project/Divh/uncased_L-24_H-1024_A-16/uncased_L-24_H-1024_A-16/',
                      '-graph_tmp_dir', '/project/Divh/tmp/',
                                      '-num_worker', '1',
-                                     '-gpu_memory_fraction', '0.8',
+                                     '-gpu_memory_fraction', '0.3',
                                      '-pooling_layer', '-12',
                                      '-pooling_strategy', 'REDUCE_MEAN',
                                      '-port', '5557',
@@ -37,16 +31,14 @@ args_setting_mean = ['-model_dir', '/project/Divh/chinese_L-12_H-768_A-12/',
 
 tmpargs = []
 tmpargs.append(args_setting_max)
-#tmpargs.append(args_setting_mean)
+tmpargs.append(args_setting_mean)
+lim_start = [756, 0, 84, 168,  252, 335, 419, 503,  587,  671]
+lim_end = [839, 83, 167, 251, 334,  418, 502, 586, 670,  755]
 
 port, port_out = 5557, 5558
-#port, port_out = 4000,4001
-#port, port_out = 6006, 6007
 showing_result_story_name = ""
 
-
 def eraseBertTmpFiles():
-    print(" ****** Erase bert tmp files ******")
     shutil.rmtree("/project/Divh/tmp")
     os.mkdir("/project/Divh/tmp")
     allFiles = os.listdir(os.getcwd())
@@ -55,12 +47,13 @@ def eraseBertTmpFiles():
         filePath = os.path.join(currentPath, a)
         if a[:3] == "tmp":
             shutil.rmtree(filePath)
-            
-def showInferenceVector(storyName, inferenceVector, guessAnswer, answer):
+# for 25 26, 18 model
+def showInferenceVector(storyName, inferenceVector, guessAnswer, answer, sentences):
     if showing_result_story_name == storyName:
         print("InferenceVector length: ", len(inferenceVector))
         print("guessAns: ", guessAnswer)
         print("correctAns: ", answer)
+        print(inferenceVector)
         # save inferenceVector
         if len(inferenceVector) != 3:
             with open('inferenceVector.txt', 'a') as log:
@@ -68,6 +61,9 @@ def showInferenceVector(storyName, inferenceVector, guessAnswer, answer):
                 for i in inferenceVector:
                     tmpV += str(i) + " "
                 tmpV += "\n\n"
+                for s in sentences:
+                    tmpV += s + "\n"
+                tmpV += "\n"
                 log.write(tmpV)
             return 0
         else:
@@ -77,6 +73,9 @@ def showInferenceVector(storyName, inferenceVector, guessAnswer, answer):
                     for element in i:
                         tmpV += str(element) + " "
                     tmpV += "\n"
+                for s in sentences:
+                    tmpV += s + "\n"
+                tmpV += "\n"
                 log.write(tmpV)
             return 0
     return 1
@@ -100,9 +99,12 @@ def showInferenceVector(storyName, inferenceVector, guessAnswer, answer):
 #             log.write(tmpV)
 #         return 0
 
-def recordAnswer(recordAns, answer):
+def recordAnswer(recordName, recordAns, answer):
     with open('recordAnswer.txt', 'a') as log:
         tmpA =""
+        for n in recordName:
+            tmpA += str(n) + ","
+        tmpA += "\n"
         for r in recordAns:
             tmpA += str(r) + ","
         tmpA += "\n"
@@ -118,13 +120,14 @@ def initialLogFile():
         log.close()
     with open('recordAnswer.txt', 'w') as log:
         log.close()
-    
+    with open('correct_List.txt', 'w') as log:
+        log.close()
+
 def main():
     # initial dataset and log file
     dataset, dataType, model = Initial().InitialMain()
     initialLogFile()
-    #TF_words, TF_scores = TFIDF(dataset).getTFIDFWeigths()
-    TF_words, TF_scores = "", ""
+    TF_words, TF_scores = TFIDF(dataset).getTFIDFWeigths()
     constant, bestAccuracy, bestStrategy, bestPool = 0, 0, "", ""
     
     for m in model:
@@ -135,7 +138,7 @@ def main():
         print(model)
         for ps in tmpargs:
             AccuracyList = []
-            for pool_layer in range(1,13):
+            for pool_layer in range(1, 25):
                 eraseBertTmpFiles()
                 args = get_args_parser().parse_args(ps)
                 print(args.pooling_strategy)
@@ -143,50 +146,57 @@ def main():
                 server = BertServer(args)
                 server.start()
                 print('wait until server is ready...')
-                time.sleep(30)
+                time.sleep(20)
                 print('encoding...')
                 # initial BERT model
-                bc = BertClient(port=port, port_out=port_out)
-                typeChange, wrongNumJson, dataTypeJson = 0, {}, 0
+                bc = BertClient(port=port, port_out=port_out, show_server_config=False)
+                typeChange=0
                 for single_dataset in dataset:
-                    tmpC, count, correct, ind, tTime, flag, correct_list, wrongNumList = 0, 0, 0, 0, time.time(), [], [], []
+                    tTime, correct_list = time.time(), []
                     if isinstance(single_dataset, str):
                         typeChange+=1
-                        Process_dataset = "Start processing dataset: " + single_dataset + "\n"
+                        Process_dataset = "Start processing dataset: " + single_dataset +"\n"
                         print(Process_dataset)
                         continue
                     for l in range(len(lim_start)):
-                    #for l in range(1,2):
-                        correct, count, wrongNum, recordAns, correctAns = 0, 0, {}, [], []
+                        recordAns, correctAns, recordName, sentences, count, correct = [], [], [], [], 0, 0
                         for single_data in single_dataset:
-                            # storyName = int(single_data['storyName'].split(".")[0][2:])
-                            # print(storyName)
                             if count >= lim_start[l] and count <= lim_end[l]:
-                                #storyName = int(single_data['storyName'].split(".")[0][2:])
                                 s_string, q_string, options, answer = ContentParser(single_data).getContent()
-                                print(type(single_data['storyName']))
-                                guessAnswer, inferenceVector = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
+                                #guessAnswer, inferenceVector = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
+                                guessAnswer, inferenceVector, sentences = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
+                                storyName = single_data['storyName']
+                                #print(single_data['storyName'])
                                 # show inference vector
-                                status = showInferenceVector(single_data['storyName'], inferenceVector, guessAnswer, answer)
-                                if status == 0:
-                                    break
+                                #status = showInferenceVector(storyName, inferenceVector, guessAnswer, answer)
+                                #status = showInferenceVector(storyName, inferenceVector, guessAnswer, answer, sentences)
+                                #if status == 0:
+                                #    break
                                 if guessAnswer == answer:
+                                    #print(single_data['storyName'])
                                     correct += 1
-                                else:
-                                    wrongNum[count] = single_data['storyName']
-                                tmpC +=1
+                                recordName.append(single_data['storyName'])
                                 recordAns.append(guessAnswer)
                                 correctAns.append(answer)
-                            count += 1
-                        recordAnswer(recordAns, correctAns)
-                        wrongNumList.append(wrongNum)
-                        print(str(round( correct / 855, 3)))
-                        correct_list.append(str(round( correct / 855, 3)))
-                    wrongNumJson[str(dataTypeJson)] = wrongNumList
-                    Accuracy = "Accuracy: "
-                    for c in correct_list:
-                        Accuracy += c + ", "
-                    CostTime = "\nTotal cost time: "+ str(time.time()-tTime) + "\n\n"
+                            count +=1
+                        accuracy = round(correct/len(single_dataset),3)
+                        correct_list.append(str(round(correct/ 84,3)))
+                    # save accuracy list
+                    with open('correct_List.txt', 'a') as log:
+                        tmpAc = ""
+                        for a in correct_list:
+                            tmpAc += a + " "
+                        tmpAc += "\n"
+                        log.write(tmpAc)
+                    recordAnswer(recordName, recordAns, correctAns)
+                    print(len(single_dataset))
+                    if accuracy > bestAccuracy:
+                        bestAccuracy = accuracy
+                        bestPool = pool_layer
+                        bestStrategy = args.pooling_strategy
+                    Accuracy = "Accuracy: " + str(accuracy) + "\n"
+                    CostTime = "Total cost time: "+ str(time.time()-tTime) + "\n"
+                    AccuracyList.append(accuracy)
                     print(Accuracy)
                     print(CostTime)
                     if typeChange <4:
@@ -194,20 +204,24 @@ def main():
                     else:
                         dataTypeLog = "Data type: " + dataType[1] + "\n"
                     #SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime).saveLogTxt()
-                    dataTypeJson += 1
-                with open('Experiment/'+ m +'_wrongNum.json', 'w') as json_file:
-                    json.dump(wrongNumJson, json_file)
-                # save accuracy list
-                with open('accuracyList.txt', 'a') as log:
-                    tmpAc = ""
-                    for a in correct_list:
-                        tmpAc += str(a) + " "
-                    tmpAc += "\n"
-                    log.write(tmpAc)
-                print(Accuracy)
+                #SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime, AccuracyList).saveLogExcel()
+                    print("Current pool: ", pool_layer)
+                    print("Best Accuracy: ", bestAccuracy)
+                    print("Best bestPool: ", bestPool)
+                    print("Best bestStrategy: ", bestStrategy)
                 bc.close()
                 server.close()
-    #SaveLog(dataTypeLog, Process_dataset, model, Accuracy, CostTime, AccuracyList).saveLogExcel()
-            
+                # save accuracy list
+            with open('accuracyList.txt', 'a') as log:
+                tmpAc = ""
+                for a in AccuracyList:
+                    tmpAc += str(a) + " "
+                tmpAc += "\n"
+                log.write(tmpAc)
+        print(AccuracyList)
+        
+
 if __name__ == "__main__":
     main()
+
+

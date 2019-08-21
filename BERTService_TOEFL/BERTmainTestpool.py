@@ -34,7 +34,7 @@ tmpargs = []
 tmpargs.append(args_setting_mean)
 
 port, port_out = 5557, 5558
-showing_result_story_name = "tpo_22-conversation_1_1"
+showing_result_story_name = ""
 
 def eraseBertTmpFiles():
     shutil.rmtree("/project/Divh/tmp")
@@ -45,12 +45,13 @@ def eraseBertTmpFiles():
         filePath = os.path.join(currentPath, a)
         if a[:3] == "tmp":
             shutil.rmtree(filePath)
-
-def showInferenceVector(storyName, inferenceVector, guessAnswer, answer):
+# for 25 26, 18 model
+def showInferenceVector(storyName, inferenceVector, guessAnswer, answer, sentences):
     if showing_result_story_name == storyName:
         print("InferenceVector length: ", len(inferenceVector))
         print("guessAns: ", guessAnswer)
         print("correctAns: ", answer)
+        print(inferenceVector)
         # save inferenceVector
         if len(inferenceVector) != 3:
             with open('inferenceVector.txt', 'a') as log:
@@ -58,6 +59,9 @@ def showInferenceVector(storyName, inferenceVector, guessAnswer, answer):
                 for i in inferenceVector:
                     tmpV += str(i) + " "
                 tmpV += "\n\n"
+                for s in sentences:
+                    tmpV += s + "\n"
+                tmpV += "\n"
                 log.write(tmpV)
             return 0
         else:
@@ -67,14 +71,52 @@ def showInferenceVector(storyName, inferenceVector, guessAnswer, answer):
                     for element in i:
                         tmpV += str(element) + " "
                     tmpV += "\n"
+                for s in sentences:
+                    tmpV += s + "\n"
+                tmpV += "\n"
                 log.write(tmpV)
             return 0
     return 1
+
+# def showInferenceVector(storyName, inferenceVector, guessAnswer, answer):
+#     if showing_result_story_name == storyName:
+#         print("InferenceVector length: ", len(inferenceVector))
+#         print("guessAns: ", guessAnswer)
+#         print("correctAns: ", answer)
+#         print(inferenceVector)
+#         # save inferenceVector
+#         with open('inferenceVector.txt', 'a') as log:
+#             tmpV = ""
+#             for i in inferenceVector:
+#                 if type(i) == list:
+#                     for element in i:
+#                         tmpV += str(element) + " "
+#                 else:
+#                     tmpV += str(i) + " "
+#                 tmpV += "\n"
+#             log.write(tmpV)
+#         return 0
+
+def recordAnswer(recordName, recordAns, answer):
+    with open('recordAnswer.txt', 'a') as log:
+        tmpA =""
+        for n in recordName:
+            tmpA += str(n) + ","
+        tmpA += "\n"
+        for r in recordAns:
+            tmpA += str(r) + ","
+        tmpA += "\n"
+        for a in answer:
+            tmpA += str(a) + ","
+        tmpA += "\n"
+        log.write(tmpA)
 
 def initialLogFile():
     with open('accuracyList.txt', 'w') as log:
         log.close()
     with open('inferenceVector.txt', 'w') as log:
+        log.close()
+    with open('recordAnswer.txt', 'w') as log:
         log.close()
 
 def main():
@@ -92,7 +134,7 @@ def main():
         print(model)
         for ps in tmpargs:
             AccuracyList = []
-            for pool_layer in range(17,18):
+            for pool_layer in range(11,12):
                 eraseBertTmpFiles()
                 args = get_args_parser().parse_args(ps)
                 print(args.pooling_strategy)
@@ -112,17 +154,26 @@ def main():
                         Process_dataset = "Start processing dataset: " + single_dataset +"\n"
                         print(Process_dataset)
                         continue
+                    recordAns, correctAns, recordName, sentences = [], [], [], []
                     for single_data in single_dataset:
                         s_string, q_string, options, answer = ContentParser(single_data).getContent()
-                        guessAnswer, inferenceVector = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
+                        #guessAnswer, inferenceVector = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
+                        guessAnswer, inferenceVector, sentences = Mymodel(bc, s_string, q_string, options, m, TF_words, TF_scores, constant).MymodelMain()
+                        storyName = single_data['storyName']
                         print(single_data['storyName'])
                         # show inference vector
-                        status = showInferenceVector(single_data['storyName'], inferenceVector, guessAnswer, answer)
+                        #status = showInferenceVector(storyName, inferenceVector, guessAnswer, answer)
+                        status = showInferenceVector(storyName, inferenceVector, guessAnswer, answer, sentences)
                         if status == 0:
                             break
                         if guessAnswer == answer:
                             #print(single_data['storyName'])
                             correct += 1
+                        recordName.append(single_data['storyName'])
+                        recordAns.append(guessAnswer)
+                        correctAns.append(answer)
+                    recordAnswer(recordName, recordAns, correctAns)
+                    print(len(single_dataset))
                     accuracy = round(correct/len(single_dataset),3)
                     if accuracy > bestAccuracy:
                         bestAccuracy = accuracy

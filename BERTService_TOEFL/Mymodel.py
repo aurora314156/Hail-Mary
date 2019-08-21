@@ -89,6 +89,7 @@ class Mymodel():
         """
         merge story and question vector by add, calculate similarity with merge story and option vector
         """
+        inferenceVector = []
         story = self.activationFunction(bc.encode([self.s_string]))
         question = self.activationFunction(bc.encode([self.q_string]))
         options = self.activationFunction(bc.encode(self.options))
@@ -98,12 +99,13 @@ class Mymodel():
             merStoryOpt = [x + y for x, y in zip(story, option)]
             #tmpScore = 1 - spatial.distance.cosine(merStoryQue, merStoryOpt)
             tmpScore = self.angle_sim(merStoryQue, merStoryOpt)
+            inferenceVector.append(tmpScore)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
             ind += 1
         
-        return guessAnswer
+        return guessAnswer, inferenceVector
     
     def SecondModel(self, bc):
         """
@@ -244,32 +246,16 @@ class Mymodel():
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
-        # test add tf-idf score
-        options_tfscores = []
-
-        for option in self.options:
-            tmp, flag = 0, 0
-            for o in option.split(" "):
-                o = o.lower()
-                if flag ==3:
-                    break
-                if o not in self.TF_words:
-                    continue
-                tmp += self.TF_scores[0][self.TF_words.index(o)]
-            options_tfscores.append(tmp)
-
-
-        ind, guessAnswer, highestScore = 0, 0, 0
+        ind, guessAnswer, highestScore, inferenceVector = 0, 0, 0, []
         for option in merQueOpts:
             tmpScore = self.angle_sim(story, option)
-            #tmpScore = 1 - spatial.distance.cosine(story, option) + (options_tfscores[ind] * self.constant)
-            #tmpScore = self.similarity(story, option) + (options_tfscores[ind] * self.constant)
+            inferenceVector.append(tmpScore)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
             ind += 1
         
-        return guessAnswer
+        return guessAnswer, inferenceVector
     
     def SeventhModel(self, bc):
         question = self.activationFunction(bc.encode([self.q_string]))
@@ -313,17 +299,19 @@ class Mymodel():
         for o in range(len(self.options)):
             self.options[o] = self.options[o] + self.s_string
         merStoryOpt = self.activationFunction(bc.encode(self.options))
-
+        
+        inferenceVector = []
         ind, guessAnswer, highestScore = 0, 0, 0
         for option in merStoryOpt:
             #tmpScore = 1 - spatial.distance.cosine(merStoryQue, option)
             tmpScore = self.angle_sim(merStoryQue, option)
+            inferenceVector.append(tmpScore)
             if tmpScore > highestScore:
                 guessAnswer = ind
                 highestScore = tmpScore
             ind += 1
         
-        return guessAnswer
+        return guessAnswer, inferenceVector
 
     def TenthModel(self, bc):
         story = self.activationFunction(bc.encode([self.s_string])) 
@@ -731,36 +719,24 @@ class Mymodel():
             self.options[i] = self.options[i] + self.q_string +self.s_string
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
-
-         # test add tf-idf score
-        sentences_tfscores = []
-
-        for sentence in sentences:
-            tmp, flag = 0, 0
-            for word in sentence.split(" "):
-                word = word.lower()
-                if flag == 3:
-                    break
-                if word not in self.TF_words:
-                    continue
-                tmp += self.TF_scores[0][self.TF_words.index(word)]
-            sentences_tfscores.append(tmp)
-
-        ind, guessAnswer, highestScore, highestScore_storyVector = 0, 0, 0, []
+        
+        ind, guessAnswer, highestScore, inferenceVector = 0, 0, 0, []
 
         for m in merQueOpts:
-            s_ind = 0
+            s_ind, tmpInferenceScore = 0, []
             for s in storySentences:
                 tmpScore = self.angle_sim(s, m)
+                tmpInferenceScore.append(tmpScore)
                 #tmpScore = 1 - spatial.distance.cosine(s, m) + (sentences_tfscores[s_ind] * self.constant)
                 #tmpScore = self.similarity(s, m) + (sentences_tfscores[s_ind] * self.constant)
                 if tmpScore > highestScore:
                     guessAnswer = ind
                     highestScore = tmpScore
                 s_ind += 1
+            inferenceVector.append(tmpInferenceScore)
             ind += 1
-        
-        return guessAnswer
+        #print(inferenceVector)
+        return guessAnswer, inferenceVector, sentences
     
     def NineteenthModel(self, bc):
         
@@ -1087,15 +1063,17 @@ class Mymodel():
                     guessAnswer = ind
                     highestScore = tmpScore
                 if tmpScore >= tmpOptScore:
-                    tmpInferenceVector[ind-1] = tmpInd
+                    tmpInferenceVector[ind] = tmpInd
                     tmpOptScore = tmpScore
+                tmpInd +=1
+            #print("highest score: ", tmpOptScore)
             ind += 1
         
         inferenceVector.append(tmpRecord)
         inferenceVector.append(recordVector)
         inferenceVector.append(tmpInferenceVector)
         
-        return guessAnswer, inferenceVector
+        return guessAnswer, inferenceVector, sentences
     
     def TwentySixthModel(self,bc):
         sentences, tmp_string, sentence = [], "", ""
@@ -1129,20 +1107,6 @@ class Mymodel():
         
         merQueOpts = self.activationFunction(bc.encode(self.options))
 
-        # test add tf-idf score
-        options_tfscores = []
-
-        for option in self.options:
-            tmp, flag = 0, 0
-            for o in option.split(" "):
-                o = o.lower()
-                if flag == 3:
-                    break
-                if o not in self.TF_words:
-                    continue
-                tmp += self.TF_scores[0][self.TF_words.index(o)]
-            options_tfscores.append(tmp)
-
         ind, guessAnswer, highestScore = 0, 0, 0
 
         for m in merQueOpts:
@@ -1151,16 +1115,17 @@ class Mymodel():
             for s in storySentences:
                 tmpScorelist.append(self.angle_sim(m, s))
             # copy inferenceVector for showing result
-            inferenceVector = list(tmpScorelist)
+            tmpInferenceVector = list(tmpScorelist)
             tmpScorelist.sort(reverse=True)
             for t in tmpScorelist[:2]:
                 tmpScore += t
             if tmpScore > highestScore:
+                inferenceVector = tmpInferenceVector
                 highestScore = tmpScore
                 guessAnswer = ind
             ind += 1
 
-        return guessAnswer, inferenceVector
+        return guessAnswer, inferenceVector, sentences
 
     def TwentySeventhModel(self,bc):
         story = bc.encode([self.s_string])
